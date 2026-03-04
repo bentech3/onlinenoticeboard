@@ -1,0 +1,1 @@
+DROP FUNCTION IF EXISTS public.handle_notice_approval_notification() CASCADE;

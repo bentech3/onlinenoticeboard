@@ -1,0 +1,255 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* UCU-BBUC Online Notice Board System - Design System
+   Primary: Deep University Blue
+   Secondary: Gold/Amber accents
+   Clean, professional, accessible
+*/
+
+@layer base {
+  :root {
+    /* UCU-inspired color palette */
+    --background: 210 20% 98%;
+    --foreground: 215 35% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 215 35% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 35% 15%;
+
+    /* Deep university blue - vibrant version */
+    --primary: 210 75% 35%;
+    --primary-foreground: 45 100% 97%;
+
+    /* Gold accent */
+    --secondary: 42 85% 55%;
+    --secondary-foreground: 215 35% 15%;
+
+    --muted: 210 20% 94%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Warm accent gold */
+    --accent: 42 85% 55%;
+    --accent-foreground: 215 35% 15%;
+
+    /* Status colors */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 71% 45%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 92% 50%;
+    --warning-foreground: 215 35% 15%;
+
+    --info: 199 89% 48%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 214 20% 88%;
+    --input: 214 20% 88%;
+    --ring: 210 75% 35%;
+
+    --radius: 0.625rem;
+
+    /* Custom gradients with vibrant blue */
+    --gradient-primary: linear-gradient(135deg, hsl(210, 75%, 35%) 0%, hsl(210, 75%, 45%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(42, 85%, 55%) 0%, hsl(38, 85%, 60%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(210, 75%, 30%) 0%, hsl(210, 75%, 40%) 50%, hsl(210, 65%, 48%) 100%);
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 hsl(215 35% 15% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(215 35% 15% / 0.08), 0 2px 4px -2px hsl(215 35% 15% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(215 35% 15% / 0.1), 0 4px 6px -4px hsl(215 35% 15% / 0.08);
+    --shadow-xl: 0 20px 25px -5px hsl(215 35% 15% / 0.1), 0 8px 10px -6px hsl(215 35% 15% / 0.08);
+    --shadow-gold: 0 4px 14px -3px hsl(42 85% 55% / 0.35);
+
+    /* Sidebar */
+    --sidebar-background: 210 75% 35%;
+    --sidebar-foreground: 45 100% 97%;
+    --sidebar-primary: 42 85% 55%;
+    --sidebar-primary-foreground: 215 35% 15%;
+    --sidebar-accent: 210 65% 42%;
+    --sidebar-accent-foreground: 45 100% 97%;
+    --sidebar-border: 210 65% 38%;
+    --sidebar-ring: 42 85% 55%;
+  }
+
+  .dark {
+    --background: 215 35% 10%;
+    --foreground: 210 20% 95%;
+
+    --card: 215 30% 14%;
+    --card-foreground: 210 20% 95%;
+
+    --popover: 215 30% 14%;
+    --popover-foreground: 210 20% 95%;
+
+    --primary: 42 90% 60%;
+    --primary-foreground: 215 35% 10%;
+
+    --secondary: 212 45% 25%;
+    --secondary-foreground: 210 20% 95%;
+
+    --muted: 215 25% 18%;
+    --muted-foreground: 215 15% 60%;
+
+    --accent: 212 45% 25%;
+    --accent-foreground: 210 20% 95%;
+
+    --destructive: 0 62% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 60% 40%;
+    --success-foreground: 0 0% 100%;
+
+    --warning: 38 80% 50%;
+    --warning-foreground: 215 35% 10%;
+
+    --info: 199 75% 45%;
+    --info-foreground: 0 0% 100%;
+
+    --border: 215 25% 22%;
+    --input: 215 25% 22%;
+    --ring: 42 85% 55%;
+
+    --sidebar-background: 215 35% 8%;
+    --sidebar-foreground: 210 20% 95%;
+    --sidebar-primary: 42 90% 60%;
+    --sidebar-primary-foreground: 215 35% 10%;
+    --sidebar-accent: 215 30% 16%;
+    --sidebar-accent-foreground: 210 20% 95%;
+    --sidebar-border: 215 25% 18%;
+    --sidebar-ring: 42 90% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer components {
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-gold {
+    background: var(--gradient-gold);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-md);
+  }
+
+  .shadow-card-hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-gold {
+    box-shadow: var(--shadow-gold);
+  }
+
+  /* Notice status badges */
+  .status-draft {
+    @apply bg-muted text-muted-foreground;
+  }
+
+  .status-pending {
+    @apply bg-warning/15 text-warning;
+  }
+
+  .status-approved {
+    @apply bg-success/15 text-success;
+  }
+
+  .status-rejected {
+    @apply bg-destructive/15 text-destructive;
+  }
+
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+  }
+
+  .gradient-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(42, 85%, 55%), hsl(212, 55%, 22%));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+
+  /* Glass effect */
+  .glass {
+    background: hsl(var(--card) / 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
+  /* Signage mode styles */
+  .signage-notice {
+    animation: slideIn 0.5s ease-out;
+  }
+
+  @keyframes slideIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(100%);
+    }
+    100% {
+      transform: translateX(-100%);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 20s linear infinite;
+  }
+
+  /* Pulse animation for urgent notices */
+  @keyframes urgentPulse {
+    0%, 100% {
+      box-shadow: 0 0 0 0 hsl(0 72% 51% / 0.4);
+    }
+    50% {
+      box-shadow: 0 0 0 8px hsl(0 72% 51% / 0);
+    }
+  }
+
+  .urgent-pulse {
+    animation: urgentPulse 2s ease-in-out infinite;
+  }
+}
