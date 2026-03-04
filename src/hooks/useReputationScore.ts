@@ -12,6 +12,7 @@ export function useReputationScore(noticeId: string) {
         .eq('notice_id', noticeId);
       return count || 0;
     },
+    enabled: !!noticeId,
   });
 
   const { data: commentsCount = 0 } = useQuery({
@@ -23,6 +24,7 @@ export function useReputationScore(noticeId: string) {
         .eq('notice_id', noticeId);
       return count || 0;
     },
+    enabled: !!noticeId,
   });
 
   const { data: feedbackData = { helpful: 0, complaints: 0 } } = useQuery({
@@ -36,6 +38,7 @@ export function useReputationScore(noticeId: string) {
       const complaints = (data || []).filter((f: any) => ['complaint', 'unhelpful', 'confusing'].includes(f.tag)).length;
       return { helpful, complaints };
     },
+    enabled: !!noticeId,
   });
 
   return useMemo(() => {

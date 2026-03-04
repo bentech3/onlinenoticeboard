@@ -33,6 +33,7 @@ export default function NoticeDetail() {
   const rejectNotice = useRejectNotice();
   const updateNotice = useUpdateNotice();
   useViewCount(id);
+  const reputation = useNoticeReputation(notice?.view_count || 0, notice?.id || '');
 
   if (!id) {
     navigate('/dashboard');
@@ -120,7 +121,6 @@ export default function NoticeDetail() {
   }
 
   const StatusIcon = statusStyles[notice.status].icon;
-  const reputation = useNoticeReputation(notice?.view_count || 0, notice?.id || '');
 
   return (
     <DashboardLayout>
