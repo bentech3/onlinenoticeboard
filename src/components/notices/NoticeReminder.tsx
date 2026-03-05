@@ -18,11 +18,9 @@ export function NoticeReminder({ notice }: NoticeReminderProps) {
   const queryClient = useQueryClient();
 
   const deadlineDate = notice.expires_at || notice.scheduled_at;
-  if (!deadlineDate || !user) return null;
-
-  const deadline = new Date(deadlineDate);
+  const deadline = deadlineDate ? new Date(deadlineDate) : null;
   const now = new Date();
-  if (deadline <= now) return null;
+  const isExpired = deadline ? deadline <= now : true;
 
   const { data: reminders = [] } = useQuery({
     queryKey: ['notice-reminders', notice.id, user?.id],
@@ -35,7 +33,7 @@ export function NoticeReminder({ notice }: NoticeReminderProps) {
       if (error) throw error;
       return data;
     },
-    enabled: !!user,
+    enabled: !!user && !!notice.id && !isExpired,
   });
 
   const addReminder = useMutation({
@@ -65,6 +63,8 @@ export function NoticeReminder({ notice }: NoticeReminderProps) {
       toast({ title: 'Reminder removed' });
     },
   });
+
+  if (!deadline || !user || isExpired) return null;
 
   const reminderOptions = [
     { label: '1 day before', date: addDays(deadline, -1) },

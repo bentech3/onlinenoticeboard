@@ -34,8 +34,8 @@ export function useReputationScore(noticeId: string) {
         .from('notice_feedback')
         .select('tag')
         .eq('notice_id', noticeId);
-      const helpful = (data || []).filter((f: any) => f.tag === 'helpful').length;
-      const complaints = (data || []).filter((f: any) => ['complaint', 'unhelpful', 'confusing'].includes(f.tag)).length;
+      const helpful = (data || []).filter((f: { tag: string }) => f.tag === 'helpful').length;
+      const complaints = (data || []).filter((f: { tag: string }) => ['complaint', 'unhelpful', 'confusing'].includes(f.tag)).length;
       return { helpful, complaints };
     },
     enabled: !!noticeId,
