@@ -60,7 +60,7 @@ export function SignUpForm() {
           <Input
             id="signup-name"
             type="text"
-            placeholder="John Doe"
+            placeholder="Enter your full name"
             className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
             {...form.register('fullName')}
           />

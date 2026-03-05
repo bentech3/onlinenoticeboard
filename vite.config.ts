@@ -58,6 +58,9 @@ export default defineConfig(({ mode }) => ({
         ],
         navigateFallbackDenylist: [/^\/~oauth/],
       },
+      devOptions: {
+        enabled: true,
+      },
     }),
   ].filter(Boolean),
   resolve: {
