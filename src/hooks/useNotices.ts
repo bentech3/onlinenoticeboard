@@ -168,10 +168,12 @@ export function useUpdateNotice() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async ({ id, ...data }: { id: string } & Partial<Notice>) => {
+    mutationFn: async ({ id, ...data }: { id: string } & Record<string, any>) => {
+      // Strip relational fields that aren't columns
+      const { creator, approver, department, attachments, ...updateData } = data;
       const { data: notice, error } = await supabase
         .from('notices')
-        .update(data)
+        .update(updateData)
         .eq('id', id)
         .select()
         .single();
