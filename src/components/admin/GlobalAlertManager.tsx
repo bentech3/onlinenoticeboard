@@ -14,19 +14,19 @@ export function GlobalAlertManager() {
   const { alertSettings, updateAlert } = useGlobalAlert();
   const { notices } = useNotices('approved');
   const [enabled, setEnabled] = useState(false);
-  const [noticeId, setNoticeId] = useState<string>('');
+  const [noticeId, setNoticeId] = useState<string>('none');
   const [tickerText, setTickerText] = useState('');
 
   useEffect(() => {
     setEnabled(alertSettings.enabled);
-    setNoticeId(alertSettings.notice_id || '');
+    setNoticeId(alertSettings.notice_id || 'none');
     setTickerText(alertSettings.ticker_text || '');
   }, [alertSettings]);
 
   const handleSave = () => {
     updateAlert.mutate({
       enabled,
-      notice_id: noticeId || null,
+      notice_id: noticeId === 'none' ? null : noticeId,
       ticker_text: tickerText,
     }, {
       onSuccess: () => toast({ title: enabled ? 'Emergency alert activated!' : 'Emergency alert deactivated' }),
@@ -58,7 +58,7 @@ export function GlobalAlertManager() {
           <Select value={noticeId} onValueChange={setNoticeId}>
             <SelectTrigger><SelectValue placeholder="Select a notice..." /></SelectTrigger>
             <SelectContent>
-              <SelectItem value="">None</SelectItem>
+              <SelectItem value="none">None</SelectItem>
               {notices.map((n) => (
                 <SelectItem key={n.id} value={n.id}>{n.title}</SelectItem>
               ))}
