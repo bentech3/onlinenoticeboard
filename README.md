@@ -1,4 +1,4 @@
-# Campus Notice Hub - UCU-BBUC
+# bbuc-notice-board - UCU-BBUC
 
 Official Online Notice Board System (ONBS) for Uganda Christian University - Bishop Barham University College.
 
@@ -11,6 +11,7 @@ Official Online Notice Board System (ONBS) for Uganda Christian University - Bis
 - Digital Signage mode
 - Attachment support
 - Inactivity session timeout
+- **Progressive Web App (PWA)**: Installable on laptop and mobile for quick shortcut access
 
 ## Technologies
 
@@ -47,6 +48,14 @@ Official Online Notice Board System (ONBS) for Uganda Christian University - Bis
    ```sh
    npm run dev
    ```
+
+## PWA Installation
+
+You can install this application as a standalone app on your devices:
+
+- **Desktop (Chrome/Edge)**: Click the "Install" icon in the address bar.
+- **Mobile (iOS/Android)**: Select "Add to Home Screen" from your browser's share or settings menu.
+- **Features**: Offline access to cached notices and a branded home screen icon.
 
 ## Development
 
