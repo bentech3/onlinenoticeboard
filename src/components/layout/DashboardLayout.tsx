@@ -142,14 +142,14 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                         isActive
                           ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
                           : item.href === '/notices/create'
-                            ? 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-foreground'
+                            ? 'bg-primary text-primary-foreground hover:bg-primary/90 shadow-md'
                             : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
                       )}
                     >
                       <div className={cn(
                         "transition-transform duration-200 group-hover:scale-110",
                         isActive && "scale-110",
-                        item.href === '/notices/create' && !isActive && "text-primary transition-colors"
+                        item.href === '/notices/create' && !isActive && "text-primary-foreground transition-colors"
                       )}>
                         {item.icon}
                       </div>

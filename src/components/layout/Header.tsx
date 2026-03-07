@@ -32,10 +32,7 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
   };
 
   const getGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
+    return 'Welcome back';
   };
 
   const getInitials = (name: string) => {

@@ -49,14 +49,8 @@ export default function Dashboard() {
   }, [approvedNotices, searchTerm, departmentFilter, statusFilter, categoryFilter]);
 
   const getGreeting = () => {
-    const hour = new Date().getHours();
     const name = profile?.full_name?.split(' ')[0] || 'User';
-
-    // Choose a friendly intro
-    const intro = hour < 12 ? 'Good morning' : hour < 17 ? 'Hi' : 'Welcome back';
-    const emoji = hour < 12 ? '👋' : hour < 17 ? '😊' : '✨';
-
-    return `${intro}, ${name}${emoji}`;
+    return `Welcome back, ${name} ✨`;
   };
 
   return (
