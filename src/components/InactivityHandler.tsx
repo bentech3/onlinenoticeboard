@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/alert-dialog';
 
 // Configuration
-const INACTIVITY_TIMEOUT = 10 * 60 * 1000; // 10 minutes
-const WARNING_DURATION = 60 * 1000; // 1 minute warning before logout
+const INACTIVITY_TIMEOUT = 2 * 60 * 1000; // 2 minutes
+const WARNING_DURATION = 30 * 1000; // 30 seconds warning before logout
 
 export const InactivityHandler = () => {
   const { signOut, isAuthenticated } = useAuth();
@@ -24,9 +24,9 @@ export const InactivityHandler = () => {
     if (!isAuthenticated) return;
 
     if (showWarning) {
-        setShowWarning(false);
+      setShowWarning(false);
     }
-    
+
     if (timerRef.current) clearTimeout(timerRef.current);
     if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
 
@@ -42,18 +42,18 @@ export const InactivityHandler = () => {
     if (timerRef.current) clearTimeout(timerRef.current);
     if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
     try {
-        await signOut();
-        window.location.href = '/auth'; // Force redirect to ensure clean state
+      await signOut();
+      window.location.href = '/auth'; // Force redirect to ensure clean state
     } catch (error) {
-        console.error("Logout failed", error);
+      console.error("Logout failed", error);
     }
   };
 
   useEffect(() => {
     if (!isAuthenticated) {
-        if (timerRef.current) clearTimeout(timerRef.current);
-        if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
-        return;
+      if (timerRef.current) clearTimeout(timerRef.current);
+      if (warningTimerRef.current) clearTimeout(warningTimerRef.current);
+      return;
     }
 
     // Initial setup
@@ -82,7 +82,7 @@ export const InactivityHandler = () => {
         <AlertDialogHeader>
           <AlertDialogTitle>Are you still there?</AlertDialogTitle>
           <AlertDialogDescription>
-            You have been inactive for a while. You will be logged out in 1 minute to protect your account.
+            You have been inactive for a while. You will be logged out in 30 seconds to protect your account.
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
