@@ -132,23 +132,33 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                     key={item.href}
                     to={item.href}
                     className={cn(
-                      'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors',
+                      'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
                       isActive
-                        ? 'bg-sidebar-accent text-sidebar-accent-foreground'
-                        : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
+                        ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
+                        : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
                     )}
                     onClick={() => setSidebarOpen(false)}
                   >
-                    {item.icon}
+                    <div className={cn(
+                      "transition-transform duration-200 group-hover:scale-110",
+                      isActive && "scale-110"
+                    )}>
+                      {item.icon}
+                    </div>
                     {!collapsed && (
                       <>
-                        <span className="flex-1">{item.title}</span>
+                        <span className="flex-1 relative z-10 transition-colors uppercase tracking-tight text-xs font-bold">
+                          {item.title}
+                        </span>
                         {item.badge !== undefined && item.badge > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-xs font-bold text-sidebar-primary-foreground">
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
                             {item.badge > 99 ? '99+' : item.badge}
                           </span>
                         )}
                       </>
+                    )}
+                    {isActive && (
+                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-sidebar-primary rounded-r-full" />
                     )}
                   </Link>
                 );

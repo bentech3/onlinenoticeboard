@@ -84,11 +84,16 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
         )}
 
         {/* Logo */}
-        <Link to="/" className="flex items-center gap-3">
-          <img src={ucuLogo} alt="UCU Logo" className="h-10 w-auto" />
+        <Link
+          to="/"
+          className="flex items-center gap-3 group transition-transform hover:scale-[1.02] active:scale-95"
+        >
+          <div className="relative">
+            <img src={ucuLogo} alt="UCU Logo" className="h-10 w-auto transition-filter group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.3)]" />
+          </div>
           <div className="hidden md:block">
-            <h1 className="text-lg font-semibold">ONBS</h1>
-            <p className="text-xs text-muted-foreground">UCU-BBUC</p>
+            <h1 className="text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors">ONBS</h1>
+            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU-BBUC</p>
           </div>
         </Link>
 
@@ -97,7 +102,7 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
           <div className="hidden flex-1 md:flex md:max-w-md md:mx-auto">
             <Button
               variant="outline"
-              className="w-full justify-start text-muted-foreground"
+              className="w-full justify-start text-muted-foreground bg-muted/30 border-muted hover:bg-muted/50 hover:border-primary/20 transition-all"
               onClick={() => navigate('/dashboard')}
             >
               <Search className="mr-2 h-4 w-4" />
@@ -106,7 +111,7 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
           </div>
         )}
 
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex items-center gap-3">
           {isAuthenticated ? (
             <>
               {/* Notifications */}
@@ -115,15 +120,18 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
               {/* User menu */}
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" className="gap-2 px-2">
-                    <Avatar className="h-8 w-8">
+                  <Button
+                    variant="ghost"
+                    className="gap-2 px-2 hover:bg-primary/5 transition-all duration-300 group rounded-full md:rounded-lg"
+                  >
+                    <Avatar className="h-8 w-8 ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
                       <AvatarImage src={profile?.avatar_url || ''} />
-                      <AvatarFallback className="bg-primary text-primary-foreground text-sm">
+                      <AvatarFallback className="bg-primary text-primary-foreground text-xs font-bold">
                         {getInitials(profile?.full_name || user?.email || 'U')}
                       </AvatarFallback>
                     </Avatar>
                     <div className="hidden flex-col items-start md:flex">
-                      <span className="text-sm font-medium">
+                      <span className="text-sm font-semibold group-hover:text-primary transition-colors">
                         {role === 'super_admin' ? 'Admin Panel' : (profile?.full_name || 'User')}
                       </span>
                       {getRoleBadge()}

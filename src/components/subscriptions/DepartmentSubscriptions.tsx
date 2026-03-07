@@ -4,6 +4,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Badge } from '@/components/ui/badge';
 import { useDepartments } from '@/hooks/useDepartments';
 import { useSubscriptions, useSubscribeToDepartment, useUnsubscribeFromDepartment } from '@/hooks/useSubscriptions';
+import { cn } from '@/lib/utils';
 
 export function DepartmentSubscriptions() {
   const { data: departments, isLoading: loadingDepts } = useDepartments();
@@ -48,21 +49,24 @@ export function DepartmentSubscriptions() {
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {departments?.map((department) => {
             const subscribed = isSubscribed(department.id);
-            const isPending = 
+            const isPending =
               (subscribeMutation.isPending || unsubscribeMutation.isPending) &&
               (subscribeMutation.variables === department.id || unsubscribeMutation.variables === department.id);
 
             return (
               <div
                 key={department.id}
-                className={`flex items-center justify-between rounded-lg border p-4 transition-colors ${
-                  subscribed ? 'border-primary/50 bg-primary/5' : 'hover:bg-muted/50'
-                }`}
+                className={cn(
+                  "flex items-center justify-between rounded-lg border p-4",
+                  subscribed ? "border-primary/40 bg-primary/5 shadow-sm" : "bg-card hover:border-primary/20 hover:bg-muted/30"
+                )}
               >
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-medium truncate">{department.name}</h4>
+                <div className="flex-1 min-w-0 mr-3">
+                  <h4 className="font-semibold text-sm sm:text-base truncate text-foreground/90">
+                    {department.name}
+                  </h4>
                   {subscribed && (
-                    <Badge variant="secondary" className="mt-1 text-xs">
+                    <Badge variant="secondary" className="mt-1.5 text-[10px] sm:text-xs font-medium bg-primary/10 text-primary border-none">
                       Following
                     </Badge>
                   )}
@@ -72,19 +76,22 @@ export function DepartmentSubscriptions() {
                   size="sm"
                   onClick={() => handleToggleSubscription(department.id)}
                   disabled={isPending}
-                  className="ml-2 shrink-0"
+                  className={cn(
+                    "shrink-0 h-9 transition-all duration-200",
+                    subscribed ? "border-primary/20 hover:bg-primary/5" : "shadow-md hover:shadow-lg active:scale-95"
+                  )}
                 >
                   {isPending ? (
                     <Loader2 className="h-4 w-4 animate-spin" />
                   ) : subscribed ? (
                     <>
-                      <BellOff className="h-4 w-4 mr-1" />
-                      Unfollow
+                      <BellOff className="h-4 w-4 mr-1.5" />
+                      <span className="text-xs sm:text-sm">Unfollow</span>
                     </>
                   ) : (
                     <>
-                      <Bell className="h-4 w-4 mr-1" />
-                      Follow
+                      <Bell className="h-4 w-4 mr-1.5" />
+                      <span className="text-xs sm:text-sm">Follow</span>
                     </>
                   )}
                 </Button>
