@@ -98,24 +98,23 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   }
 
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex h-screen flex-col overflow-hidden bg-background">
       <GlobalAlertBanner />
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} pendingCount={pendingCount} />
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
         <aside
           className={cn(
-            'hidden md:flex fixed inset-y-0 left-0 z-40 flex-col border-r bg-sidebar transition-all duration-300',
+            'hidden md:flex flex-col border-r bg-sidebar transition-all duration-300 relative',
             collapsed ? 'w-16' : 'w-64'
           )}
-          style={{ top: '64px' }}
         >
           {/* Collapse button */}
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-3 top-4 h-6 w-6 rounded-full border bg-background flex"
+            className="absolute -right-3 top-4 h-6 w-6 rounded-full border bg-background flex z-50"
             onClick={() => setCollapsed(!collapsed)}
           >
             <ChevronLeft
@@ -271,10 +270,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         )}
 
         {/* Main content */}
-        <main className={cn(
-          'flex-1 overflow-auto',
-          collapsed ? 'md:ml-16' : 'md:ml-64'
-        )}>
+        <main className="flex-1 overflow-y-auto relative bg-background/50">
           <div className="px-3 py-4 md:container md:py-6 pb-20 md:pb-6">{children}</div>
         </main>
       </div>
