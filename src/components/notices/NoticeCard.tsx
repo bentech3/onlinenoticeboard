@@ -104,13 +104,13 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
 
             {/* Creator */}
             {notice.creator && (
-              <div className="flex items-center gap-1 hidden md:flex">
+              <div className="flex items-center gap-1">
                 <Avatar className="h-4 w-4 md:h-5 md:w-5">
                   <AvatarFallback className="text-[8px] md:text-[10px] bg-primary/10 text-primary">
                     {getInitials(notice.creator.full_name)}
                   </AvatarFallback>
                 </Avatar>
-                <span>{notice.creator.full_name}</span>
+                <span className="truncate max-w-[80px] md:max-w-none">{notice.creator.full_name}</span>
               </div>
             )}
 

@@ -88,52 +88,52 @@ export default function Dashboard() {
         </div>
 
         {/* Stats Cards - horizontal scroll on mobile */}
-        <div className="flex gap-3 overflow-x-auto pb-1 -mx-3 px-3 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:overflow-visible">
-          <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+        <div className="flex gap-4 overflow-x-auto pb-2 -mx-3 px-3 md:mx-0 md:px-0 md:grid md:grid-cols-2 lg:grid-cols-4 md:gap-4 md:overflow-visible">
+          <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-card/50 shadow-sm transition-all hover:shadow-md">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
               <CardTitle className="text-xs md:text-sm font-medium">Total Notices</CardTitle>
-              <FileText className="h-4 w-4 text-muted-foreground hidden md:block" />
+              <FileText className="h-4 w-4 text-primary hidden md:block" />
             </CardHeader>
-            <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-              <div className="text-xl md:text-2xl font-bold">{stats.approved}</div>
-              <p className="text-[10px] md:text-xs text-muted-foreground">Published</p>
+            <CardContent className="p-4 pt-0">
+              <div className="text-2xl md:text-3xl font-bold text-primary">{stats.approved}</div>
+              <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider font-medium">Published</p>
             </CardContent>
           </Card>
 
           {isApprover && (
-            <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink border-warning/50 bg-warning/5">
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+            <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-orange-500/10 shadow-sm transition-all hover:shadow-md">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                 <CardTitle className="text-xs md:text-sm font-medium">Pending</CardTitle>
-                <Clock className="h-4 w-4 text-warning hidden md:block" />
+                <Clock className="h-4 w-4 text-orange-500 hidden md:block" />
               </CardHeader>
-              <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-                <div className="text-xl md:text-2xl font-bold text-warning">{stats.pending}</div>
-                <Link to="/approval-queue" className="text-[10px] md:text-xs text-muted-foreground hover:underline">Review →</Link>
+              <CardContent className="p-4 pt-0">
+                <div className="text-2xl md:text-3xl font-bold text-orange-500">{stats.pending}</div>
+                <Link to="/approval-queue" className="text-[10px] md:text-xs text-muted-foreground hover:underline uppercase tracking-wider font-medium">Review →</Link>
               </CardContent>
             </Card>
           )}
 
           {isCreator && (
             <>
-              <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+              <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-card/50 shadow-sm transition-all hover:shadow-md">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                   <CardTitle className="text-xs md:text-sm font-medium">My Drafts</CardTitle>
                   <FileText className="h-4 w-4 text-muted-foreground hidden md:block" />
                 </CardHeader>
-                <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-                  <div className="text-xl md:text-2xl font-bold">{stats.myDrafts}</div>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">Unpublished</p>
+                <CardContent className="p-4 pt-0">
+                  <div className="text-2xl md:text-3xl font-bold">{stats.myDrafts}</div>
+                  <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider font-medium">Unpublished</p>
                 </CardContent>
               </Card>
 
-              <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+              <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-orange-500/5 shadow-sm transition-all hover:shadow-md">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                   <CardTitle className="text-xs md:text-sm font-medium">Awaiting</CardTitle>
-                  <Clock className="h-4 w-4 text-warning hidden md:block" />
+                  <Clock className="h-4 w-4 text-orange-500 hidden md:block" />
                 </CardHeader>
-                <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-                  <div className="text-xl md:text-2xl font-bold">{stats.myPending}</div>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">For approval</p>
+                <CardContent className="p-4 pt-0">
+                  <div className="text-2xl md:text-3xl font-bold text-orange-500">{stats.myPending}</div>
+                  <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider font-medium">For approval</p>
                 </CardContent>
               </Card>
             </>
@@ -141,33 +141,33 @@ export default function Dashboard() {
 
           {!isCreator && !isApprover && (
             <>
-              <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+              <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-success/10 shadow-sm transition-all hover:shadow-md">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                   <CardTitle className="text-xs md:text-sm font-medium">This Week</CardTitle>
                   <TrendingUp className="h-4 w-4 text-success hidden md:block" />
                 </CardHeader>
-                <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-                  <div className="text-xl md:text-2xl font-bold">
+                <CardContent className="p-4 pt-0">
+                  <div className="text-2xl md:text-3xl font-bold text-success">
                     {approvedNotices.filter(n => {
                       const weekAgo = new Date();
                       weekAgo.setDate(weekAgo.getDate() - 7);
                       return new Date(n.created_at) > weekAgo;
                     }).length}
                   </div>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">New notices</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider font-medium">New notices</p>
                 </CardContent>
               </Card>
 
-              <Card className="min-w-[140px] md:min-w-0 shrink-0 md:shrink">
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-3 md:p-6 md:pb-2">
+              <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-info/10 shadow-sm transition-all hover:shadow-md">
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                   <CardTitle className="text-xs md:text-sm font-medium">Departments</CardTitle>
-                  <CheckCircle className="h-4 w-4 text-success hidden md:block" />
+                  <CheckCircle className="h-4 w-4 text-info hidden md:block" />
                 </CardHeader>
-                <CardContent className="p-3 pt-0 md:p-6 md:pt-0">
-                  <div className="text-xl md:text-2xl font-bold">
+                <CardContent className="p-4 pt-0">
+                  <div className="text-2xl md:text-3xl font-bold text-info">
                     {new Set(approvedNotices.map(n => n.department_id)).size}
                   </div>
-                  <p className="text-[10px] md:text-xs text-muted-foreground">Active</p>
+                  <p className="text-[10px] md:text-xs text-muted-foreground uppercase tracking-wider font-medium">Active</p>
                 </CardContent>
               </Card>
             </>

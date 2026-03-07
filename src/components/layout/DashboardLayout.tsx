@@ -134,12 +134,15 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                       'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
                       isActive
                         ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
-                        : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
+                        : item.href === '/notices/create'
+                          ? 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-foreground'
+                          : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
                     )}
                   >
                     <div className={cn(
                       "transition-transform duration-200 group-hover:scale-110",
-                      isActive && "scale-110"
+                      isActive && "scale-110",
+                      item.href === '/notices/create' && !isActive && "text-primary transition-colors"
                     )}>
                       {item.icon}
                     </div>
@@ -149,7 +152,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                           {item.title}
                         </span>
                         {item.badge !== undefined && item.badge > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
                             {item.badge > 99 ? '99+' : item.badge}
                           </span>
                         )}
@@ -221,13 +224,16 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                           'flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
                           isActive
                             ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
-                            : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
+                            : item.href === '/notices/create'
+                              ? 'bg-primary/10 text-primary active:bg-primary/20'
+                              : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
                         )}
                         onClick={() => setSidebarOpen(false)}
                       >
                         <div className={cn(
                           "transition-transform duration-200 group-hover:scale-110",
-                          isActive && "scale-110"
+                          isActive && "scale-110",
+                          item.href === '/notices/create' && !isActive && "text-primary transition-colors"
                         )}>
                           {item.icon}
                         </div>
@@ -235,7 +241,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                           {item.title}
                         </span>
                         {item.badge !== undefined && item.badge > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
                             {item.badge > 99 ? '99+' : item.badge}
                           </span>
                         )}

@@ -89,24 +89,22 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
           className="flex items-center gap-2 md:gap-3 group transition-transform hover:scale-[1.02] active:scale-95 shrink-0"
         >
           <img src={ucuLogo} alt="UCU Logo" className="h-8 md:h-10 w-auto" />
-          <div className="hidden md:block">
-            <h1 className="text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors">ONBS</h1>
-            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU-BBUC</p>
+          <div className="flex flex-col">
+            <h1 className="text-sm md:text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors uppercase">BBUC Notice Board</h1>
+            <p className="text-[9px] md:text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU Main Campus</p>
           </div>
-          {/* Mobile title */}
-          <span className="md:hidden text-sm font-bold text-primary">BBUC</span>
         </Link>
 
-        {/* Search (hidden on mobile) */}
+        {/* Search */}
         {isAuthenticated && (
-          <div className="hidden flex-1 md:flex md:max-w-md md:mx-auto">
+          <div className="flex-1 max-w-md mx-auto px-2 md:px-0">
             <Button
               variant="outline"
-              className="w-full justify-start text-muted-foreground bg-muted/30 border-muted hover:bg-muted/50 hover:border-primary/20 transition-all"
+              className="w-full justify-start text-muted-foreground bg-muted/30 border-muted hover:bg-muted/50 hover:border-primary/20 transition-all h-9 md:h-10 px-3 md:px-4"
               onClick={() => navigate('/dashboard')}
             >
-              <Search className="mr-2 h-4 w-4" />
-              Search notices...
+              <Search className="mr-2 h-4 w-4 shrink-0" />
+              <span className="truncate">Search notices...</span>
             </Button>
           </div>
         )}
