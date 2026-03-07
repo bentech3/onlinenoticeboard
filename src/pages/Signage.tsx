@@ -78,8 +78,8 @@ export default function Signage() {
   }
 
   const current = sortedNotices[currentIndex];
-  // QR Code URL - dynamically generates based on notice ID/Link
-  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(window.location.origin + '/notices/' + current.id)}`;
+  // QR Code URL - dynamically generates based on notice ID/Link with tracking param
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(window.location.origin + '/notices/' + current.id + '?from=qr')}`;
 
   return (
     <div

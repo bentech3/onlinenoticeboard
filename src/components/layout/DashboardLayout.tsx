@@ -92,7 +92,9 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     navigate('/');
   };
 
-  if (!isAuthenticated) {
+  const isPublicRoute = location.pathname.startsWith('/notices/') && !location.pathname.endsWith('/create') && !location.pathname.endsWith('/edit');
+
+  if (!isAuthenticated && !isPublicRoute) {
     navigate('/auth');
     return null;
   }
@@ -100,97 +102,103 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   return (
     <div className="flex h-screen flex-col overflow-hidden bg-background">
       <GlobalAlertBanner />
-      <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} pendingCount={pendingCount} />
+      <Header
+        onMenuClick={() => setSidebarOpen(!sidebarOpen)}
+        pendingCount={pendingCount}
+        showNav={isAuthenticated}
+      />
 
       <div className="flex flex-1 overflow-hidden">
         {/* Desktop Sidebar */}
-        <aside
-          className={cn(
-            'hidden md:flex flex-col border-r bg-sidebar transition-all duration-300 relative',
-            collapsed ? 'w-16' : 'w-64'
-          )}
-        >
-          {/* Collapse button */}
-          <Button
-            variant="ghost"
-            size="icon"
-            className="absolute -right-3 top-4 h-6 w-6 rounded-full border bg-background flex z-50"
-            onClick={() => setCollapsed(!collapsed)}
+        {isAuthenticated && (
+          <aside
+            className={cn(
+              'hidden md:flex flex-col border-r bg-sidebar transition-all duration-300 relative',
+              collapsed ? 'w-16' : 'w-64'
+            )}
           >
-            <ChevronLeft
-              className={cn('h-4 w-4 transition-transform', collapsed && 'rotate-180')}
-            />
-          </Button>
+            {/* Collapse button */}
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute -right-3 top-4 h-6 w-6 rounded-full border bg-background flex z-50"
+              onClick={() => setCollapsed(!collapsed)}
+            >
+              <ChevronLeft
+                className={cn('h-4 w-4 transition-transform', collapsed && 'rotate-180')}
+              />
+            </Button>
 
-          <ScrollArea className="flex-1 py-4">
-            <nav className="space-y-1 px-2">
-              {filteredNavItems.map((item) => {
-                const isActive = location.pathname === item.href;
-                return (
-                  <Link
-                    key={item.href}
-                    to={item.href}
-                    className={cn(
-                      'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
-                      isActive
-                        ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
-                        : item.href === '/notices/create'
-                          ? 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-foreground'
-                          : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
-                    )}
-                  >
-                    <div className={cn(
-                      "transition-transform duration-200 group-hover:scale-110",
-                      isActive && "scale-110",
-                      item.href === '/notices/create' && !isActive && "text-primary transition-colors"
-                    )}>
-                      {item.icon}
-                    </div>
-                    {!collapsed && (
-                      <>
-                        <span className="flex-1 relative z-10 transition-colors uppercase tracking-tight text-xs font-bold">
-                          {item.title}
-                        </span>
-                        {item.badge !== undefined && item.badge > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
-                            {item.badge > 99 ? '99+' : item.badge}
+            <ScrollArea className="flex-1 py-4">
+              <nav className="space-y-1 px-2">
+                {filteredNavItems.map((item) => {
+                  const isActive = location.pathname === item.href;
+                  return (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className={cn(
+                        'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
+                        isActive
+                          ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
+                          : item.href === '/notices/create'
+                            ? 'bg-primary/10 text-primary hover:bg-primary/20 hover:text-primary-foreground'
+                            : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
+                      )}
+                    >
+                      <div className={cn(
+                        "transition-transform duration-200 group-hover:scale-110",
+                        isActive && "scale-110",
+                        item.href === '/notices/create' && !isActive && "text-primary transition-colors"
+                      )}>
+                        {item.icon}
+                      </div>
+                      {!collapsed && (
+                        <>
+                          <span className="flex-1 relative z-10 transition-colors uppercase tracking-tight text-xs font-bold">
+                            {item.title}
                           </span>
-                        )}
-                      </>
-                    )}
-                    {isActive && (
-                      <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-sidebar-primary rounded-r-full" />
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
-          </ScrollArea>
+                          {item.badge !== undefined && item.badge > 0 && (
+                            <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
+                              {item.badge > 99 ? '99+' : item.badge}
+                            </span>
+                          )}
+                        </>
+                      )}
+                      {isActive && (
+                        <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-sidebar-primary rounded-r-full" />
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </ScrollArea>
 
-          <div className="border-t border-sidebar-border p-2">
-            <Link
-              to="/settings"
-              className={cn(
-                'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
-              )}
-            >
-              <Settings className="h-5 w-5" />
-              {!collapsed && <span>Settings</span>}
-            </Link>
-            <button
-              onClick={handleSignOut}
-              className={cn(
-                'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive'
-              )}
-            >
-              <LogOut className="h-5 w-5" />
-              {!collapsed && <span>Sign out</span>}
-            </button>
-          </div>
-        </aside>
+            <div className="border-t border-sidebar-border p-2">
+              <Link
+                to="/settings"
+                className={cn(
+                  'flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground'
+                )}
+              >
+                <Settings className="h-5 w-5" />
+                {!collapsed && <span>Settings</span>}
+              </Link>
+              <button
+                onClick={handleSignOut}
+                className={cn(
+                  'flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive'
+                )}
+              >
+                <LogOut className="h-5 w-5" />
+                {!collapsed && <span>Sign out</span>}
+              </button>
+            </div>
+          </aside>
+        )}
 
         {/* Mobile sidebar drawer */}
-        {sidebarOpen && (
+        {isAuthenticated && sidebarOpen && (
           <>
             <div
               className="fixed inset-0 z-40 bg-foreground/50 backdrop-blur-sm md:hidden"
@@ -282,7 +290,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       </div>
 
       {/* Mobile bottom nav */}
-      <MobileBottomNav />
+      {isAuthenticated && <MobileBottomNav />}
     </div>
   );
 }

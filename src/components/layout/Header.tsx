@@ -19,9 +19,10 @@ import { cn } from '@/lib/utils';
 interface HeaderProps {
   onMenuClick?: () => void;
   pendingCount?: number;
+  showNav?: boolean;
 }
 
-export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
+export function Header({ onMenuClick, pendingCount = 0, showNav = true }: HeaderProps) {
   const { user, profile, role, isAuthenticated, signOut } = useAuth();
   const navigate = useNavigate();
 
@@ -72,7 +73,7 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
       <div className="flex h-14 md:h-16 items-center gap-2 px-3 md:px-6">
         {/* Mobile menu button */}
-        {onMenuClick && (
+        {showNav && onMenuClick && (
           <Button
             variant="ghost"
             size="icon"

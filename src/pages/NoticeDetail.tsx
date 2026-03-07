@@ -26,7 +26,7 @@ import { toast } from '@/hooks/use-toast';
 export default function NoticeDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { profile, isApprover, isSuperAdmin } = useAuth();
+  const { profile, isApprover, isSuperAdmin, isAuthenticated } = useAuth();
   const { data: notice, isLoading, error } = useNotice(id || '');
   const deleteNotice = useDeleteNotice();
   const approveNotice = useApproveNotice();
@@ -136,31 +136,37 @@ export default function NoticeDetail() {
 
           {/* Actions - scrollable on mobile */}
           <div className="flex items-center gap-1.5 md:gap-2 overflow-x-auto pb-1 -mx-3 px-3 md:mx-0 md:px-0 md:flex-wrap">
-            {notice?.status === 'approved' && (
+            {isAuthenticated ? (
               <>
-                <NoticeActions noticeId={notice.id} viewCount={notice.view_count} />
-                <NoticeQRCode noticeId={notice.id} noticeTitle={notice.title} />
-                <NoticeCalendarExport notice={notice} />
-                <NoticeReminder notice={notice} />
+                {notice?.status === 'approved' && (
+                  <>
+                    <NoticeActions noticeId={notice.id} viewCount={notice.view_count} />
+                    <NoticeQRCode noticeId={notice.id} noticeTitle={notice.title} />
+                    <NoticeCalendarExport notice={notice} />
+                    <NoticeReminder notice={notice} />
+                  </>
+                )}
+                {isSuperAdmin && notice && (
+                  <Button variant="outline" size="sm" onClick={handleArchive} className="shrink-0 h-8 text-xs">
+                    <Archive className="mr-1.5 h-3.5 w-3.5" />
+                    {notice.is_archived ? 'Unarchive' : 'Archive'}
+                  </Button>
+                )}
+                {canEdit && (
+                  <Button variant="outline" size="sm" onClick={() => navigate(`/notices/${id}/edit`)} className="shrink-0 h-8 text-xs">
+                    <Edit className="mr-1.5 h-3.5 w-3.5" />
+                    Edit
+                  </Button>
+                )}
+                {canDelete && (
+                  <Button variant="outline" size="sm" className="text-destructive shrink-0 h-8 text-xs" onClick={handleDelete}>
+                    <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+                    Delete
+                  </Button>
+                )}
               </>
-            )}
-            {isSuperAdmin && notice && (
-              <Button variant="outline" size="sm" onClick={handleArchive} className="shrink-0 h-8 text-xs">
-                <Archive className="mr-1.5 h-3.5 w-3.5" />
-                {notice.is_archived ? 'Unarchive' : 'Archive'}
-              </Button>
-            )}
-            {canEdit && (
-              <Button variant="outline" size="sm" onClick={() => navigate(`/notices/${id}/edit`)} className="shrink-0 h-8 text-xs">
-                <Edit className="mr-1.5 h-3.5 w-3.5" />
-                Edit
-              </Button>
-            )}
-            {canDelete && (
-              <Button variant="outline" size="sm" className="text-destructive shrink-0 h-8 text-xs" onClick={handleDelete}>
-                <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-                Delete
-              </Button>
+            ) : (
+              <Button size="sm" onClick={() => navigate('/auth')} className="h-8 text-xs">Login to Interact</Button>
             )}
           </div>
         </div>
@@ -319,7 +325,7 @@ export default function NoticeDetail() {
         </Card>
 
         {/* Comments */}
-        {notice.status === 'approved' && (
+        {isAuthenticated && notice.status === 'approved' && (
           <CommentSection noticeId={notice.id} />
         )}
       </div>
