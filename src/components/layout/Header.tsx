@@ -14,7 +14,9 @@ import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { NotificationCenter } from '@/components/notifications/NotificationCenter';
 import { useAuth } from '@/hooks/useAuth';
+import { useSystemSettings } from '@/hooks/useSystemSettings';
 import { cn } from '@/lib/utils';
+import { Hammer } from 'lucide-react';
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -24,6 +26,7 @@ interface HeaderProps {
 
 export function Header({ onMenuClick, pendingCount = 0, showNav = true }: HeaderProps) {
   const { user, profile, role, isAuthenticated, signOut } = useAuth();
+  const { maintenanceEnabled } = useSystemSettings();
   const navigate = useNavigate();
 
   const handleSignOut = async () => {
@@ -107,6 +110,14 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
           </div>
         )}
 
+        {/* Maintenance Indicator (For Admins) */}
+        {maintenanceEnabled && role === 'super_admin' && (
+          <div className="hidden lg:flex items-center gap-2 px-3 py-1 bg-warning/10 border border-warning/30 rounded-full animate-pulse">
+            <Hammer className="h-4 w-4 text-warning" />
+            <span className="text-[10px] font-bold text-warning uppercase tracking-widest leading-none">Maintenance Active</span>
+          </div>
+        )}
+
         <div className="ml-auto flex items-center gap-1.5 md:gap-3">
           {isAuthenticated ? (
             <>
@@ -157,6 +168,12 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
                     <Settings className="mr-2 h-4 w-4" />
                     Settings
                   </DropdownMenuItem>
+                  {role === 'super_admin' && (
+                    <DropdownMenuItem onClick={() => navigate('/admin/settings')}>
+                      <Settings className="mr-2 h-4 w-4" />
+                      System Settings
+                    </DropdownMenuItem>
+                  )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="text-destructive">
                     <LogOut className="mr-2 h-4 w-4" />

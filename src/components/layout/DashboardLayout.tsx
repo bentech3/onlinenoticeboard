@@ -81,6 +81,12 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       href: '/signage',
       icon: <Monitor className="h-5 w-5" />,
     },
+    {
+      title: 'System Settings',
+      href: '/admin/settings',
+      icon: <Settings className="h-5 w-5" />,
+      roles: ['super_admin'],
+    },
   ];
 
   const filteredNavItems = navItems.filter(
