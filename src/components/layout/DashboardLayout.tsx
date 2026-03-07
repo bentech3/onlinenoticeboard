@@ -11,12 +11,13 @@ import {
   Monitor,
   ChevronLeft,
   LogOut,
+  X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { Button } from '@/components/ui/button';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Separator } from '@/components/ui/separator';
 import { Header } from './Header';
+import { MobileBottomNav } from './MobileBottomNav';
 import { GlobalAlertBanner } from '@/components/notices/GlobalAlertBanner';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotices } from '@/hooks/useNotices';
@@ -102,12 +103,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       <Header onMenuClick={() => setSidebarOpen(!sidebarOpen)} pendingCount={pendingCount} />
 
       <div className="flex flex-1">
-        {/* Sidebar */}
+        {/* Desktop Sidebar */}
         <aside
           className={cn(
-            'fixed inset-y-0 left-0 z-40 flex flex-col border-r bg-sidebar transition-all duration-300 md:relative md:translate-x-0',
-            collapsed ? 'w-16' : 'w-64',
-            sidebarOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'
+            'hidden md:flex fixed inset-y-0 left-0 z-40 flex-col border-r bg-sidebar transition-all duration-300',
+            collapsed ? 'w-16' : 'w-64'
           )}
           style={{ top: '64px' }}
         >
@@ -115,7 +115,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           <Button
             variant="ghost"
             size="icon"
-            className="absolute -right-3 top-4 hidden h-6 w-6 rounded-full border bg-background md:flex"
+            className="absolute -right-3 top-4 h-6 w-6 rounded-full border bg-background flex"
             onClick={() => setCollapsed(!collapsed)}
           >
             <ChevronLeft
@@ -137,7 +137,6 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                         ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
                         : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
                     )}
-                    onClick={() => setSidebarOpen(false)}
                   >
                     <div className={cn(
                       "transition-transform duration-200 group-hover:scale-110",
@@ -188,19 +187,100 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           </div>
         </aside>
 
-        {/* Mobile sidebar overlay */}
+        {/* Mobile sidebar drawer */}
         {sidebarOpen && (
-          <div
-            className="fixed inset-0 z-30 bg-black/50 md:hidden"
-            onClick={() => setSidebarOpen(false)}
-          />
+          <>
+            <div
+              className="fixed inset-0 z-40 bg-foreground/50 backdrop-blur-sm md:hidden"
+              onClick={() => setSidebarOpen(false)}
+            />
+            <aside
+              className="fixed inset-y-0 left-0 z-50 w-72 max-w-[85vw] flex flex-col bg-sidebar md:hidden animate-in slide-in-from-left duration-200"
+            >
+              {/* Mobile sidebar header */}
+              <div className="flex items-center justify-between p-4 border-b border-sidebar-border">
+                <span className="text-sm font-bold text-sidebar-foreground uppercase tracking-wider">Menu</span>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 text-sidebar-foreground hover:bg-sidebar-accent"
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <X className="h-5 w-5" />
+                </Button>
+              </div>
+
+              <ScrollArea className="flex-1 py-2">
+                <nav className="space-y-0.5 px-2">
+                  {filteredNavItems.map((item) => {
+                    const isActive = location.pathname === item.href;
+                    return (
+                      <Link
+                        key={item.href}
+                        to={item.href}
+                        className={cn(
+                          'flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium transition-all duration-200 group relative overflow-hidden',
+                          isActive
+                            ? 'bg-sidebar-accent text-sidebar-accent-foreground shadow-sm'
+                            : 'text-sidebar-foreground/70 hover:bg-sidebar-accent/40 hover:text-sidebar-foreground'
+                        )}
+                        onClick={() => setSidebarOpen(false)}
+                      >
+                        <div className={cn(
+                          "transition-transform duration-200",
+                          isActive && "scale-110"
+                        )}>
+                          {item.icon}
+                        </div>
+                        <span className="flex-1 uppercase tracking-tight text-xs font-bold">
+                          {item.title}
+                        </span>
+                        {item.badge !== undefined && item.badge > 0 && (
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground">
+                            {item.badge > 99 ? '99+' : item.badge}
+                          </span>
+                        )}
+                        {isActive && (
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-sidebar-primary rounded-r-full" />
+                        )}
+                      </Link>
+                    );
+                  })}
+                </nav>
+              </ScrollArea>
+
+              <div className="border-t border-sidebar-border p-2 safe-area-bottom">
+                <Link
+                  to="/settings"
+                  className="flex items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-sidebar-accent/50 hover:text-sidebar-foreground"
+                  onClick={() => setSidebarOpen(false)}
+                >
+                  <Settings className="h-5 w-5" />
+                  <span>Settings</span>
+                </Link>
+                <button
+                  onClick={() => { setSidebarOpen(false); handleSignOut(); }}
+                  className="flex w-full items-center gap-3 rounded-lg px-3 py-3 text-sm font-medium text-sidebar-foreground/70 transition-colors hover:bg-destructive/10 hover:text-destructive"
+                >
+                  <LogOut className="h-5 w-5" />
+                  <span>Sign out</span>
+                </button>
+              </div>
+            </aside>
+          </>
         )}
 
         {/* Main content */}
-        <main className="flex-1 overflow-auto">
-          <div className="container py-6">{children}</div>
+        <main className={cn(
+          'flex-1 overflow-auto',
+          collapsed ? 'md:ml-16' : 'md:ml-64'
+        )}>
+          <div className="px-3 py-4 md:container md:py-6 pb-20 md:pb-6">{children}</div>
         </main>
       </div>
+
+      {/* Mobile bottom nav */}
+      <MobileBottomNav />
     </div>
   );
 }
