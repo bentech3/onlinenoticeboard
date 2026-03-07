@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, Calendar, User, Paperclip, Clock, CheckCircle, XCircle, AlertTriangle, Edit, Trash2, Eye, Archive } from 'lucide-react';
+import { ArrowLeft, Building2, Calendar, Paperclip, Clock, CheckCircle, XCircle, AlertTriangle, Edit, Trash2, Archive } from 'lucide-react';
 import { CommentSection } from '@/components/comments/CommentSection';
 import { NoticeActions } from '@/components/notices/NoticeActions';
 import { NoticeQRCode } from '@/components/notices/NoticeQRCode';
@@ -86,16 +86,16 @@ export default function NoticeDetail() {
   if (isLoading) {
     return (
       <DashboardLayout>
-        <div className="max-w-4xl mx-auto space-y-6">
-          <div className="flex items-center gap-4">
-            <Skeleton className="h-10 w-10 rounded-lg" />
-            <Skeleton className="h-8 w-64" />
+        <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
+          <div className="flex items-center gap-3">
+            <Skeleton className="h-9 w-9 rounded-lg" />
+            <Skeleton className="h-6 w-48" />
           </div>
           <Card>
-            <CardHeader>
-              <Skeleton className="h-8 w-3/4" />
+            <CardHeader className="p-4 md:p-6">
+              <Skeleton className="h-6 w-3/4" />
             </CardHeader>
-            <CardContent className="space-y-4">
+            <CardContent className="p-4 md:p-6 pt-0 space-y-3">
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-full" />
               <Skeleton className="h-4 w-2/3" />
@@ -109,12 +109,12 @@ export default function NoticeDetail() {
   if (error || !notice) {
     return (
       <DashboardLayout>
-        <div className="max-w-4xl mx-auto text-center py-12">
-          <h2 className="text-xl font-semibold mb-2">Notice Not Found</h2>
-          <p className="text-muted-foreground mb-4">
+        <div className="max-w-4xl mx-auto text-center py-12 px-4">
+          <h2 className="text-lg md:text-xl font-semibold mb-2">Notice Not Found</h2>
+          <p className="text-muted-foreground text-sm mb-4">
             The notice you're looking for doesn't exist or you don't have permission to view it.
           </p>
-          <Button onClick={() => navigate(-1)}>Go Back</Button>
+          <Button onClick={() => navigate(-1)} size="sm">Go Back</Button>
         </div>
       </DashboardLayout>
     );
@@ -124,17 +124,18 @@ export default function NoticeDetail() {
 
   return (
     <DashboardLayout>
-      <div className="max-w-4xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-4 md:space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between gap-4">
-          <div className="flex items-center gap-4">
-            <Button variant="ghost" size="icon" onClick={() => navigate(-1)}>
-              <ArrowLeft className="h-5 w-5" />
+        <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between md:gap-4">
+          <div className="flex items-center gap-2 md:gap-4">
+            <Button variant="ghost" size="icon" className="h-8 w-8 md:h-10 md:w-10 shrink-0" onClick={() => navigate(-1)}>
+              <ArrowLeft className="h-4 w-4 md:h-5 md:w-5" />
             </Button>
-            <h1 className="text-xl font-semibold">Notice Details</h1>
+            <h1 className="text-base md:text-xl font-semibold">Notice Details</h1>
           </div>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          {/* Actions - scrollable on mobile */}
+          <div className="flex items-center gap-1.5 md:gap-2 overflow-x-auto pb-1 -mx-3 px-3 md:mx-0 md:px-0 md:flex-wrap">
             {notice?.status === 'approved' && (
               <>
                 <NoticeActions noticeId={notice.id} viewCount={notice.view_count} />
@@ -144,20 +145,20 @@ export default function NoticeDetail() {
               </>
             )}
             {isSuperAdmin && notice && (
-              <Button variant="outline" size="sm" onClick={handleArchive}>
-                <Archive className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="sm" onClick={handleArchive} className="shrink-0 h-8 text-xs">
+                <Archive className="mr-1.5 h-3.5 w-3.5" />
                 {notice.is_archived ? 'Unarchive' : 'Archive'}
               </Button>
             )}
             {canEdit && (
-              <Button variant="outline" size="sm" onClick={() => navigate(`/notices/${id}/edit`)}>
-                <Edit className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="sm" onClick={() => navigate(`/notices/${id}/edit`)} className="shrink-0 h-8 text-xs">
+                <Edit className="mr-1.5 h-3.5 w-3.5" />
                 Edit
               </Button>
             )}
             {canDelete && (
-              <Button variant="outline" size="sm" className="text-destructive" onClick={handleDelete}>
-                <Trash2 className="mr-2 h-4 w-4" />
+              <Button variant="outline" size="sm" className="text-destructive shrink-0 h-8 text-xs" onClick={handleDelete}>
+                <Trash2 className="mr-1.5 h-3.5 w-3.5" />
                 Delete
               </Button>
             )}
@@ -166,56 +167,56 @@ export default function NoticeDetail() {
 
         {/* Main Content */}
         <Card>
-          <CardHeader className="pb-4">
+          <CardHeader className="pb-3 md:pb-4 p-4 md:p-6">
             {/* Status and badges */}
-            <div className="flex flex-wrap items-center gap-2 mb-4">
-              <Badge className={cn('gap-1 capitalize', statusStyles[notice.status].bg, statusStyles[notice.status].text)}>
+            <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4">
+              <Badge className={cn('gap-1 capitalize text-[10px] md:text-xs', statusStyles[notice.status].bg, statusStyles[notice.status].text)}>
                 <StatusIcon className="h-3 w-3" />
                 {notice.status}
               </Badge>
               {notice.is_urgent && (
-                <Badge className="bg-destructive text-destructive-foreground gap-1">
+                <Badge className="bg-destructive text-destructive-foreground gap-1 text-[10px] md:text-xs">
                   <AlertTriangle className="h-3 w-3" />
                   Urgent
                 </Badge>
               )}
               {notice.priority !== 'normal' && (
-                <Badge variant="outline" className="capitalize">
+                <Badge variant="outline" className="capitalize text-[10px] md:text-xs">
                   {notice.priority} priority
                 </Badge>
               )}
               {notice.category && (
-                <Badge variant="secondary">{notice.category}</Badge>
+                <Badge variant="secondary" className="text-[10px] md:text-xs">{notice.category}</Badge>
               )}
               {notice.status === 'approved' && (
                 <ReputationBadge score={reputation.totalScore} tier={reputation.tier} />
               )}
             </div>
 
-            <CardTitle className="text-2xl md:text-3xl">{notice.title}</CardTitle>
+            <CardTitle className="text-lg md:text-2xl lg:text-3xl leading-tight">{notice.title}</CardTitle>
           </CardHeader>
 
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-4 md:space-y-6 p-4 md:p-6 pt-0">
             {/* Meta info */}
-            <div className="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
+            <div className="flex flex-wrap items-center gap-x-4 md:gap-x-6 gap-y-1.5 md:gap-y-2 text-xs md:text-sm text-muted-foreground">
               {notice.department && (
-                <div className="flex items-center gap-2">
-                  <Building2 className="h-4 w-4" />
+                <div className="flex items-center gap-1.5">
+                  <Building2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span>{notice.department.name}</span>
                 </div>
               )}
               {notice.creator && (
-                <div className="flex items-center gap-2">
-                  <Avatar className="h-5 w-5">
-                    <AvatarFallback className="text-[10px] bg-primary/10 text-primary">
+                <div className="flex items-center gap-1.5">
+                  <Avatar className="h-4 w-4 md:h-5 md:w-5">
+                    <AvatarFallback className="text-[8px] md:text-[10px] bg-primary/10 text-primary">
                       {getInitials(notice.creator.full_name)}
                     </AvatarFallback>
                   </Avatar>
                   <span>{notice.creator.full_name}</span>
                 </div>
               )}
-              <div className="flex items-center gap-2">
-                <Calendar className="h-4 w-4" />
+              <div className="flex items-center gap-1.5">
+                <Calendar className="h-3.5 w-3.5 md:h-4 md:w-4" />
                 <span>{format(new Date(notice.created_at), 'PPP')}</span>
               </div>
             </div>
@@ -224,27 +225,27 @@ export default function NoticeDetail() {
 
             {/* Content */}
             <div className="prose prose-sm max-w-none">
-              <p className="whitespace-pre-wrap text-foreground leading-relaxed">
+              <p className="whitespace-pre-wrap text-foreground leading-relaxed text-sm md:text-base">
                 {notice.content}
               </p>
             </div>
 
             {/* Rejection reason */}
             {notice.status === 'rejected' && notice.rejection_reason && (
-              <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-4">
-                <h4 className="font-medium text-destructive mb-1">Rejection Reason</h4>
-                <p className="text-sm text-muted-foreground">{notice.rejection_reason}</p>
+              <div className="rounded-lg bg-destructive/10 border border-destructive/20 p-3 md:p-4">
+                <h4 className="font-medium text-destructive mb-1 text-sm">Rejection Reason</h4>
+                <p className="text-xs md:text-sm text-muted-foreground">{notice.rejection_reason}</p>
               </div>
             )}
 
             {/* Approval info */}
             {notice.status === 'approved' && notice.approved_at && (
-              <div className="rounded-lg bg-success/10 border border-success/20 p-4">
+              <div className="rounded-lg bg-success/10 border border-success/20 p-3 md:p-4">
                 <div className="flex items-center gap-2 text-success mb-1">
-                  <CheckCircle className="h-4 w-4" />
-                  <span className="font-medium">Approved</span>
+                  <CheckCircle className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span className="font-medium text-sm">Approved</span>
                 </div>
-                <p className="text-sm text-muted-foreground">
+                <p className="text-xs md:text-sm text-muted-foreground">
                   Approved {formatDistanceToNow(new Date(notice.approved_at), { addSuffix: true })}
                   {notice.approver && ` by ${notice.approver.full_name}`}
                 </p>
@@ -256,7 +257,7 @@ export default function NoticeDetail() {
               <>
                 <Separator />
                 <div>
-                  <h4 className="font-medium mb-3 flex items-center gap-2">
+                  <h4 className="font-medium mb-2 md:mb-3 flex items-center gap-2 text-sm">
                     <Paperclip className="h-4 w-4" />
                     Attachments ({notice.attachments.length})
                   </h4>
@@ -267,11 +268,11 @@ export default function NoticeDetail() {
                         href={attachment.file_url}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors"
+                        className="flex items-center gap-3 p-2.5 md:p-3 rounded-lg border hover:bg-muted/50 transition-colors"
                       >
                         <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate">{attachment.file_name}</p>
-                          <p className="text-sm text-muted-foreground">
+                          <p className="font-medium truncate text-sm">{attachment.file_name}</p>
+                          <p className="text-xs text-muted-foreground">
                             {attachment.file_type} • {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : 'Unknown size'}
                           </p>
                         </div>
@@ -286,12 +287,12 @@ export default function NoticeDetail() {
             {canApprove && (
               <>
                 <Separator />
-                <div className="flex flex-col sm:flex-row gap-3">
-                  <Button onClick={handleApprove} className="flex-1">
+                <div className="flex flex-col gap-2 md:flex-row md:gap-3">
+                  <Button onClick={handleApprove} className="flex-1" size="sm">
                     <CheckCircle className="mr-2 h-4 w-4" />
                     Approve Notice
                   </Button>
-                  <Button variant="outline" onClick={handleReject} className="flex-1 border-destructive text-destructive hover:bg-destructive/10">
+                  <Button variant="outline" onClick={handleReject} className="flex-1 border-destructive text-destructive hover:bg-destructive/10" size="sm">
                     <XCircle className="mr-2 h-4 w-4" />
                     Reject Notice
                   </Button>
@@ -317,7 +318,7 @@ export default function NoticeDetail() {
           </CardContent>
         </Card>
 
-        {/* Comments Section - only show for approved notices */}
+        {/* Comments */}
         {notice.status === 'approved' && (
           <CommentSection noticeId={notice.id} />
         )}

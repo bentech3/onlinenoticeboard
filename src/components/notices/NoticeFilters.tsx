@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Search, Filter, X } from 'lucide-react';
+import { Search, Filter, X, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import {
@@ -89,9 +89,10 @@ export function NoticeFilters({
   };
 
   const hasActiveFilters = search || department || status || category || priority;
+  const activeFilterCount = [department, status, category, priority].filter(Boolean).length;
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-3">
       {/* Search and filter toggle */}
       <div className="flex gap-2">
         <div className="relative flex-1">
@@ -100,29 +101,30 @@ export function NoticeFilters({
             placeholder="Search notices..."
             value={search}
             onChange={(e) => handleSearchChange(e.target.value)}
-            className="pl-9"
+            className="pl-9 h-10"
           />
         </div>
         <Button
           variant={showFilters ? 'secondary' : 'outline'}
           onClick={() => setShowFilters(!showFilters)}
-          className="gap-2"
+          className="gap-1.5 h-10 px-3 shrink-0"
+          size="sm"
         >
-          <Filter className="h-4 w-4" />
-          Filters
-          {hasActiveFilters && (
-            <Badge variant="secondary" className="ml-1 h-5 w-5 rounded-full p-0 flex items-center justify-center">
-              {[department, status, category].filter(Boolean).length}
+          <SlidersHorizontal className="h-4 w-4" />
+          <span className="hidden sm:inline">Filters</span>
+          {activeFilterCount > 0 && (
+            <Badge variant="secondary" className="ml-0.5 h-5 w-5 rounded-full p-0 flex items-center justify-center text-[10px]">
+              {activeFilterCount}
             </Badge>
           )}
         </Button>
       </div>
 
-      {/* Filter dropdowns */}
+      {/* Filter dropdowns - stacked on mobile */}
       {showFilters && (
-        <div className="flex flex-wrap gap-3 p-4 rounded-lg bg-muted/50">
+        <div className="grid grid-cols-2 md:flex md:flex-wrap gap-2 md:gap-3 p-3 md:p-4 rounded-lg bg-muted/50">
           <Select value={department || 'all'} onValueChange={handleDepartmentChange}>
-            <SelectTrigger className="w-[180px]">
+            <SelectTrigger className="w-full md:w-[180px] h-9 text-xs md:text-sm">
               <SelectValue placeholder="Department" />
             </SelectTrigger>
             <SelectContent>
@@ -137,7 +139,7 @@ export function NoticeFilters({
 
           {showStatusFilter && (
             <Select value={status || 'all'} onValueChange={handleStatusChange}>
-              <SelectTrigger className="w-[140px]">
+              <SelectTrigger className="w-full md:w-[140px] h-9 text-xs md:text-sm">
                 <SelectValue placeholder="Status" />
               </SelectTrigger>
               <SelectContent>
@@ -151,7 +153,7 @@ export function NoticeFilters({
           )}
 
           <Select value={category || 'all'} onValueChange={handleCategoryChange}>
-            <SelectTrigger className="w-[140px]">
+            <SelectTrigger className="w-full md:w-[140px] h-9 text-xs md:text-sm">
               <SelectValue placeholder="Category" />
             </SelectTrigger>
             <SelectContent>
@@ -164,7 +166,6 @@ export function NoticeFilters({
             </SelectContent>
           </Select>
 
-          {/* Priority filter */}
           <Select
             value={priority || 'all'}
             onValueChange={(value) => {
@@ -173,7 +174,7 @@ export function NoticeFilters({
               onPriorityChange?.(p);
             }}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-full md:w-[130px] h-9 text-xs md:text-sm">
               <SelectValue placeholder="Priority" />
             </SelectTrigger>
             <SelectContent>
@@ -186,9 +187,9 @@ export function NoticeFilters({
           </Select>
 
           {hasActiveFilters && (
-            <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1">
+            <Button variant="ghost" size="sm" onClick={clearFilters} className="gap-1 h-9 col-span-2 md:col-span-1">
               <X className="h-4 w-4" />
-              Clear
+              Clear All
             </Button>
           )}
         </div>

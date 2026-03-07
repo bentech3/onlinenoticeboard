@@ -21,9 +21,9 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col lg:flex-row">
+    <div className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row">
       {/* Left Panel — Campus Image + Welcome Text */}
-      <div className="relative lg:w-1/2 min-h-[320px] lg:min-h-screen flex items-center justify-center overflow-hidden">
+      <div className="relative lg:w-1/2 min-h-[200px] sm:min-h-[280px] lg:min-h-screen flex items-center justify-center overflow-hidden">
         <img
           src={campusBg}
           alt="Bishop Barham University College campus"
@@ -31,16 +31,16 @@ export default function AuthPage() {
         />
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(212,55%,12%,0.85)] via-[hsl(212,55%,18%,0.8)] to-[hsl(212,55%,22%,0.75)]" />
 
-        <div className="relative z-10 text-center px-8 py-12 lg:py-0 max-w-lg">
+        <div className="relative z-10 text-center px-6 py-8 sm:py-10 lg:py-0 max-w-lg">
           <img
             src={ucuLogo}
             alt="Uganda Christian University"
-            className="h-20 lg:h-28 w-auto mx-auto mb-6 drop-shadow-lg"
+            className="h-14 sm:h-20 lg:h-28 w-auto mx-auto mb-3 sm:mb-6 drop-shadow-lg"
           />
-          <h1 className="text-3xl lg:text-4xl font-bold text-white mb-4 font-display leading-tight">
+          <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 font-display leading-tight">
             Welcome to BBUC<br />Online Notice Board
           </h1>
-          <p className="text-white/80 text-base lg:text-lg mb-8 leading-relaxed">
+          <p className="text-white/80 text-xs sm:text-base lg:text-lg mb-4 sm:mb-8 leading-relaxed hidden sm:block">
             Access official notices, exams, events and announcements anytime
           </p>
 
@@ -79,7 +79,7 @@ export default function AuthPage() {
       </div>
 
       {/* Right Panel — Form */}
-      <div className="lg:w-1/2 flex items-center justify-center bg-card px-6 py-12 lg:py-0">
+      <div className="lg:w-1/2 flex items-center justify-center bg-card px-4 sm:px-6 py-6 sm:py-12 lg:py-0">
         <div className="w-full max-w-md">
           {/* Mobile-only logo */}
           <div className="lg:hidden flex justify-center mb-6">

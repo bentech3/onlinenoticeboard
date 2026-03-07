@@ -70,13 +70,13 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-card/95 backdrop-blur supports-[backdrop-filter]:bg-card/80">
-      <div className="flex h-16 items-center gap-4 px-4 md:px-6">
+      <div className="flex h-14 md:h-16 items-center gap-2 px-3 md:px-6">
         {/* Mobile menu button */}
         {onMenuClick && (
           <Button
             variant="ghost"
             size="icon"
-            className="md:hidden"
+            className="md:hidden h-9 w-9 shrink-0"
             onClick={onMenuClick}
           >
             <Menu className="h-5 w-5" />
@@ -86,15 +86,15 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
         {/* Logo */}
         <Link
           to="/"
-          className="flex items-center gap-3 group transition-transform hover:scale-[1.02] active:scale-95"
+          className="flex items-center gap-2 md:gap-3 group transition-transform hover:scale-[1.02] active:scale-95 shrink-0"
         >
-          <div className="relative">
-            <img src={ucuLogo} alt="UCU Logo" className="h-10 w-auto transition-filter group-hover:drop-shadow-[0_0_8px_rgba(var(--primary),0.3)]" />
-          </div>
+          <img src={ucuLogo} alt="UCU Logo" className="h-8 md:h-10 w-auto" />
           <div className="hidden md:block">
             <h1 className="text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors">ONBS</h1>
             <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU-BBUC</p>
           </div>
+          {/* Mobile title */}
+          <span className="md:hidden text-sm font-bold text-primary">BBUC</span>
         </Link>
 
         {/* Search (hidden on mobile) */}
@@ -111,7 +111,7 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
           </div>
         )}
 
-        <div className="ml-auto flex items-center gap-3">
+        <div className="ml-auto flex items-center gap-1.5 md:gap-3">
           {isAuthenticated ? (
             <>
               {/* Notifications */}
@@ -122,7 +122,7 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
                 <DropdownMenuTrigger asChild>
                   <Button
                     variant="ghost"
-                    className="gap-2 px-2 hover:bg-primary/5 transition-all duration-300 group rounded-full md:rounded-lg"
+                    className="gap-2 px-1.5 md:px-2 hover:bg-primary/5 transition-all duration-300 group rounded-full md:rounded-lg"
                   >
                     <Avatar className="h-8 w-8 ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
                       <AvatarImage src={profile?.avatar_url || ''} />
@@ -171,10 +171,10 @@ export function Header({ onMenuClick, pendingCount = 0 }: HeaderProps) {
             </>
           ) : (
             <div className="flex gap-2">
-              <Button variant="ghost" onClick={() => navigate('/auth')}>
+              <Button variant="ghost" size="sm" onClick={() => navigate('/auth')}>
                 Sign In
               </Button>
-              <Button onClick={() => navigate('/auth?mode=signup')}>
+              <Button size="sm" onClick={() => navigate('/auth?mode=signup')}>
                 Get Started
               </Button>
             </div>
