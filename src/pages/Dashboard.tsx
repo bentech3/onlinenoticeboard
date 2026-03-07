@@ -51,10 +51,12 @@ export default function Dashboard() {
   const getGreeting = () => {
     const hour = new Date().getHours();
     const name = profile?.full_name?.split(' ')[0] || 'User';
-    if (hour >= 5 && hour < 12) return `Good Morning, ${name} 👋`;
-    if (hour >= 12 && hour < 17) return `Good Afternoon, ${name} 👋`;
-    if (hour >= 17 && hour < 21) return `Good Evening, ${name} 👋`;
-    return `Hello, ${name} 🌙`;
+
+    // Choose a friendly intro
+    const intro = hour < 12 ? 'Good morning' : hour < 17 ? 'Hi' : 'Welcome back';
+    const emoji = hour < 12 ? '👋' : hour < 17 ? '😊' : '✨';
+
+    return `${intro}, ${name}${emoji}`;
   };
 
   return (
