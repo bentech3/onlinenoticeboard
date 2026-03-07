@@ -227,7 +227,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                         onClick={() => setSidebarOpen(false)}
                       >
                         <div className={cn(
-                          "transition-transform duration-200",
+                          "transition-transform duration-200 group-hover:scale-110",
                           isActive && "scale-110"
                         )}>
                           {item.icon}
@@ -236,12 +236,12 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
                           {item.title}
                         </span>
                         {item.badge !== undefined && item.badge > 0 && (
-                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground">
+                          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-sidebar-primary text-[10px] font-bold text-sidebar-primary-foreground shadow-sm ring-2 ring-sidebar-background/10">
                             {item.badge > 99 ? '99+' : item.badge}
                           </span>
                         )}
                         {isActive && (
-                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-6 bg-sidebar-primary rounded-r-full" />
+                          <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1.5 h-6 bg-sidebar-primary rounded-r-full" />
                         )}
                       </Link>
                     );
