@@ -73,6 +73,7 @@ const App = () => (
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/departments" element={<AdminDepartments />} />
               <Route path="/admin/settings" element={<AdminSystemSettings />} />
+              <Route path="/install" element={<Install />} />
               <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
           </BrowserRouter>
