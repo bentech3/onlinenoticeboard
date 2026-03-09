@@ -9,6 +9,11 @@ interface MaintenanceOverlayProps {
 export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
     const { signOut } = useAuth();
 
+    const handleAdminSignIn = async () => {
+        await signOut();
+        window.location.href = '/auth';
+    };
+
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md">
             <div className="max-w-md w-full mx-4 p-8 bg-card border rounded-2xl shadow-2xl text-center animate-in fade-in zoom-in duration-300">
@@ -28,6 +33,12 @@ export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
                         Access is restricted to administrators during maintenance.
                     </p>
                     <Button
+                        className="w-full h-12 text-lg font-semibold"
+                        onClick={handleAdminSignIn}
+                    >
+                        Sign In (Admins Only)
+                    </Button>
+                    <Button
                         variant="outline"
                         className="w-full h-12 text-lg"
                         onClick={() => signOut()}
@@ -43,4 +54,5 @@ export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
         </div>
     );
 }
+
 
