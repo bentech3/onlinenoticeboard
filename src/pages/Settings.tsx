@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/hooks/useAuth';
 import { useAvatarUpload } from '@/hooks/useAvatarUpload';
-import { User, Mail, Building2, Camera, Loader2 } from 'lucide-react';
+import { User, Mail, Building2, Camera, Loader2, Bell } from 'lucide-react';
+import { PushNotificationToggle } from '@/components/notifications/PushNotificationToggle';
 import { useRef, useState } from 'react';
 
 export default function Settings() {
@@ -145,6 +146,22 @@ export default function Settings() {
                 </div>
               </div>
             </div>
+          </CardContent>
+        </Card>
+
+        {/* Push Notifications */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Bell className="h-5 w-5" />
+              Push Notifications
+            </CardTitle>
+            <CardDescription>
+              Get instant alerts on your device when new notices are published
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PushNotificationToggle />
           </CardContent>
         </Card>
 
