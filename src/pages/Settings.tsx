@@ -149,6 +149,22 @@ export default function Settings() {
           </CardContent>
         </Card>
 
+        {/* Push Notifications */}
+        <Card>
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Bell className="h-5 w-5" />
+              Push Notifications
+            </CardTitle>
+            <CardDescription>
+              Get instant alerts on your device when new notices are published
+            </CardDescription>
+          </CardHeader>
+          <CardContent>
+            <PushNotificationToggle />
+          </CardContent>
+        </Card>
+
         {/* Subscriptions */}
         <DepartmentSubscriptions />
       </div>

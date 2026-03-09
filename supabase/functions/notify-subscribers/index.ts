@@ -160,6 +160,26 @@ serve(async (req: Request) => {
       console.log("RESEND_API_KEY not found. Skipping email sending. Would send to:", allEmails.length, "users");
     }
 
+    // 5. Send push notifications via edge function
+    try {
+      const pushRes = await fetch(`${supabaseUrl}/functions/v1/send-push`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${supabaseServiceKey}`,
+        },
+        body: JSON.stringify({
+          title: `📢 ${record.title}`,
+          message: `New notice published${department?.name ? ` by ${department.name}` : ''}`,
+          notice_id: record.id,
+        }),
+      });
+      const pushResult = await pushRes.json();
+      console.log("Push notifications sent:", pushResult);
+    } catch (pushError) {
+      console.error("Push notification error:", pushError);
+    }
+
     return new Response(JSON.stringify({ success: true, count: allEmails.length }), {
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });
