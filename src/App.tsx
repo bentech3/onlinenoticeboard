@@ -19,7 +19,8 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminDepartments from "./pages/AdminDepartments";
 import AdminSystemSettings from "./pages/AdminSystemSettings";
 import NotFound from "./pages/NotFound";
-import { Analytics } from "@vercel/analytics/react";
+import Install from "./pages/Install";
+
 import { useSystemSettings } from "@/hooks/useSystemSettings";
 import { MaintenanceOverlay } from "@/components/layout/MaintenanceOverlay";
 
@@ -72,6 +73,7 @@ const App = () => (
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/departments" element={<AdminDepartments />} />
               <Route path="/admin/settings" element={<AdminSystemSettings />} />
+              <Route path="/install" element={<Install />} />
               <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
           </BrowserRouter>
