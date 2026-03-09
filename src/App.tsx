@@ -19,7 +19,7 @@ import AdminUsers from "./pages/AdminUsers";
 import AdminDepartments from "./pages/AdminDepartments";
 import AdminSystemSettings from "./pages/AdminSystemSettings";
 import NotFound from "./pages/NotFound";
-import { Analytics } from "@vercel/analytics/react";
+
 import { useSystemSettings } from "@/hooks/useSystemSettings";
 import { MaintenanceOverlay } from "@/components/layout/MaintenanceOverlay";
 
