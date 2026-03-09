@@ -56,8 +56,8 @@ const App = () => (
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <MaintenanceGuard>
-          <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+          <MaintenanceGuard>
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/auth" element={<Auth />} />
@@ -76,8 +76,8 @@ const App = () => (
               <Route path="/install" element={<Install />} />
               <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
-          </BrowserRouter>
-        </MaintenanceGuard>
+          </MaintenanceGuard>
+        </BrowserRouter>
         <InactivityHandler />
       </TooltipProvider>
     </AuthProvider>

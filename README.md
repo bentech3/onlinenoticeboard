@@ -66,4 +66,9 @@ You can install this application as a standalone app on your devices:
 
 ## License
 
+npx tsc --noEmit --project tsconfig.json
+
 © 2026 UCU — Bishop Barham University College. All rights reserved.
+
+
+
