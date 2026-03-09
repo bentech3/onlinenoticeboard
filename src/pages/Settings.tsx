@@ -7,7 +7,8 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { useAuth } from '@/hooks/useAuth';
 import { useAvatarUpload } from '@/hooks/useAvatarUpload';
-import { User, Mail, Building2, Camera, Loader2 } from 'lucide-react';
+import { User, Mail, Building2, Camera, Loader2, Bell } from 'lucide-react';
+import { PushNotificationToggle } from '@/components/notifications/PushNotificationToggle';
 import { useRef, useState } from 'react';
 
 export default function Settings() {
