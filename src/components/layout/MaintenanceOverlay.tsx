@@ -1,6 +1,5 @@
-import { Hammer, Lock } from 'lucide-react';
+import { Hammer } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
 interface MaintenanceOverlayProps {
@@ -8,8 +7,7 @@ interface MaintenanceOverlayProps {
 }
 
 export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
-    const navigate = useNavigate();
-    const { isAuthenticated, isSuperAdmin, signOut } = useAuth();
+    const { signOut } = useAuth();
 
     return (
         <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/80 backdrop-blur-md">
@@ -26,40 +24,16 @@ export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
                 </p>
 
                 <div className="space-y-4">
-                    {!isAuthenticated ? (
-                        <Button
-                            className="w-full h-12 text-lg font-semibold"
-                            onClick={() => navigate('/auth')}
-                        >
-                            Sign In (Admins Only)
-                        </Button>
-                    ) : isSuperAdmin ? (
-                        <div className="space-y-2">
-                            <p className="text-sm text-info font-medium flex items-center justify-center gap-2">
-                                <Lock className="h-4 w-4" />
-                                You are logged in as Admin
-                            </p>
-                            <Button
-                                className="w-full h-12 text-lg font-semibold"
-                                onClick={() => navigate('/admin/settings')}
-                            >
-                                Go to Admin Settings
-                            </Button>
-                        </div>
-                    ) : (
-                        <div className="space-y-4">
-                            <p className="text-sm text-destructive font-medium">
-                                Access is restricted to administrators during maintenance.
-                            </p>
-                            <Button
-                                variant="outline"
-                                className="w-full h-12 text-lg"
-                                onClick={() => signOut()}
-                            >
-                                Sign Out
-                            </Button>
-                        </div>
-                    )}
+                    <p className="text-sm text-destructive font-medium">
+                        Access is restricted to administrators during maintenance.
+                    </p>
+                    <Button
+                        variant="outline"
+                        className="w-full h-12 text-lg"
+                        onClick={() => signOut()}
+                    >
+                        Sign Out
+                    </Button>
 
                     <p className="text-xs text-muted-foreground mt-8">
                         BBUC Digital Notice Board &copy; {new Date().getFullYear()}
@@ -69,3 +43,4 @@ export function MaintenanceOverlay({ message }: MaintenanceOverlayProps) {
         </div>
     );
 }
+

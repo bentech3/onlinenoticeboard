@@ -31,7 +31,10 @@ const MaintenanceGuard = ({ children }: { children: React.ReactNode }) => {
   const { isSuperAdmin, isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return null;
-  if (maintenanceEnabled && !isSuperAdmin) {
+
+  // Only show maintenance overlay to authenticated non-admin users
+  // Unauthenticated users can still access auth/login pages freely
+  if (maintenanceEnabled && isAuthenticated && !isSuperAdmin) {
     return <MaintenanceOverlay message={maintenanceMessage} />;
   }
   return <>{children}</>;
@@ -77,8 +80,8 @@ const App = () => (
               <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
           </MaintenanceGuard>
+          <InactivityHandler />
         </BrowserRouter>
-        <InactivityHandler />
       </TooltipProvider>
     </AuthProvider>
   </QueryClientProvider>
