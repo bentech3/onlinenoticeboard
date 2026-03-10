@@ -291,7 +291,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
 
         {/* Main content */}
         <main className="flex-1 overflow-y-auto relative bg-background/50">
-          <div className="px-3 py-4 md:container md:py-6 pb-20 md:pb-6">{children}</div>
+          <div className="px-3 py-4 md:container md:py-6 pb-24 md:pb-6">{children}</div>
         </main>
       </div>
 

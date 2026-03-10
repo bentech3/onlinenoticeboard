@@ -66,7 +66,7 @@ export function MobileBottomNav() {
               key={item.href}
               to={item.href}
               className={cn(
-                'flex flex-col items-center justify-center gap-0.5 flex-1 py-1 px-1 rounded-lg transition-colors relative min-w-0',
+                'flex flex-col items-center justify-center gap-0.5 flex-1 py-1 px-0.5 rounded-lg transition-colors relative min-w-0',
                 isActive
                   ? 'text-primary'
                   : 'text-muted-foreground active:text-foreground'
@@ -87,7 +87,7 @@ export function MobileBottomNav() {
                 </div>
               )}
               <span className={cn(
-                'text-[10px] font-medium leading-tight truncate max-w-full',
+                'text-[9px] xs:text-[10px] font-medium leading-tight truncate max-w-full',
                 item.accent && '-mt-0.5'
               )}>
                 {item.title}

@@ -262,4 +262,18 @@
   .urgent-pulse {
     animation: urgentPulse 2s ease-in-out infinite;
   }
+
+  /* Subtle zoom animation for backgrounds */
+  @keyframes subtleZoom {
+    0% {
+      transform: scale(1.05);
+    }
+    100% {
+      transform: scale(1.15);
+    }
+  }
+
+  .animate-subtle-zoom {
+    animation: subtleZoom 20s ease-in-out infinite alternate;
+  }
 }

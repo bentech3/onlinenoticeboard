@@ -21,163 +21,111 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen min-h-[100dvh] flex flex-col lg:flex-row">
-      {/* Left Panel — Campus Image + Welcome Text */}
-      <div className="relative lg:w-1/2 min-h-[200px] sm:min-h-[280px] lg:min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen min-h-[100dvh] relative flex items-center justify-center p-4 sm:p-6 overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div className="fixed inset-0 z-0">
         <img
           src={campusBg}
           alt="Bishop Barham University College campus"
-          className="absolute inset-0 w-full h-full object-cover"
+          className="absolute inset-0 w-full h-full object-cover scale-105 animate-subtle-zoom"
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(212,55%,12%,0.85)] via-[hsl(212,55%,18%,0.8)] to-[hsl(212,55%,22%,0.75)]" />
-
-        <div className="relative z-10 text-center px-6 py-8 sm:py-10 lg:py-0 max-w-lg">
-          <img
-            src={ucuLogo}
-            alt="Uganda Christian University"
-            className="h-14 sm:h-20 lg:h-28 w-auto mx-auto mb-3 sm:mb-6 drop-shadow-lg"
-          />
-          <h1 className="text-xl sm:text-3xl lg:text-4xl font-bold text-white mb-2 sm:mb-4 font-display leading-tight">
-            Welcome to BBUC<br />Online Notice Board
-          </h1>
-          <p className="text-white/80 text-xs sm:text-base lg:text-lg mb-4 sm:mb-8 leading-relaxed hidden sm:block">
-            Access official notices, exams, events and announcements anytime
-          </p>
-
-          {mode === 'signup' ? (
-            <div className="space-y-3">
-              <p className="text-white/70 text-sm">Already have an account?</p>
-              <button
-                onClick={() => setMode('signin')}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-full border-2 border-white/80 text-white font-semibold tracking-wider hover:bg-white/10 transition-colors text-sm"
-              >
-                SIGN IN
-              </button>
-            </div>
-          ) : mode === 'forgot' ? (
-            <div className="space-y-3">
-              <p className="text-white/70 text-sm">Remember your password?</p>
-              <button
-                onClick={() => setMode('signin')}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-full border-2 border-white/80 text-white font-semibold tracking-wider hover:bg-white/10 transition-colors text-sm"
-              >
-                SIGN IN
-              </button>
-            </div>
-          ) : (
-            <div className="space-y-3">
-              <p className="text-white/70 text-sm">Don't have an account?</p>
-              <button
-                onClick={() => setMode('signup')}
-                className="inline-flex items-center justify-center px-8 py-2.5 rounded-full border-2 border-white/80 text-white font-semibold tracking-wider hover:bg-white/10 transition-colors text-sm"
-              >
-                SIGN UP
-              </button>
-            </div>
-          )}
-        </div>
+        <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-[2px]" />
       </div>
 
-      {/* Right Panel — Form */}
-      <div className="lg:w-1/2 flex items-center justify-center bg-card px-4 sm:px-6 py-6 sm:py-12 lg:py-0">
-        <div className="w-full max-w-md">
-          {/* Mobile-only logo */}
-          <div className="lg:hidden flex justify-center mb-6">
-            <img src={ucuLogo} alt="UCU" className="h-14 w-auto" />
-          </div>
+      {/* Auth Card — The "Slide" */}
+      <div className="relative z-10 w-full max-w-[480px] animate-in fade-in zoom-in duration-500">
+        <div className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
+          <div className="p-6 sm:p-10">
+            {/* Header Section */}
+            <div className="text-center mb-8">
+              <img
+                src={ucuLogo}
+                alt="UCU Logo"
+                className="h-16 sm:h-20 w-auto mx-auto mb-6 drop-shadow-2xl"
+              />
+              <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2 font-display tracking-tight">
+                BBUC Notice Board
+              </h1>
+              <p className="text-white/70 text-sm sm:text-base">
+                {mode === 'signin'
+                  ? 'Sign in to access official updates'
+                  : mode === 'signup'
+                    ? 'Create an account to get started'
+                    : 'Reset your account password'}
+              </p>
+            </div>
 
-          {mode === 'signin' ? (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2 font-display">
-                Sign In to Your Account
-              </h2>
-              <p className="text-muted-foreground mb-8 text-sm">
-                Enter your credentials to access the notice board
-              </p>
-              <SignInForm />
-              <div className="mt-6 text-center">
-                <button
-                  onClick={() => setMode('forgot')}
-                  className="text-sm text-primary hover:underline underline-offset-4"
-                >
-                  Forgot Password?
-                </button>
-              </div>
-              {/* Mobile toggle */}
-              <div className="lg:hidden mt-8 text-center border-t border-border pt-6">
-                <p className="text-sm text-muted-foreground mb-2">Don't have an account?</p>
-                <button
-                  onClick={() => setMode('signup')}
-                  className="text-sm font-semibold text-primary hover:underline underline-offset-4"
-                >
-                  Create Account
-                </button>
-              </div>
+            {/* Form Section */}
+            <div className="space-y-6">
+              {mode === 'signin' ? (
+                <div className="animate-in slide-in-from-bottom-4 duration-300">
+                  <SignInForm />
+                  <div className="mt-6 flex flex-col items-center gap-4">
+                    <button
+                      onClick={() => setMode('forgot')}
+                      className="text-sm text-white/60 hover:text-white hover:underline underline-offset-4 transition-colors"
+                    >
+                      Forgot Password?
+                    </button>
+                    <div className="w-full flex items-center gap-3 py-2">
+                      <div className="h-px flex-1 bg-white/10" />
+                      <span className="text-xs text-white/40 uppercase tracking-widest">or</span>
+                      <div className="h-px flex-1 bg-white/10" />
+                    </div>
+                    <button
+                      onClick={() => setMode('signup')}
+                      className="w-full py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/10 transition-all active:scale-[0.98]"
+                    >
+                      Create New Account
+                    </button>
+                  </div>
+                </div>
+              ) : mode === 'forgot' ? (
+                <div className="animate-in slide-in-from-bottom-4 duration-300">
+                  <ForgotPasswordForm onBack={() => setMode('signin')} />
+                  <button
+                    onClick={() => setMode('signin')}
+                    className="mt-6 w-full text-sm text-white/60 hover:text-white transition-colors py-2"
+                  >
+                    Back to Sign In
+                  </button>
+                </div>
+              ) : (
+                <div className="animate-in slide-in-from-bottom-4 duration-300">
+                  <SignUpForm />
+                  <div className="mt-6 flex flex-col items-center gap-4">
+                    <div className="w-full flex items-center gap-3 py-2">
+                      <div className="h-px flex-1 bg-white/10" />
+                      <span className="text-xs text-white/40 uppercase tracking-widest">Have an account?</span>
+                      <div className="h-px flex-1 bg-white/10" />
+                    </div>
+                    <button
+                      onClick={() => setMode('signin')}
+                      className="w-full py-3 rounded-xl border border-white/20 text-white font-semibold hover:bg-white/10 transition-all active:scale-[0.98]"
+                    >
+                      Sign In Instead
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          ) : mode === 'forgot' ? (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2 font-display">
-                Reset Your Password
-              </h2>
-              <p className="text-muted-foreground mb-8 text-sm">
-                Enter your email and we'll send you a reset link
-              </p>
-              <ForgotPasswordForm onBack={() => setMode('signin')} />
-            </div>
-          ) : (
-            <div className="animate-fade-in">
-              <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2 font-display">
-                Create Your Account
-              </h2>
-              <p className="text-muted-foreground mb-8 text-sm">
-                Use your email for registration
-              </p>
-              <SignUpForm />
-              <div className="mt-6 flex items-center justify-center gap-2 text-sm">
-                <button
-                  onClick={() => setMode('forgot')}
-                  className="text-primary hover:underline underline-offset-4"
-                >
-                  Forgot Password?
-                </button>
-                <span className="text-muted-foreground">·</span>
-                <button
-                  onClick={() => setMode('forgot')}
-                  className="text-primary hover:underline underline-offset-4"
-                >
-                  Reset
-                </button>
-              </div>
-              {/* Mobile toggle */}
-              <div className="lg:hidden mt-8 text-center border-t border-border pt-6">
-                <p className="text-sm text-muted-foreground mb-2">Already have an account?</p>
-                <button
-                  onClick={() => setMode('signin')}
-                  className="text-sm font-semibold text-primary hover:underline underline-offset-4"
-                >
-                  Sign In
-                </button>
-              </div>
-            </div>
-          )}
 
-          {/* Contact Admin Message */}
-          <div className="mt-8 p-4 rounded-lg bg-muted/50 border border-border text-center">
-            <div className="flex items-center justify-center gap-2 text-sm text-muted-foreground">
-              <Phone className="h-4 w-4 shrink-0" />
-              <p>
-                Issues while trying to access your account? Contact your system administrator{' '}
-                <a href="tel:+256761214808" className="font-semibold text-primary hover:underline">
-                  +256761214808
-                </a>{' '}
-                for assistance.
+            {/* Footer / Contact */}
+            <div className="mt-10 pt-6 border-t border-white/10">
+              <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
+                <Phone className="h-4 w-4 text-white/60 mt-0.5 shrink-0" />
+                <p className="text-[13px] text-white/60 leading-snug">
+                  Need help? Contact admin: <br />
+                  <a href="tel:+256761214808" className="font-semibold text-white hover:underline">
+                    +256761214808
+                  </a>
+                </p>
+              </div>
+              <p className="text-center text-[11px] text-white/40 mt-6 tracking-wide uppercase">
+                © {new Date().getFullYear()} UCU — Bishop Barham University College
               </p>
             </div>
           </div>
-
-          <p className="text-center text-xs text-muted-foreground mt-6">
-            © {new Date().getFullYear()} UCU — Bishop Barham University College. All rights reserved.
-          </p>
         </div>
       </div>
     </div>

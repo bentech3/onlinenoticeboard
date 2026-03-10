@@ -89,23 +89,23 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
           to="/"
           className="flex items-center gap-2 md:gap-3 group transition-transform hover:scale-[1.02] active:scale-95 shrink-0"
         >
-          <img src={ucuLogo} alt="UCU Logo" className="h-8 md:h-10 w-auto" />
+          <img src={ucuLogo} alt="UCU Logo" className="h-7 md:h-10 w-auto" />
           <div className="flex flex-col">
-            <h1 className="text-sm md:text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors uppercase">BBUC Notice Board</h1>
-            <p className="text-[9px] md:text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU Main Campus</p>
+            <h1 className="text-[11px] xs:text-sm md:text-lg font-bold tracking-tight text-primary group-hover:text-primary/80 transition-colors uppercase leading-none">BBUC Notice Board</h1>
+            <p className="hidden xs:block text-[8px] md:text-[10px] font-medium text-muted-foreground uppercase tracking-wider">UCU Main Campus</p>
           </div>
         </Link>
 
         {/* Search */}
         {isAuthenticated && (
-          <div className="flex-1 max-w-md mx-auto px-2 md:px-0">
+          <div className="flex-1 max-w-sm mx-auto px-1 md:px-0">
             <Button
               variant="outline"
-              className="w-full justify-start text-muted-foreground bg-muted/30 border-muted hover:bg-muted/50 hover:border-primary/20 transition-all h-9 md:h-10 px-3 md:px-4"
+              className="w-full justify-start text-muted-foreground bg-muted/30 border-muted hover:bg-muted/50 hover:border-primary/20 transition-all h-8 md:h-10 px-2 md:px-4"
               onClick={() => navigate('/dashboard')}
             >
-              <Search className="mr-2 h-4 w-4 shrink-0" />
-              <span className="truncate">Search notices...</span>
+              <Search className="mr-1.5 h-3.5 w-3.5 shrink-0" />
+              <span className="truncate text-xs md:text-sm">Search...</span>
             </Button>
           </div>
         )}
