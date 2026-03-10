@@ -32,10 +32,10 @@ export default function AuthPage() {
         <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/50 to-black/70 backdrop-blur-[2px]" />
       </div>
 
-      {/* Auth Card — The "Slide" */}
-      <div className="relative z-10 w-full max-w-[480px] animate-in fade-in zoom-in duration-500">
-        <div className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl overflow-hidden">
-          <div className="p-6 sm:p-10">
+      {/* Auth Card — The "Square Slide" */}
+      <div className="relative z-10 w-full max-w-[500px] animate-in fade-in zoom-in duration-500">
+        <div className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col justify-center">
+          <div className="p-8 sm:p-10">
             {/* Header Section */}
             <div className="text-center mb-8">
               <img
