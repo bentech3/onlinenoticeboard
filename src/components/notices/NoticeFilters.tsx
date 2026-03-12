@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { Search, Filter, X, SlidersHorizontal } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/select';
 import { Badge } from '@/components/ui/badge';
 import { useDepartments } from '@/hooks/useDepartments';
+import { useNotices } from '@/hooks/useNotices';
 import { NoticeStatus } from '@/lib/types';
 
 interface NoticeFiltersProps {
@@ -88,6 +89,15 @@ export function NoticeFilters({
     onPriorityChange?.(null);
   };
 
+  const { notices: allNotices } = useNotices('approved');
+  const suggestions = useMemo(() => {
+    if (!search || search.length < 2) return [];
+    return allNotices
+      .map(n => n.title)
+      .filter(title => title.toLowerCase().includes(search.toLowerCase()))
+      .slice(0, 5);
+  }, [search, allNotices]);
+
   const hasActiveFilters = search || department || status || category || priority;
   const activeFilterCount = [department, status, category, priority].filter(Boolean).length;
 
@@ -95,7 +105,7 @@ export function NoticeFilters({
     <div className="space-y-3">
       {/* Search and filter toggle */}
       <div className="flex gap-2">
-        <div className="relative flex-1">
+        <div className="relative flex-1 group">
           <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
             placeholder="Search notices..."
@@ -103,6 +113,21 @@ export function NoticeFilters({
             onChange={(e) => handleSearchChange(e.target.value)}
             className="pl-9 h-10"
           />
+          {suggestions.length > 0 && (
+            <div className="absolute top-full left-0 right-0 z-50 mt-1 bg-background border rounded-md shadow-lg overflow-hidden">
+              {suggestions.map((s, i) => (
+                <button
+                  key={i}
+                  className="w-full text-left px-4 py-2 text-sm hover:bg-muted focus:bg-muted outline-none"
+                  onClick={() => {
+                    handleSearchChange(s);
+                  }}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
         <Button
           variant={showFilters ? 'secondary' : 'outline'}

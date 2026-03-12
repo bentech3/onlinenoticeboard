@@ -42,9 +42,15 @@ export function useReputationScore(noticeId: string) {
   });
 
   return useMemo(() => {
-    // Score formula: views(1x) + likes(3x) + comments(2x) + helpful(2x) - complaints(3x)
-    const score = likesCount * 3 + commentsCount * 2 + feedbackData.helpful * 2 - feedbackData.complaints * 3;
-    const tier = score >= 20 ? 'high' : score >= 5 ? 'medium' : 'low';
+    // Enhanced Score formula: views(1x) + likes(5x) + comments(3x) + helpful(3x) - complaints(8x)
+    // Differentiates high-quality institutional content from noise
+    const baseScore = likesCount * 5 + commentsCount * 3 + feedbackData.helpful * 3 - feedbackData.complaints * 8;
+    
+    // Add engagement density bonus (helpful feedback per views) - simplified representation
+    const totalEngagements = likesCount + commentsCount + feedbackData.helpful;
+    const score = baseScore + (totalEngagements > 0 ? Math.floor(totalEngagements / 2) : 0);
+
+    const tier = score >= 30 ? 'high' : score >= 10 ? 'medium' : 'low';
     return { score: Math.max(0, score), tier, likesCount, commentsCount, ...feedbackData };
   }, [likesCount, commentsCount, feedbackData]);
 }

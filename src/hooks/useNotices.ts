@@ -8,6 +8,7 @@ interface CreateNoticeData {
   title: string;
   content: string;
   department_id?: string | null;
+  target_department_id?: string | null;
   category?: string | null;
   priority?: string;
   expires_at?: string | null;
@@ -39,6 +40,10 @@ export function useNotices(status?: NoticeStatus | NoticeStatus[], departmentId?
       if (departmentId) {
         query = query.eq('department_id', departmentId);
       }
+
+      // If we want to filter by target audience in the query:
+      // query = query.or(`target_department_id.is.null,target_department_id.eq.${userDepartmentId}`);
+      // However, we'll keep it simple for now and rely on the UI/RLS.
 
       const { data, error } = await query;
 

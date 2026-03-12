@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import { Calendar, Building2, AlertTriangle, Paperclip, ChevronRight } from 'lucide-react';
+import { Calendar, Building2, AlertTriangle, Paperclip, ChevronRight, ShieldAlert } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -22,11 +22,11 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
     rejected: 'bg-destructive/15 text-destructive border-destructive/30',
   };
 
-  const priorityStyles = {
-    low: 'bg-muted text-muted-foreground',
-    normal: 'bg-info/15 text-info',
-    high: 'bg-warning/15 text-warning',
-    urgent: 'bg-destructive/15 text-destructive',
+  const priorityConfig = {
+    low: { color: 'bg-slate-100 text-slate-600 border-slate-200', icon: null },
+    normal: { color: 'bg-blue-50 text-blue-600 border-blue-100', icon: null },
+    high: { color: 'bg-amber-50 text-amber-600 border-amber-200', icon: <AlertTriangle className="h-3 w-3" /> },
+    urgent: { color: 'bg-red-50 text-red-600 border-red-200', icon: <ShieldAlert className="h-3 w-3" /> },
   };
 
   const getInitials = (name: string) => {
@@ -63,7 +63,14 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
                   </Badge>
                 )}
                 {notice.priority !== 'normal' && (
-                  <Badge variant="outline" className={cn('capitalize text-[10px] md:text-xs px-1.5 py-0', priorityStyles[notice.priority])}>
+                  <Badge 
+                    variant="outline" 
+                    className={cn(
+                      'capitalize text-[10px] md:text-xs px-1.5 py-0 gap-1 font-medium', 
+                      priorityConfig[notice.priority as keyof typeof priorityConfig]?.color || ''
+                    )}
+                  >
+                    {priorityConfig[notice.priority as keyof typeof priorityConfig]?.icon}
                     {notice.priority}
                   </Badge>
                 )}

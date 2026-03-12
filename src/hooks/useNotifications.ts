@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -80,5 +80,9 @@ export function useNotifications() {
     },
   });
 
-  return { notifications, unreadCount, isLoading, markAsRead, markAllAsRead };
+  const importantNotifications = useMemo(() => 
+    notifications.filter(n => n.type === 'urgent_notice' || n.type === 'priority_notice'),
+  [notifications]);
+
+  return { notifications, importantNotifications, unreadCount, isLoading, markAsRead, markAllAsRead };
 }

@@ -27,19 +27,19 @@ import { toast } from '@/hooks/use-toast';
 
 const CATEGORIES = [
   'Academic',
-  'Administrative',
+  'Finance',
+  'Exams',
   'Events',
-  'Examinations',
-  'Financial',
-  'General',
-  'Sports',
-  'Library',
+  'Hostel',
+  'ICT',
+  'Administration',
 ];
 
 const noticeSchema = z.object({
   title: z.string().trim().min(5, 'Title must be at least 5 characters').max(200, 'Title is too long'),
   content: z.string().trim().min(20, 'Content must be at least 20 characters').max(10000, 'Content is too long'),
   department_id: z.string().optional().nullable(),
+  target_department_id: z.string().optional().nullable(),
   category: z.string().optional().nullable(),
   priority: z.string().default('normal'),
   expires_at: z.string().optional().nullable(),
@@ -75,13 +75,14 @@ export default function CreateNotice() {
       title: '',
       content: '',
       department_id: profile?.department_id || null,
+      target_department_id: null,
       category: null,
       priority: 'normal',
       expires_at: null,
       scheduled_at: null,
       is_urgent: false,
     },
-  });
+});
 
   if (!isCreator) {
     navigate('/dashboard');
@@ -101,6 +102,18 @@ export default function CreateNotice() {
     }
   };
 
+  const suggestCategory = (content: string) => {
+    const text = content.toLowerCase();
+    if (text.includes('exam') || text.includes('result') || text.includes('test')) return 'Exams';
+    if (text.includes('money') || text.includes('fee') || text.includes('payment') || text.includes('finance')) return 'Finance';
+    if (text.includes('class') || text.includes('lecture') || text.includes('academic') || text.includes('unit')) return 'Academic';
+    if (text.includes('party') || text.includes('event') || text.includes('celebration') || text.includes('workshop')) return 'Events';
+    if (text.includes('room') || text.includes('hostel') || text.includes('accommodation')) return 'Hostel';
+    if (text.includes('computer') || text.includes('ict') || text.includes('internet') || text.includes('system')) return 'ICT';
+    if (text.includes('admin') || text.includes('office') || text.includes('clerk')) return 'Administration';
+    return null;
+  };
+
   const handleSaveDraft = async (data: NoticeFormData) => {
     setIsSaving(true);
     try {
@@ -108,6 +121,7 @@ export default function CreateNotice() {
         title: data.title,
         content: data.content,
         department_id: data.department_id || null,
+        target_department_id: data.target_department_id || null,
         category: data.category || null,
         priority: data.priority,
         expires_at: data.expires_at || null,
@@ -131,6 +145,7 @@ export default function CreateNotice() {
         title: data.title,
         content: data.content,
         department_id: data.department_id || null,
+        target_department_id: data.target_department_id || null,
         category: data.category || null,
         priority: data.priority,
         expires_at: data.expires_at || null,
@@ -193,7 +208,20 @@ export default function CreateNotice() {
                   id="content"
                   placeholder="Write the main content of your notice here..."
                   rows={8}
-                  {...form.register('content')}
+                  {...form.register('content', {
+                    onChange: (e) => {
+                      if (!form.getValues('category')) {
+                        const suggested = suggestCategory(e.target.value);
+                        if (suggested) {
+                          form.setValue('category', suggested);
+                          toast({
+                            title: 'Suggested Category',
+                            description: `Based on your content, we've suggested the "${suggested}" category.`,
+                          });
+                        }
+                      }
+                    }
+                  })}
                 />
                 {form.formState.errors.content && (
                   <p className="text-sm text-destructive">{form.formState.errors.content.message}</p>
@@ -239,6 +267,28 @@ export default function CreateNotice() {
                     </SelectContent>
                   </Select>
                 </div>
+              </div>
+
+              {/* Target Audience */}
+              <div className="space-y-2">
+                <Label>Target Department (Optional)</Label>
+                <p className="text-xs text-muted-foreground">Recommend a specific department this notice is intended for. Leave empty for "University Wide".</p>
+                <Select
+                  value={form.watch('target_department_id') || 'all'}
+                  onValueChange={(value) => form.setValue('target_department_id', value === 'all' ? null : value)}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="University Wide" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">University Wide (Public)</SelectItem>
+                    {departments?.map((dept) => (
+                      <SelectItem key={dept.id} value={dept.id}>
+                        {dept.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
 
               {/* Priority and Expiry */}

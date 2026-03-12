@@ -33,6 +33,7 @@ export interface Notice {
   content: string;
   status: NoticeStatus;
   department_id: string | null;
+  target_department_id: string | null;
   category: string | null;
   priority: string;
   created_by: string;

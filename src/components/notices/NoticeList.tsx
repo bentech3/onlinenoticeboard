@@ -45,10 +45,12 @@ export function NoticeList({
 
   if (notices.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-lg border border-dashed bg-muted/30 py-12 text-center">
-        <FileText className="h-12 w-12 text-muted-foreground/50 mb-4" />
-        <h3 className="font-medium text-lg mb-1">No Notices</h3>
-        <p className="text-muted-foreground text-sm">{emptyMessage}</p>
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed border-primary/20 bg-primary/5 py-16 text-center animate-in fade-in zoom-in duration-300">
+        <div className="bg-primary/10 p-4 rounded-full mb-4">
+          <FileText className="h-10 w-10 text-primary opacity-60" />
+        </div>
+        <h3 className="font-semibold text-xl mb-2">No Notices Found</h3>
+        <p className="text-muted-foreground text-sm max-w-xs mx-auto">{emptyMessage}</p>
       </div>
     );
   }

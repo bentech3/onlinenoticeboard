@@ -169,10 +169,16 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
                     Settings
                   </DropdownMenuItem>
                   {role === 'super_admin' && (
-                    <DropdownMenuItem onClick={() => navigate('/admin/settings')}>
-                      <Settings className="mr-2 h-4 w-4" />
-                      System Settings
-                    </DropdownMenuItem>
+                    <>
+                      <DropdownMenuItem onClick={() => navigate('/admin/dashboard')}>
+                        <LayoutDashboard className="mr-2 h-4 w-4" />
+                        Admin Dashboard
+                      </DropdownMenuItem>
+                      <DropdownMenuItem onClick={() => navigate('/admin/settings')}>
+                        <Settings className="mr-2 h-4 w-4" />
+                        System Settings
+                      </DropdownMenuItem>
+                    </>
                   )}
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={handleSignOut} className="text-destructive">

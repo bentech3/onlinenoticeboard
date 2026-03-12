@@ -18,6 +18,7 @@ import Settings from "./pages/Settings";
 import AdminUsers from "./pages/AdminUsers";
 import AdminDepartments from "./pages/AdminDepartments";
 import AdminSystemSettings from "./pages/AdminSystemSettings";
+import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import Install from "./pages/Install";
 
@@ -76,6 +77,7 @@ const App = () => (
               <Route path="/admin/users" element={<AdminUsers />} />
               <Route path="/admin/departments" element={<AdminDepartments />} />
               <Route path="/admin/settings" element={<AdminSystemSettings />} />
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
               <Route path="/install" element={<Install />} />
               <Route path="*" element={<NotFoundRedirect />} />
             </Routes>
