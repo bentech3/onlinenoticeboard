@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import ucuLogo from '@/assets/ucu-logo.png';
 import campusBg from '@/assets/campus-bg.jfif';
@@ -12,11 +12,16 @@ export default function AuthPage() {
   const [searchParams] = useSearchParams();
   const defaultMode = searchParams.get('mode') === 'signup' ? 'signup' : 'signin';
   const [mode, setMode] = useState<'signin' | 'signup' | 'forgot'>(defaultMode);
-  const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/dashboard');
+    }
+  }, [isAuthenticated, navigate]);
 
   if (isAuthenticated) {
-    navigate('/dashboard');
     return null;
   }
 

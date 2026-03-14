@@ -56,10 +56,10 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
     };
 
     const roleLabels = {
-      super_admin: 'Admin',
-      approver: 'Approver',
-      creator: 'Creator',
-      viewer: 'Viewer',
+      super_admin: 'System Administrator',
+      approver: 'HOD / Dean',
+      creator: 'Staff / Lecturer',
+      viewer: 'Student',
     };
 
     return (
@@ -139,7 +139,7 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
                     </Avatar>
                     <div className="hidden flex-col items-start md:flex">
                       <span className="text-sm font-semibold group-hover:text-primary transition-colors">
-                        {role === 'super_admin' ? 'Admin Panel' : (profile?.full_name || 'User')}
+                        {role === 'super_admin' ? 'System Administrator' : (profile?.full_name || 'User')}
                       </span>
                       {getRoleBadge()}
                     </div>
@@ -150,7 +150,7 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
                     <div className="flex flex-col space-y-1">
                       <p className="text-xs text-muted-foreground">{getGreeting()}!</p>
                       <p className="text-sm font-medium">
-                        {role === 'super_admin' ? 'Administrator' : profile?.full_name}
+                        {role === 'super_admin' ? 'System Administrator' : profile?.full_name}
                       </p>
                       <p className="text-xs text-muted-foreground">{user?.email}</p>
                     </div>

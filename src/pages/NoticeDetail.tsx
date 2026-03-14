@@ -19,7 +19,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { useNotice, useDeleteNotice, useApproveNotice, useRejectNotice, useUpdateNotice } from '@/hooks/useNotices';
 import { useAuth } from '@/hooks/useAuth';
 import { useViewCount } from '@/hooks/useViewCount';
-import { cn } from '@/lib/utils';
+import { cn, getDepartmentColor } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/hooks/use-toast';
 
@@ -172,7 +172,9 @@ export default function NoticeDetail() {
         </div>
 
         {/* Main Content */}
-        <Card>
+        <Card className="relative overflow-hidden">
+          {/* Department Accent Strip */}
+          <div className={cn("absolute left-0 top-0 bottom-0 w-1.5 md:w-2", getDepartmentColor(notice.department?.name))} />
           <CardHeader className="pb-3 md:pb-4 p-4 md:p-6">
             {/* Status and badges */}
             <div className="flex flex-wrap items-center gap-1.5 md:gap-2 mb-3 md:mb-4">
@@ -206,7 +208,10 @@ export default function NoticeDetail() {
             {/* Meta info */}
             <div className="flex flex-wrap items-center gap-x-4 md:gap-x-6 gap-y-1.5 md:gap-y-2 text-xs md:text-sm text-muted-foreground">
               {notice.department && (
-                <div className="flex items-center gap-1.5">
+                <div className={cn(
+                  "flex items-center gap-1.5 px-3 py-1 rounded-full text-white font-bold text-[10px] md:text-xs",
+                  getDepartmentColor(notice.department.name)
+                )}>
                   <Building2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span>{notice.department.name}</span>
                 </div>

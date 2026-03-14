@@ -111,7 +111,7 @@ export default function AdminDashboard() {
               <FileText className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics.total_notices}</div>
+              <div className="text-2xl font-bold">{analytics?.total_notices ?? 0}</div>
               <p className="text-xs text-muted-foreground">Published and drafts</p>
             </CardContent>
           </Card>
@@ -121,7 +121,7 @@ export default function AdminDashboard() {
               <ShieldAlert className="h-4 w-4 text-orange-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics.pending_notices}</div>
+              <div className="text-2xl font-bold">{analytics?.pending_notices ?? 0}</div>
               <p className="text-xs text-muted-foreground">Awaiting review</p>
             </CardContent>
           </Card>
@@ -131,7 +131,7 @@ export default function AdminDashboard() {
               <Eye className="h-4 w-4 text-green-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics.total_views}</div>
+              <div className="text-2xl font-bold">{analytics?.total_views ?? 0}</div>
               <p className="text-xs text-muted-foreground">Total notice views</p>
             </CardContent>
           </Card>
@@ -141,7 +141,7 @@ export default function AdminDashboard() {
               <Users className="h-4 w-4 text-blue-500" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{analytics.total_users}</div>
+              <div className="text-2xl font-bold">{analytics?.total_users ?? 0}</div>
               <p className="text-xs text-muted-foreground">Students and Staff</p>
             </CardContent>
           </Card>
@@ -158,7 +158,7 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {analytics.department_engagement?.[0] && (
+                {analytics?.department_engagement?.[0] && (
                   <div className="flex items-start gap-4">
                     <div className="p-2 bg-primary/20 rounded-full">
                       <Building2 className="h-4 w-4 text-primary" />
@@ -166,7 +166,7 @@ export default function AdminDashboard() {
                     <div>
                       <p className="text-sm font-medium">Top Performing Department</p>
                       <p className="text-xs text-muted-foreground">
-                        {analytics.department_engagement[0].department_name} has the highest engagement with {analytics.department_engagement[0].total_views} views. 
+                        {analytics?.department_engagement?.[0]?.department_name} has the highest engagement with {analytics?.department_engagement?.[0]?.total_views} views. 
                         Consider sharing their posting patterns with other departments.
                       </p>
                     </div>
@@ -179,7 +179,7 @@ export default function AdminDashboard() {
                   <div>
                     <p className="text-sm font-medium">Approval Efficiency</p>
                     <p className="text-xs text-muted-foreground">
-                      {analytics.pending_notices > 5 
+                      {(analytics?.pending_notices ?? 0) > 5 
                         ? 'Pending queue is growing. Aim to review notices within 24 hours to maintain engagement.'
                         : 'Approval queue is well-managed. Good job maintainining system throughput!'}
                     </p>
@@ -205,7 +205,7 @@ export default function AdminDashboard() {
                   <div>
                     <p className="text-sm font-medium">Auto-Archive Status</p>
                     <p className="text-xs text-muted-foreground">
-                      System auto-archiver is active. {analytics.total_notices > 0 ? 'Cleanup is running periodically to keep the feed fresh.' : 'Monitoring for expired content.'}
+                      System auto-archiver is active. {(analytics?.total_notices ?? 0) > 0 ? 'Cleanup is running periodically to keep the feed fresh.' : 'Monitoring for expired content.'}
                     </p>
                   </div>
                 </div>
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent className="h-[350px]">
               <ResponsiveContainer width="100%" height="100%">
-                <RechartsBarChart data={analytics.department_engagement}>
+                <RechartsBarChart data={analytics?.department_engagement ?? []}>
                   <XAxis 
                     dataKey="department_name" 
                     stroke="#888888" 
@@ -251,7 +251,7 @@ export default function AdminDashboard() {
                     radius={[4, 4, 0, 0]} 
                     className="fill-primary"
                   >
-                    {analytics.department_engagement.map((entry, index: number) => (
+                    {analytics?.department_engagement?.map((entry, index: number) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Bar>
@@ -271,8 +271,8 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {analytics.recent_activity?.map((activity, i: number) => (
-                  <div key={i} className="flex items-start gap-3">
+                {analytics?.recent_activity?.map((activity, index) => (
+                  <div key={index} className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0" />
                     <div className="space-y-1">
                       <p className="text-sm font-medium leading-none">
@@ -284,7 +284,7 @@ export default function AdminDashboard() {
                     </div>
                   </div>
                 ))}
-                {(!analytics.recent_activity || analytics.recent_activity.length === 0) && (
+                {(!analytics?.recent_activity || analytics.recent_activity.length === 0) && (
                   <p className="text-sm text-muted-foreground italic">No recent activity logged</p>
                 )}
               </div>

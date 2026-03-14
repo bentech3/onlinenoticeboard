@@ -41,10 +41,10 @@ interface User {
 }
 
 const ROLES: { value: AppRole; label: string; color: string }[] = [
-  { value: 'viewer', label: 'Viewer', color: 'secondary' },
-  { value: 'creator', label: 'Creator', color: 'default' },
-  { value: 'approver', label: 'Approver', color: 'warning' },
-  { value: 'super_admin', label: 'Super Admin', color: 'destructive' },
+  { value: 'viewer', label: 'Student', color: 'secondary' },
+  { value: 'creator', label: 'Staff / Lecturer', color: 'default' },
+  { value: 'approver', label: 'HOD / Dean', color: 'warning' },
+  { value: 'super_admin', label: 'System Administrator', color: 'destructive' },
 ];
 
 export function UserManagement() {

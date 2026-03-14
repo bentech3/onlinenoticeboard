@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/badge';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { NoticeActions } from '@/components/notices/NoticeActions';
 import { Notice } from '@/lib/types';
-import { cn } from '@/lib/utils';
+import { cn, getDepartmentColor } from '@/lib/utils';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -38,14 +38,18 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
       .slice(0, 2);
   };
 
+  const deptColor = getDepartmentColor(notice.department?.name);
+
   return (
     <Link to={`/notices/${notice.id}`}>
       <Card
         className={cn(
-          'group transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99]',
+          'group transition-all duration-200 hover:shadow-lg hover:-translate-y-0.5 active:scale-[0.99] relative overflow-hidden',
           notice.is_urgent && 'ring-2 ring-destructive/50 urgent-pulse'
         )}
       >
+        {/* Department Accent Strip */}
+        <div className={cn('absolute left-0 top-0 bottom-0 w-1 md:w-1.5', deptColor)} />
         <CardHeader className={cn('pb-2 p-3 md:p-6 md:pb-2', compact && 'p-3')}>
           <div className="flex items-start justify-between gap-2 md:gap-4">
             <div className="flex-1 min-w-0">
@@ -103,9 +107,12 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
           <div className="flex flex-wrap items-center gap-x-3 md:gap-x-4 gap-y-1 md:gap-y-2 text-xs md:text-sm text-muted-foreground">
             {/* Department */}
             {notice.department && (
-              <div className="flex items-center gap-1">
-                <Building2 className="h-3 w-3 md:h-4 md:w-4" />
-                <span className="truncate max-w-[100px] md:max-w-none">{notice.department.name}</span>
+              <div className={cn(
+                "flex items-center gap-1.5 px-2 py-0.5 rounded-md text-white font-medium",
+                deptColor
+              )}>
+                <Building2 className="h-3 w-3" />
+                <span className="truncate max-w-[120px] md:max-w-none">{notice.department.name}</span>
               </div>
             )}
 

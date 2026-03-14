@@ -119,7 +119,7 @@ export default function AdminSystemSettings() {
                         <div>
                             <h4 className="font-bold text-warning uppercase text-xs tracking-widest mb-1">Warning: Maintenance Active</h4>
                             <p className="text-sm text-muted-foreground">
-                                While maintenance mode is active, only Super Admins can interact with the system. Other users (including Creators and Approvers) will be redirected to the maintenance screen.
+                                While maintenance mode is active, only System Administrators can interact with the system. Other users (including Staff and HODs) will be redirected to the maintenance screen.
                             </p>
                         </div>
                     </div>

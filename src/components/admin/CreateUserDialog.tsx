@@ -36,10 +36,10 @@ const createUserSchema = z.object({
 type CreateUserFormData = z.infer<typeof createUserSchema>;
 
 const ROLES: { value: AppRole; label: string }[] = [
-  { value: 'viewer', label: 'Viewer' },
-  { value: 'creator', label: 'Creator' },
-  { value: 'approver', label: 'Approver' },
-  { value: 'super_admin', label: 'Super Admin' },
+  { value: 'viewer', label: 'Student' },
+  { value: 'creator', label: 'Staff / Lecturer' },
+  { value: 'approver', label: 'HOD / Dean' },
+  { value: 'super_admin', label: 'System Administrator' },
 ];
 
 export function CreateUserDialog() {

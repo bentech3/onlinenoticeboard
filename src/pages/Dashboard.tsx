@@ -10,7 +10,10 @@ import { NoticeFilters } from '@/components/notices/NoticeFilters';
 import { useAuth } from '@/hooks/useAuth';
 import { useNotices } from '@/hooks/useNotices';
 import { useBookmarkedNotices } from '@/hooks/useNoticeBookmarks';
+import { useDepartments } from '@/hooks/useDepartments';
 import { NoticeStatus } from '@/lib/types';
+import { cn, getDepartmentColor } from '@/lib/utils';
+import { Building2 } from 'lucide-react';
 
 export default function Dashboard() {
   const { profile, role, isCreator, isApprover, isSuperAdmin } = useAuth();
@@ -18,6 +21,7 @@ export default function Dashboard() {
   const { notices: approvedNotices } = useNotices('approved');
   const { notices: pendingNotices } = useNotices('pending');
   const { data: bookmarkedNotices = [], isLoading: bookmarksLoading } = useBookmarkedNotices();
+  const { data: departments = [] } = useDepartments();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
@@ -64,12 +68,12 @@ export default function Dashboard() {
             </h1>
             <p className="text-sm md:text-base text-muted-foreground">
               {isSuperAdmin
-                ? "Manage all notices and system settings"
+                ? "System Administrator: Manage all notices and university settings"
                 : isApprover
-                  ? "Review and approve pending notices"
+                  ? "HOD / Dean: Review and approve pending departmental notices"
                   : isCreator
-                    ? "Create and manage your notices"
-                    : "Stay updated with the latest notices"}
+                    ? "Staff / Lecturer: Create and manage your academic notices"
+                    : "Student: Stay updated with the latest university notices"}
             </p>
           </div>
 
@@ -168,6 +172,62 @@ export default function Dashboard() {
               </Card>
             </>
           )}
+        </div>
+
+        {/* Department Quick Filters */}
+        <div className="space-y-3">
+          <div className="flex items-center justify-between">
+            <h2 className="text-sm font-bold uppercase tracking-widest text-muted-foreground flex items-center gap-2">
+              <Building2 className="h-4 w-4" />
+              Browse by Department
+            </h2>
+            {departmentFilter && (
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                onClick={() => setDepartmentFilter(null)}
+                className="h-7 text-xs font-bold text-primary hover:text-primary/80 uppercase tracking-tighter"
+              >
+                Clear Filter
+              </Button>
+            )}
+          </div>
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-3 px-3 md:mx-0 md:px-0">
+            <Button
+              variant={departmentFilter === null ? 'default' : 'outline'}
+              size="sm"
+              onClick={() => setDepartmentFilter(null)}
+              className={cn(
+                "shrink-0 h-9 rounded-full px-4 font-bold uppercase tracking-tight text-xs",
+                departmentFilter === null ? "shadow-md" : "hover:bg-muted"
+              )}
+            >
+              All Departments
+            </Button>
+            {departments.map((dept) => {
+              const isActive = departmentFilter === dept.id;
+              const deptColor = getDepartmentColor(dept.name);
+              
+              return (
+                <Button
+                  key={dept.id}
+                  variant={isActive ? 'default' : 'outline'}
+                  size="sm"
+                  onClick={() => setDepartmentFilter(dept.id)}
+                  className={cn(
+                    "shrink-0 h-9 rounded-full px-4 font-bold uppercase tracking-tight text-xs transition-all",
+                    isActive ? [deptColor, "border-transparent shadow-lg scale-105"] : "hover:border-primary/30"
+                  )}
+                >
+                  <div className={cn(
+                    "w-2 h-2 rounded-full mr-2",
+                    isActive ? "bg-white" : deptColor
+                  )} />
+                  {dept.name}
+                </Button>
+              );
+            })}
+          </div>
         </div>
 
         {/* Main Content */}
