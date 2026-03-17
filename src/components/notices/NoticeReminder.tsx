@@ -90,7 +90,7 @@ export function NoticeReminder({ notice }: NoticeReminderProps) {
         </p>
         <div className="space-y-1.5">
           {reminderOptions.map((opt) => {
-            const existing = reminders.find((r: any) =>
+            const existing = reminders.find((r) =>
               Math.abs(new Date(r.remind_at).getTime() - opt.date.getTime()) < 60000
             );
             return (

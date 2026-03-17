@@ -86,7 +86,7 @@ serve(async (req: Request) => {
       });
     }
 
-    const publicKey = (pubKeyData.value as any).value;
+    const publicKey = (pubKeyData.value as { value: string }).value;
     const privateKeyJwk = privKeyData.value as JsonWebKey;
 
     // Get subscriptions

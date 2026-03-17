@@ -27,15 +27,37 @@ import { format } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAutoArchive } from '@/hooks/useAutoArchive';
 
+interface DepartmentEngagement {
+  department_name: string;
+  total_views: number;
+}
+
+interface RecentActivity {
+  action: string;
+  target_type: string;
+  admin_name: string;
+  created_at: string;
+}
+
+interface AnalyticsSummary {
+  total_notices: number;
+  pending_notices: number;
+  total_views: number;
+  total_users: number;
+  department_engagement: DepartmentEngagement[];
+  recent_activity: RecentActivity[];
+}
+
 export default function AdminDashboard() {
   useAutoArchive();
   
   const { data: analytics, isLoading } = useQuery({
     queryKey: ['admin-analytics-summary'],
     queryFn: async () => {
-      const { data, error } = await (supabase.rpc('get_admin_analytics_summary' as any) as any);
+      // @ts-expect-error Types for this RPC might not be generated yet
+      const { data, error } = await supabase.rpc('get_admin_analytics_summary');
       if (error) throw error;
-      return data as any;
+      return data as unknown as AnalyticsSummary;
     },
   });
 
@@ -229,7 +251,7 @@ export default function AdminDashboard() {
                     radius={[4, 4, 0, 0]} 
                     className="fill-primary"
                   >
-                    {analytics.department_engagement.map((entry: any, index: number) => (
+                    {analytics.department_engagement.map((entry, index: number) => (
                       <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                     ))}
                   </Bar>
@@ -249,7 +271,7 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-6">
-                {analytics.recent_activity?.map((activity: any, i: number) => (
+                {analytics.recent_activity?.map((activity, i: number) => (
                   <div key={i} className="flex items-start gap-3">
                     <div className="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0" />
                     <div className="space-y-1">

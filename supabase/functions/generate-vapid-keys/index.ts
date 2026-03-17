@@ -32,7 +32,7 @@ serve(async (req: Request) => {
 
     if (existing) {
       return new Response(
-        JSON.stringify({ publicKey: (existing.value as any).value }),
+        JSON.stringify({ publicKey: (existing.value as { value: string }).value }),
         { headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
     }

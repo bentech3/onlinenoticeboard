@@ -11,6 +11,9 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Monitor, Plus, Trash2, Edit, MapPin } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { toast } from '@/hooks/use-toast';
+import { type Database } from '@/integrations/supabase/types';
+
+type SignageProfile = Database['public']['Tables']['signage_profiles']['Row'];
 
 export function SignageProfileManager() {
   const queryClient = useQueryClient();
@@ -62,7 +65,7 @@ export function SignageProfileManager() {
     setEditingId(null);
   };
 
-  const startEdit = (profile: any) => {
+  const startEdit = (profile: SignageProfile) => {
     setForm({ name: profile.name, location: profile.location || '', layout: profile.layout, rotation_interval: profile.rotation_interval });
     setEditingId(profile.id);
     setDialogOpen(true);
@@ -140,7 +143,7 @@ export function SignageProfileManager() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {profiles.map((p: any) => (
+              {profiles.map((p) => (
                 <TableRow key={p.id}>
                   <TableCell className="font-medium">{p.name}</TableCell>
                   <TableCell>

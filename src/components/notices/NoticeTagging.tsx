@@ -67,14 +67,14 @@ export function NoticeTagging({ noticeId }: NoticeTaggingProps) {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['notice-tags', noticeId] }),
   });
 
-  const approvedTags = tags.filter((t: any) => t.is_approved);
-  const pendingTags = tags.filter((t: any) => !t.is_approved);
+  const approvedTags = tags.filter((t) => t.is_approved);
+  const pendingTags = tags.filter((t) => !t.is_approved);
 
   return (
     <div className="space-y-2">
       <div className="flex items-center gap-2 flex-wrap">
         <Hash className="h-4 w-4 text-muted-foreground" />
-        {approvedTags.map((t: any) => (
+        {approvedTags.map((t) => (
           <Badge key={t.id} variant="secondary" className="gap-1">
             #{t.tag}
             {isSuperAdmin && (
@@ -113,7 +113,7 @@ export function NoticeTagging({ noticeId }: NoticeTaggingProps) {
       {isSuperAdmin && pendingTags.length > 0 && (
         <div className="flex items-center gap-2 flex-wrap">
           <span className="text-xs text-muted-foreground">Pending:</span>
-          {pendingTags.map((t: any) => (
+          {pendingTags.map((t) => (
             <Badge key={t.id} variant="outline" className="gap-1 border-warning/50">
               #{t.tag}
               <Check

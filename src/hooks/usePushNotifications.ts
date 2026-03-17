@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { type Json } from '@/integrations/supabase/types';
 import { supabase } from '@/integrations/supabase/client';
 import { useAuth } from '@/hooks/useAuth';
 import { toast } from 'sonner';
@@ -40,7 +41,7 @@ export function usePushNotifications() {
         .single();
 
       if (data) {
-        return (data.value as any).value;
+        return (data.value as { value: string }).value;
       }
 
       // Generate keys via edge function

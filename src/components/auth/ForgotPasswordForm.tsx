@@ -43,10 +43,10 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
         title: 'Reset link sent',
         description: 'Please check your email for a password reset link.',
       });
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Error',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'An unknown error occurred',
         variant: 'destructive',
       });
     } finally {

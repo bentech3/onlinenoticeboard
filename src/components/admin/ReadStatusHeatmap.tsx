@@ -26,7 +26,7 @@ export function ReadStatusHeatmap() {
   const recentNotices = approvedNotices.slice(0, 10);
 
   const getReadCount = (noticeId: string, deptId: string) => {
-    return readData.filter((r: any) => r.notice_id === noticeId && r.department_id === deptId).length;
+    return readData.filter((r) => r.notice_id === noticeId && r.department_id === deptId).length;
   };
 
   const getColor = (count: number) => {
@@ -71,7 +71,7 @@ export function ReadStatusHeatmap() {
             </thead>
             <tbody>
               {recentNotices.map((notice) => {
-                const totalReads = readData.filter((r: any) => r.notice_id === notice.id).length;
+                const totalReads = readData.filter((r) => r.notice_id === notice.id).length;
                 return (
                   <tr key={notice.id} className="border-t">
                     <td className="p-2 max-w-[200px] truncate font-medium">{notice.title}</td>

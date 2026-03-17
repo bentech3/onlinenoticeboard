@@ -56,7 +56,7 @@ export default function ResetPassword() {
         setIsChecking(false);
       }, 5000);
       return () => {
-        timeout && clearTimeout(timeout);
+        if (timeout) clearTimeout(timeout);
         subscription.unsubscribe();
       };
     }

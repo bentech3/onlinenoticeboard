@@ -81,10 +81,10 @@ export function CreateUserDialog() {
       setSelectedRole('viewer');
       setSelectedDepartment('none');
       setOpen(false);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: 'Failed to create user',
-        description: error.message,
+        description: error instanceof Error ? error.message : 'An unknown error occurred',
         variant: 'destructive',
       });
     } finally {

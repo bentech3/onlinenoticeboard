@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
+import { type Json } from '@/integrations/supabase/types';
 import { useEffect } from 'react';
 
 interface GlobalAlertSettings {
@@ -42,7 +43,7 @@ export function useGlobalAlert() {
       const newValue = { ...current, ...settings, updated_at: new Date().toISOString() };
       const { error } = await supabase
         .from('system_settings')
-        .update({ value: newValue as any })
+        .update({ value: newValue as Json })
         .eq('key', 'global_alert');
       if (error) throw error;
     },

@@ -29,6 +29,17 @@ import { useDepartments } from '@/hooks/useDepartments';
 import { AppRole } from '@/lib/types';
 import { format } from 'date-fns';
 
+interface User {
+  id: string;
+  full_name: string;
+  email: string;
+  avatar_url: string | null;
+  created_at: string;
+  department_id: string | null;
+  user_role?: { role: AppRole } | null;
+  department?: { name: string } | null;
+}
+
 const ROLES: { value: AppRole; label: string; color: string }[] = [
   { value: 'viewer', label: 'Viewer', color: 'secondary' },
   { value: 'creator', label: 'Creator', color: 'default' },
@@ -39,10 +50,10 @@ const ROLES: { value: AppRole; label: string; color: string }[] = [
 export function UserManagement() {
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState<string>('all');
-  const [editingUser, setEditingUser] = useState<any | null>(null);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
   const [editName, setEditName] = useState('');
   const [editEmail, setEditEmail] = useState('');
-  const [deletingUser, setDeletingUser] = useState<any | null>(null);
+  const [deletingUser, setDeletingUser] = useState<User | null>(null);
   
   const { data: users, isLoading } = useUsers();
   const { data: departments } = useDepartments();
@@ -67,7 +78,7 @@ export function UserManagement() {
     updateDepartmentMutation.mutate({ userId, departmentId: departmentId === 'none' ? null : departmentId });
   };
 
-  const handleEditUser = (user: any) => {
+  const handleEditUser = (user: User) => {
     setEditingUser(user);
     setEditName(user.full_name);
     setEditEmail(user.email);

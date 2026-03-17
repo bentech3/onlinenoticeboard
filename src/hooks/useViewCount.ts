@@ -63,7 +63,7 @@ export function useViewCount(noticeId: string | undefined) {
           notice_id: noticeId,
           user_id: session.user.id,
           department_id: profile?.department_id || null,
-        } as any, { onConflict: 'notice_id,user_id' });
+        }, { onConflict: 'notice_id,user_id' });
       }
     };
 

@@ -79,7 +79,7 @@ export function useBookmarkedNotices() {
 
       if (error) throw error;
 
-      return (data || []).map((b: any) => b.notice).filter(Boolean) as Notice[];
+      return (data || []).map((b) => b.notice).filter(Boolean) as unknown as Notice[];
     },
     enabled: !!user,
   });

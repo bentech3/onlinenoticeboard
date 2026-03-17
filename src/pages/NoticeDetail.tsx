@@ -45,7 +45,7 @@ export default function NoticeDetail() {
   const canDelete = (isOwner && notice?.status === 'draft') || isSuperAdmin;
   const canApprove = (isApprover || isSuperAdmin) && notice?.status === 'pending';
 
-  const statusStyles: Record<string, { bg: string; text: string; icon: any }> = {
+  const statusStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
     draft: { bg: 'bg-muted', text: 'text-muted-foreground', icon: Clock },
     pending: { bg: 'bg-warning/15', text: 'text-warning', icon: Clock },
     approved: { bg: 'bg-success/15', text: 'text-success', icon: CheckCircle },
