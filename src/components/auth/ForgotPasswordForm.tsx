@@ -81,7 +81,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
           <Input
             id="reset-email"
             type="email"
-            placeholder="your@email.com"
+            placeholder="Please enter your email"
             className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
             {...form.register('email')}
           />
