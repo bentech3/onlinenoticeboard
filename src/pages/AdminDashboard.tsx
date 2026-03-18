@@ -26,6 +26,8 @@ import {
 import { format } from 'date-fns';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useAutoArchive } from '@/hooks/useAutoArchive';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { NoticePerformanceReport } from '@/components/admin/NoticePerformanceReport';
 
 interface DepartmentEngagement {
   department_name: string;
@@ -103,7 +105,14 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        {/* Stats Grid */}
+        <Tabs defaultValue="overview" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-2 max-w-[400px]">
+            <TabsTrigger value="overview">Overview</TabsTrigger>
+            <TabsTrigger value="reports">Performance Reports</TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="overview" className="space-y-6">
+            {/* Stats Grid */}
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -291,7 +300,13 @@ export default function AdminDashboard() {
             </CardContent>
           </Card>
         </div>
-      </div>
-    </DashboardLayout>
+      </TabsContent>
+
+      <TabsContent value="reports">
+        <NoticePerformanceReport />
+      </TabsContent>
+    </Tabs>
+  </div>
+</DashboardLayout>
   );
 }

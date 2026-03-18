@@ -95,3 +95,17 @@ export interface Comment {
   author?: Profile;
   replies?: Comment[];
 }
+
+export interface NoticePerformanceReport {
+  notice_id: string;
+  title: string;
+  creator_name: string;
+  department_name: string;
+  category: string;
+  status: string;
+  view_count: number;
+  likes_count: number;
+  comments_count: number;
+  helpful_count: number;
+  created_at: string;
+}
