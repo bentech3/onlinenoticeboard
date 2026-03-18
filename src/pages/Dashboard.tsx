@@ -53,8 +53,7 @@ export default function Dashboard() {
   }, [approvedNotices, searchTerm, departmentFilter, statusFilter, categoryFilter]);
 
   const getGreeting = () => {
-    const name = profile?.full_name?.split(' ')[0] || 'User';
-    return `Welcome back, ${name} ✨`;
+    return `Welcome back ✨`;
   };
 
   return (

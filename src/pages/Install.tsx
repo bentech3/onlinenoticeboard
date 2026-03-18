@@ -103,7 +103,7 @@ export default function Install() {
         ) : isAndroid ? (
           <Card>
             <CardContent className="pt-6 space-y-6">
-              <h2 className="text-lg font-bold">Install on Android</h2>
+              <h1 className="text-2xl font-bold">BBUC-online-notice-board</h1>
               <div className="space-y-4 text-left">
                 <Step number={1} icon={<MoreVertical className="h-5 w-5" />} text='Tap the menu button (⋮) in Chrome' />
                 <Step number={2} icon={<Download className="h-5 w-5" />} text='Tap "Install app" or "Add to Home screen"' />

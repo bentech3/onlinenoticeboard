@@ -70,7 +70,7 @@ export default function Signage() {
       <div className="min-h-screen gradient-hero flex items-center justify-center">
         <div className="text-center text-primary-foreground max-w-md">
           <img src={ucuLogo} alt="UCU Logo" className="h-24 w-auto mx-auto mb-6" />
-          <h1 className="text-3xl font-bold mb-4 uppercase tracking-tighter">BBUC Notice Board</h1>
+          <h1 className="text-4xl font-bold tracking-tight text-foreground uppercase tracking-widest">BBUC-online-notice-board</h1>
           <p className="text-xl text-primary-foreground/80 font-medium">No notices to display at this time.</p>
         </div>
       </div>

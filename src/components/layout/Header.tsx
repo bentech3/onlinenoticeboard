@@ -158,7 +158,7 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
                   <DropdownMenuSeparator />
                   <DropdownMenuItem onClick={() => navigate('/dashboard')}>
                     <LayoutDashboard className="mr-2 h-4 w-4" />
-                    Dashboard
+                   BBUC-online-notice-board
                   </DropdownMenuItem>
                   <DropdownMenuItem onClick={() => navigate('/profile')}>
                     <User className="mr-2 h-4 w-4" />

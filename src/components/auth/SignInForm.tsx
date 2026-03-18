@@ -23,12 +23,6 @@ export function SignInForm() {
   const navigate = useNavigate();
   const { signIn, profile } = useAuth();
 
-  const getTimeGreeting = () => {
-    const hour = new Date().getHours();
-    if (hour < 12) return 'Good morning';
-    if (hour < 17) return 'Good afternoon';
-    return 'Good evening';
-  };
 
   const form = useForm<SignInFormData>({
     resolver: zodResolver(signInSchema),
@@ -48,11 +42,9 @@ export function SignInForm() {
           variant: 'destructive',
         });
       } else {
-        const greeting = getTimeGreeting();
-        const userName = profile?.full_name?.split(' ')[0] || 'User';
         toast({ 
-          title: `${greeting}, ${userName}! 👋`, 
-          description: 'Welcome back! You have signed in successfully.' 
+          title: `Welcome back!`, 
+          description: 'You have signed in successfully.' 
         });
         navigate('/dashboard');
       }
