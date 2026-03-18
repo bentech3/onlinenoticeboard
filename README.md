@@ -31,12 +31,12 @@ Official Online Notice Board System (ONBS) for Uganda Christian University - Bis
 
 1. Clone the repository:
    ```sh
-   git clone https://github.com/bentech3/campus-notice-hub.git
+   git clone https://github.com/bentech3/onlinenoticeboard.git
    ```
 
 2. Navigate to the project directory:
    ```sh
-   cd campus-notice-hub
+   cd onlinenoticeboard
    ```
 
 3. Install dependencies:
