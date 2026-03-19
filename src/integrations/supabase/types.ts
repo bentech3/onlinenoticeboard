@@ -405,6 +405,7 @@ export type Database = {
           rejection_reason: string | null
           scheduled_at: string | null
           status: Database["public"]["Enums"]["notice_status"]
+          target_department_id: string | null
           title: string
           updated_at: string
           view_count: number
@@ -425,6 +426,7 @@ export type Database = {
           rejection_reason?: string | null
           scheduled_at?: string | null
           status?: Database["public"]["Enums"]["notice_status"]
+          target_department_id?: string | null
           title: string
           updated_at?: string
           view_count?: number
@@ -445,6 +447,7 @@ export type Database = {
           rejection_reason?: string | null
           scheduled_at?: string | null
           status?: Database["public"]["Enums"]["notice_status"]
+          target_department_id?: string | null
           title?: string
           updated_at?: string
           view_count?: number
@@ -453,6 +456,13 @@ export type Database = {
           {
             foreignKeyName: "notices_department_id_fkey"
             columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "notices_target_department_id_fkey"
+            columns: ["target_department_id"]
             isOneToOne: false
             referencedRelation: "departments"
             referencedColumns: ["id"]

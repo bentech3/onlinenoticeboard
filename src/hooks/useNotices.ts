@@ -25,7 +25,8 @@ export function useNotices(status?: NoticeStatus | NoticeStatus[], departmentId?
         .from('notices')
         .select(`
           *,
-          department:departments(*)
+          department:departments!notices_department_id_fkey(*),
+          target_department:departments!notices_target_department_id_fkey(*)
         `)
         .order('created_at', { ascending: false });
 
@@ -99,7 +100,8 @@ export function useNotice(id: string) {
         .from('notices')
         .select(`
           *,
-          department:departments(*),
+          department:departments!notices_department_id_fkey(*),
+          target_department:departments!notices_target_department_id_fkey(*),
           attachments(*)
         `)
         .eq('id', id)

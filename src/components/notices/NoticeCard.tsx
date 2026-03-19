@@ -16,7 +16,6 @@ interface NoticeCardProps {
 }
 
 export function NoticeCard({ notice, showStatus = false, compact = false }: NoticeCardProps) {
-  const { data: departments } = useDepartments();
   const statusStyles = {
     draft: 'bg-muted text-muted-foreground',
     pending: 'bg-warning/15 text-warning border-warning/30',
@@ -119,10 +118,10 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
             )}
 
             {/* Target Audience Badge */}
-            {notice.target_department_id && notice.target_department_id !== notice.department_id && (
+            {notice.target_department && notice.target_department_id !== notice.department_id && (
               <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 gap-1.5">
                 <Users className="h-3 w-3" />
-                Target: {departments?.find(d => d.id === notice.target_department_id)?.name || 'Department'}
+                Target: {notice.target_department.name}
               </Badge>
             )}
 

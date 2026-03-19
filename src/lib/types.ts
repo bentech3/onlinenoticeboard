@@ -48,6 +48,7 @@ export interface Notice {
   created_at: string;
   updated_at: string;
   department?: Department;
+  target_department?: Department;
   creator?: Profile;
   approver?: Profile;
   attachments?: Attachment[];
