@@ -1,5 +1,5 @@
 import { formatDistanceToNow } from 'date-fns';
-import { Calendar, Building2, AlertTriangle, Paperclip, ChevronRight, ShieldAlert } from 'lucide-react';
+import { Calendar, Building2, AlertTriangle, Paperclip, ChevronRight, ShieldAlert, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { NoticeActions } from '@/components/notices/NoticeActions';
 import { Notice } from '@/lib/types';
 import { cn, getDepartmentColor } from '@/lib/utils';
+import { useDepartments } from '@/hooks/useDepartments';
 
 interface NoticeCardProps {
   notice: Notice;
@@ -15,6 +16,7 @@ interface NoticeCardProps {
 }
 
 export function NoticeCard({ notice, showStatus = false, compact = false }: NoticeCardProps) {
+  const { data: departments } = useDepartments();
   const statusStyles = {
     draft: 'bg-muted text-muted-foreground',
     pending: 'bg-warning/15 text-warning border-warning/30',
@@ -114,6 +116,14 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
                 <Building2 className="h-3 w-3" />
                 <span className="truncate max-w-[120px] md:max-w-none">{notice.department.name}</span>
               </div>
+            )}
+
+            {/* Target Audience Badge */}
+            {notice.target_department_id && notice.target_department_id !== notice.department_id && (
+              <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 gap-1.5">
+                <Users className="h-3 w-3" />
+                Target: {departments?.find(d => d.id === notice.target_department_id)?.name || 'Department'}
+              </Badge>
             )}
 
             {/* Creator */}

@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Building2, Calendar, Paperclip, Clock, CheckCircle, XCircle, AlertTriangle, Edit, Trash2, Archive } from 'lucide-react';
+import { ArrowLeft, Building2, Calendar, Paperclip, Clock, CheckCircle, XCircle, AlertTriangle, Edit, Trash2, Archive, Users } from 'lucide-react';
 import { CommentSection } from '@/components/comments/CommentSection';
 import { NoticeActions } from '@/components/notices/NoticeActions';
 import { NoticeQRCode } from '@/components/notices/NoticeQRCode';
@@ -22,12 +22,14 @@ import { useViewCount } from '@/hooks/useViewCount';
 import { cn, getDepartmentColor } from '@/lib/utils';
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/hooks/use-toast';
+import { useDepartments } from '@/hooks/useDepartments';
 
 export default function NoticeDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
   const { profile, isApprover, isSuperAdmin, isAuthenticated } = useAuth();
   const { data: notice, isLoading, error } = useNotice(id || '');
+  const { data: departments } = useDepartments();
   const deleteNotice = useDeleteNotice();
   const approveNotice = useApproveNotice();
   const rejectNotice = useRejectNotice();
@@ -214,6 +216,12 @@ export default function NoticeDetail() {
                 )}>
                   <Building2 className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span>{notice.department.name}</span>
+                </div>
+              )}
+              {notice.target_department_id && notice.target_department_id !== notice.department_id && (
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary font-bold text-[10px] md:text-xs">
+                  <Users className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span>Target: {departments?.find(d => d.id === notice.target_department_id)?.name || 'Department'}</span>
                 </div>
               )}
               {notice.creator && (
