@@ -12,7 +12,7 @@ import { useNotices } from '@/hooks/useNotices';
 
 export function MobileBottomNav() {
   const location = useLocation();
-  const { role, isCreator, isApprover, isSuperAdmin } = useAuth();
+  const { role, isCreator, isHOD, isSuperAdmin } = useAuth();
   const { notices } = useNotices('pending');
   const pendingCount = notices.length;
 
@@ -33,15 +33,15 @@ export function MobileBottomNav() {
       title: 'Create',
       href: '/notices/create',
       icon: PlusCircle,
-      show: isCreator || isApprover || isSuperAdmin,
+      show: isCreator || isHOD || isSuperAdmin,
       accent: true,
     },
     {
-      title: 'Approve',
+      title: 'HOD Queue',
       href: '/approval-queue',
       icon: CheckSquare,
       badge: pendingCount,
-      show: isApprover || isSuperAdmin,
+      show: isHOD || isSuperAdmin,
     },
     {
       title: 'Settings',

@@ -14,7 +14,7 @@ interface AuthContextType {
   signOut: () => Promise<void>;
   isAuthenticated: boolean;
   isCreator: boolean;
-  isApprover: boolean;
+  isHOD: boolean;
   isSuperAdmin: boolean;
 }
 
@@ -149,7 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signOut,
     isAuthenticated: !!user,
     isCreator: role === 'creator' || role === 'approver' || role === 'super_admin',
-    isApprover: role === 'approver' || role === 'super_admin',
+    isHOD: role === 'approver' || role === 'super_admin',
     isSuperAdmin: role === 'super_admin',
   };
 

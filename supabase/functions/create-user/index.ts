@@ -89,13 +89,16 @@ serve(async (req: Request) => {
         .eq("id", newUser.user.id);
     }
 
-    // Assign role
+    // Remove the default 'viewer' role assigned by the signup trigger
     await adminClient
       .from("user_roles")
-      .upsert(
-        { user_id: newUser.user.id, role },
-        { onConflict: "user_id" }
-      );
+      .delete()
+      .eq("user_id", newUser.user.id);
+
+    // Assign requested role
+    await adminClient
+      .from("user_roles")
+      .insert({ user_id: newUser.user.id, role });
 
     return new Response(
       JSON.stringify({

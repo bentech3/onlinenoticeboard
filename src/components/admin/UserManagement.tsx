@@ -43,7 +43,7 @@ interface User {
 const ROLES: { value: AppRole; label: string; color: string }[] = [
   { value: 'viewer', label: 'Student', color: 'secondary' },
   { value: 'creator', label: 'Staff / Lecturer', color: 'default' },
-  { value: 'approver', label: 'HOD / Dean', color: 'warning' },
+  { value: 'approver', label: 'Head of Department (HOD)', color: 'info' },
   { value: 'super_admin', label: 'System Administrator', color: 'destructive' },
 ];
 

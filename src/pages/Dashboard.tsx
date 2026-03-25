@@ -16,10 +16,15 @@ import { cn, getDepartmentColor } from '@/lib/utils';
 import { Building2 } from 'lucide-react';
 
 export default function Dashboard() {
-  const { profile, role, isCreator, isApprover, isSuperAdmin } = useAuth();
+  const { profile, role, isCreator, isHOD, isSuperAdmin } = useAuth();
+  
+  // Define target department for notice delivery
+  // Students and Staff see notices for their department + general
+  const targetDept = !isSuperAdmin ? profile?.department_id : undefined;
+
   const { notices: allNotices, isLoading } = useNotices();
-  const { notices: approvedNotices } = useNotices('approved');
-  const { notices: pendingNotices } = useNotices('pending');
+  const { notices: approvedNotices } = useNotices('approved', undefined, targetDept);
+  const { notices: pendingNotices } = useNotices('pending', isHOD && !isSuperAdmin ? profile?.department_id : undefined);
   const { data: bookmarkedNotices = [], isLoading: bookmarksLoading } = useBookmarkedNotices();
   const { data: departments = [] } = useDepartments();
 
@@ -68,8 +73,8 @@ export default function Dashboard() {
             <p className="text-sm md:text-base text-muted-foreground">
               {isSuperAdmin
                 ? "System Administrator: Manage all notices and university settings"
-                : isApprover
-                  ? "HOD / Dean: Review and approve pending departmental notices"
+                : isHOD
+                  ? "Head of Department: Review and approve pending departmental notices"
                   : isCreator
                     ? "Staff / Lecturer: Create and manage your academic notices"
                     : "Student: Stay updated with the latest university notices"}
@@ -99,7 +104,7 @@ export default function Dashboard() {
             </CardContent>
           </Card>
 
-          {isApprover && (
+          {isHOD && (
             <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-orange-500/10 shadow-sm transition-all hover:shadow-md">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">
                 <CardTitle className="text-xs md:text-sm font-medium">Pending</CardTitle>
@@ -138,7 +143,7 @@ export default function Dashboard() {
             </>
           )}
 
-          {!isCreator && !isApprover && (
+          {!isCreator && !isHOD && (
             <>
               <Card className="min-w-[150px] md:min-w-0 shrink-0 md:shrink border-none bg-success/10 shadow-sm transition-all hover:shadow-md">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-1 p-4">

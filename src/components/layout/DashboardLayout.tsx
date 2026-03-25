@@ -58,7 +58,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       roles: ['creator', 'approver', 'super_admin'],
     },
     {
-      title: 'Pending Approval',
+      title: 'Department Approvals',
       href: '/approval-queue',
       icon: <CheckSquare className="h-5 w-5" />,
       badge: pendingCount,

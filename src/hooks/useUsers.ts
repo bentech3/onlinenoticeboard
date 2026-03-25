@@ -48,35 +48,23 @@ export function useUpdateUserRole() {
 
   return useMutation({
     mutationFn: async ({ userId, role }: { userId: string; role: AppRole }) => {
-      // First check if user has a role entry
-      const { data: existingRole } = await supabase
+      // Delete any existing roles to ensure a clean slate and avoid multiple-row UPDATE conflicts
+      const { error: deleteError } = await supabase
         .from('user_roles')
-        .select('*')
-        .eq('user_id', userId)
+        .delete()
+        .eq('user_id', userId);
+
+      if (deleteError) throw deleteError;
+
+      // Insert the new single role
+      const { data: insertedRole, error: insertError } = await supabase
+        .from('user_roles')
+        .insert({ user_id: userId, role })
+        .select()
         .single();
 
-      if (existingRole) {
-        // Update existing role
-        const { data, error } = await supabase
-          .from('user_roles')
-          .update({ role })
-          .eq('user_id', userId)
-          .select()
-          .single();
-
-        if (error) throw error;
-        return data;
-      } else {
-        // Insert new role
-        const { data, error } = await supabase
-          .from('user_roles')
-          .insert({ user_id: userId, role })
-          .select()
-          .single();
-
-        if (error) throw error;
-        return data;
-      }
+      if (insertError) throw insertError;
+      return insertedRole;
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['users'] });

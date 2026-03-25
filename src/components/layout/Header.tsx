@@ -57,7 +57,7 @@ export function Header({ onMenuClick, pendingCount = 0, showNav = true }: Header
 
     const roleLabels = {
       super_admin: 'System Administrator',
-      approver: 'HOD / Dean',
+      approver: 'Head of Department',
       creator: 'Staff / Lecturer',
       viewer: 'Student',
     };

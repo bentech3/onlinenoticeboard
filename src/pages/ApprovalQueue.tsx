@@ -21,8 +21,13 @@ import { useNavigate } from 'react-router-dom';
 
 export default function ApprovalQueue() {
   const navigate = useNavigate();
-  const { isApprover, isSuperAdmin } = useAuth();
-  const { notices: pendingNotices, isLoading } = useNotices('pending');
+  const { profile, isHOD, isSuperAdmin } = useAuth();
+  
+  // HODs only see pending notices for their department (or all if super admin)
+  const { notices: pendingNotices, isLoading } = useNotices(
+    'pending', 
+    !isSuperAdmin ? profile?.department_id : undefined
+  );
   const approveNotice = useApproveNotice();
   const rejectNotice = useRejectNotice();
   
@@ -31,7 +36,7 @@ export default function ApprovalQueue() {
   const [rejectReason, setRejectReason] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
 
-  if (!isApprover && !isSuperAdmin) {
+  if (!isHOD && !isSuperAdmin) {
     navigate('/dashboard');
     return null;
   }
@@ -73,9 +78,9 @@ export default function ApprovalQueue() {
       <div className="space-y-6">
         {/* Header */}
         <div>
-          <h1 className="text-2xl md:text-3xl font-bold mb-1">Approval Queue</h1>
+          <h1 className="text-2xl md:text-3xl font-bold mb-1">HOD Approval Queue</h1>
           <p className="text-muted-foreground">
-            Review and approve pending notices from your department
+            Review and approve pending notices targeting your department
           </p>
         </div>
 

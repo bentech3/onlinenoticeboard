@@ -27,7 +27,7 @@ import { useDepartments } from '@/hooks/useDepartments';
 export default function NoticeDetail() {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { profile, isApprover, isSuperAdmin, isAuthenticated } = useAuth();
+  const { profile, isHOD, isSuperAdmin, isAuthenticated } = useAuth();
   const { data: notice, isLoading, error } = useNotice(id || '');
   const deleteNotice = useDeleteNotice();
   const approveNotice = useApproveNotice();
@@ -44,7 +44,7 @@ export default function NoticeDetail() {
   const isOwner = notice?.created_by === profile?.id;
   const canEdit = isOwner && notice?.status === 'draft';
   const canDelete = (isOwner && notice?.status === 'draft') || isSuperAdmin;
-  const canApprove = (isApprover || isSuperAdmin) && notice?.status === 'pending';
+  const canApprove = (isHOD || isSuperAdmin) && notice?.status === 'pending';
 
   const statusStyles: Record<string, { bg: string; text: string; icon: React.ElementType }> = {
     draft: { bg: 'bg-muted', text: 'text-muted-foreground', icon: Clock },

@@ -38,7 +38,7 @@ type CreateUserFormData = z.infer<typeof createUserSchema>;
 const ROLES: { value: AppRole; label: string }[] = [
   { value: 'viewer', label: 'Student' },
   { value: 'creator', label: 'Staff / Lecturer' },
-  { value: 'approver', label: 'HOD / Dean' },
+  { value: 'approver', label: 'Head of Department (HOD)' },
   { value: 'super_admin', label: 'System Administrator' },
 ];
 

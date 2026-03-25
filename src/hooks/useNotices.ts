@@ -15,11 +15,11 @@ interface CreateNoticeData {
   is_urgent?: boolean;
 }
 
-export function useNotices(status?: NoticeStatus | NoticeStatus[], departmentId?: string) {
+export function useNotices(status?: NoticeStatus | NoticeStatus[], departmentId?: string, targetDepartmentId?: string) {
   const queryClient = useQueryClient();
 
   const { data: notices, isLoading, error } = useQuery({
-    queryKey: ['notices', status, departmentId],
+    queryKey: ['notices', status, departmentId, targetDepartmentId],
     queryFn: async () => {
       let query = supabase
         .from('notices')
@@ -42,9 +42,10 @@ export function useNotices(status?: NoticeStatus | NoticeStatus[], departmentId?
         query = query.eq('department_id', departmentId);
       }
 
-      // If we want to filter by target audience in the query:
-      // query = query.or(`target_department_id.is.null,target_department_id.eq.${userDepartmentId}`);
-      // However, we'll keep it simple for now and rely on the UI/RLS.
+      if (targetDepartmentId) {
+        // Filter for specific target department OR university-wide (null)
+        query = query.or(`target_department_id.eq.${targetDepartmentId},target_department_id.is.null`);
+      }
 
       const { data, error } = await query;
 
