@@ -139,20 +139,20 @@ export default function Signage() {
         </div>
       )}
 
-      {/* Modern Header */}
+      {/* Modern Header - Responsive */}
       <header className={cn(
-        "relative z-40 flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-4 md:py-8 transition-all duration-700 gap-4",
+        "relative z-40 flex flex-col md:flex-row items-center justify-between px-4 md:px-10 py-4 md:py-8 transition-all duration-700 gap-4",
         showControls ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
       )}>
-        <div className="flex items-center gap-4 md:gap-8">
-          <div className="relative group">
+        <div className="flex items-center gap-3 md:gap-8">
+          <div className="relative group shrink-0">
             <div className="absolute -inset-2 bg-white/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <img src={ucuLogo} alt="UCU Logo" className="h-[50px] md:h-[90px] w-auto relative drop-shadow-2xl" />
+            <img src={ucuLogo} alt="UCU Logo" className="h-10 md:h-[90px] w-auto relative drop-shadow-2xl" />
           </div>
-          <div className="h-10 md:h-16 w-px bg-white/10 mx-1 md:mx-2" />
+          <div className="h-8 md:h-16 w-px bg-white/10 mx-1 md:mx-2" />
           <div className="space-y-0.5 md:space-y-1">
-            <h1 className="text-xl md:text-3xl font-black uppercase tracking-[0.1em] md:tracking-[0.15em] text-white leading-none">BBUC Notice Board</h1>
-            <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-sm md:text-lg font-bold">
+            <h1 className="text-sm md:text-3xl font-black uppercase tracking-[0.1em] md:tracking-[0.15em] text-white leading-none">BBUC Notice Board</h1>
+            <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-[10px] md:text-lg font-bold">
               <span className="text-secondary">{format(currentTime, 'EEE, MMM do')}</span>
               <span className="h-1 w-1 rounded-full bg-slate-700" />
               <span className="text-white tracking-widest">{format(currentTime, 'HH:mm:ss')}</span>
@@ -252,12 +252,12 @@ export default function Signage() {
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-3xl md:text-6xl lg:text-8xl font-black leading-[1.1] md:leading-[0.95] tracking-tight drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] text-white">
+                  <h2 className="text-2xl md:text-6xl lg:text-8xl font-black leading-tight md:leading-[0.95] tracking-tight drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] text-white">
                     {current.title}
                   </h2>
 
                   {/* Content */}
-                  <div className="text-lg md:text-3xl lg:text-4xl text-slate-200/90 leading-relaxed font-semibold max-h-[300px] md:max-h-[450px] overflow-y-auto scrollbar-hide relative pr-2">
+                  <div className="text-sm md:text-3xl lg:text-4xl text-slate-200/90 leading-relaxed font-semibold max-h-[250px] md:max-h-[450px] overflow-y-auto scrollbar-hide relative pr-2">
                     <p className="whitespace-pre-wrap">{current.content}</p>
                     {/* Fade for long content - visible only if content is long */}
                     <div className="sticky bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#020617]/40 to-transparent pointer-events-none" />
@@ -265,16 +265,16 @@ export default function Signage() {
 
                   {/* Meta Information */}
                   <div className="flex flex-wrap items-center gap-6 md:gap-12 pt-6 md:pt-12 border-t border-white/5">
-                    <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-sm md:text-2xl font-bold">
-                      <Clock className="h-5 w-5 md:h-8 md:w-8 text-secondary" />
+                    <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-xs md:text-2xl font-bold">
+                      <Clock className="h-4 w-4 md:h-8 md:w-8 text-secondary" />
                       <span>{formatDistanceToNow(new Date(current.created_at), { addSuffix: true })}</span>
                     </div>
                     {current.creator && (
-                      <div className="flex items-center gap-3 md:gap-5 text-slate-300 text-sm md:text-2xl font-bold">
-                        <div className="h-8 w-8 md:h-12 md:w-12 rounded-full bg-gradient-to-tr from-secondary to-primary/40 flex items-center justify-center text-white text-xs md:text-base">
+                      <div className="flex items-center gap-2 md:gap-5 text-slate-300 text-xs md:text-2xl font-bold">
+                        <div className="h-6 w-6 md:h-12 md:w-12 rounded-full bg-gradient-to-tr from-secondary to-primary/40 flex items-center justify-center text-white text-[8px] md:text-base">
                           {current.creator.full_name.charAt(0)}
                         </div>
-                        <span className="truncate max-w-[150px] md:max-w-none">{current.creator.full_name}</span>
+                        <span className="truncate max-w-[100px] md:max-w-none">{current.creator.full_name}</span>
                       </div>
                     )}
                   </div>
@@ -295,17 +295,17 @@ export default function Signage() {
                   )}
                 </div>
 
-                {/* Vertical QR Panel */}
-                <div className="w-full lg:w-[280px] flex flex-row lg:flex-col items-center gap-6 md:gap-8 p-6 md:p-10 rounded-3xl md:rounded-[50px] bg-white/[0.02] border border-white/5 shadow-inner shrink-0 justify-center">
-                  <div className="p-2 md:p-4 bg-white rounded-2xl md:rounded-[40px] shadow-2xl transform hover:scale-105 transition-transform duration-500 shrink-0">
-                    <img src={qrUrl} alt="Quick Scan" className="w-[100px] h-[100px] md:w-[200px] md:h-[200px]" />
+                {/* QR Panel - Responsive Stack */}
+                <div className="w-full lg:w-[280px] flex flex-row lg:flex-col items-center gap-4 md:gap-8 p-4 md:p-10 rounded-2xl md:rounded-[50px] bg-white/[0.02] border border-white/5 shadow-inner shrink-0 justify-center">
+                  <div className="p-1 md:p-4 bg-white rounded-xl md:rounded-[40px] shadow-2xl transform hover:scale-105 transition-transform duration-500 shrink-0">
+                    <img src={qrUrl} alt="Quick Scan" className="w-[60px] h-[60px] md:w-[200px] md:h-[200px]" />
                   </div>
-                  <div className="text-left lg:text-center space-y-2 md:space-y-4">
-                    <div className="px-3 md:px-4 py-1 md:py-2 bg-secondary/10 rounded-full border border-secondary/20 inline-block">
-                      <p className="text-secondary text-[10px] md:text-sm font-black uppercase tracking-[0.2em]">Quick Access</p>
+                  <div className="text-left lg:text-center space-y-1 md:space-y-4">
+                    <div className="px-2 md:px-4 py-0.5 md:py-2 bg-secondary/10 rounded-full border border-secondary/20 inline-block">
+                      <p className="text-secondary text-[8px] md:text-sm font-black uppercase tracking-[0.2em]">Quick Access</p>
                     </div>
-                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-bold max-w-[150px] md:max-w-none">
-                      Scan to read on mobile.
+                    <p className="text-slate-400 text-[10px] md:text-sm leading-relaxed font-bold max-w-[100px] md:max-w-none">
+                      Scan on mobile.
                     </p>
                   </div>
                 </div>

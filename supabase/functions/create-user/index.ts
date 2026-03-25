@@ -56,8 +56,8 @@ serve(async (req: Request) => {
       throw new Error("Only super admins can create users");
     }
 
-    const { email, password, fullName, role, departmentId }: CreateUserRequest =
-      await req.json();
+    const requestData: CreateUserRequest = await req.json();
+    const { email, password, fullName, role, departmentId } = requestData;
 
     // Validate input
     if (!email || !password || !fullName || !role) {
@@ -77,28 +77,42 @@ serve(async (req: Request) => {
         user_metadata: { full_name: fullName },
       });
 
-    if (createError || !newUser.user) {
+    if (createError || !newUser?.user) {
       throw createError || new Error("User creation failed");
     }
 
     // Update profile with department if provided
-    if (departmentId) {
+    if (departmentId || fullName) {
       await adminClient
         .from("profiles")
-        .update({ department_id: departmentId })
+        .update({ 
+          department_id: departmentId || null,
+          full_name: fullName 
+        })
         .eq("id", newUser.user.id);
     }
 
-    // Remove the default 'viewer' role assigned by the signup trigger
+    // Role management: Ensure only one role exists
+    // Small delay to let any automation triggers finish
+    await new Promise((resolve) => setTimeout(resolve, 500));
+
+    // Delete any existing roles to avoid duplicates
     await adminClient
       .from("user_roles")
       .delete()
       .eq("user_id", newUser.user.id);
 
     // Assign requested role
-    await adminClient
+    const { error: roleError } = await adminClient
       .from("user_roles")
       .insert({ user_id: newUser.user.id, role });
+
+    if (roleError) {
+      console.error("Role assignment error, trying upsert:", roleError);
+      await adminClient
+        .from("user_roles")
+        .upsert({ user_id: newUser.user.id, role });
+    }
 
     return new Response(
       JSON.stringify({
