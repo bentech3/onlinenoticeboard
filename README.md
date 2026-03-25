@@ -1,4 +1,4 @@
-# bbuc-notice-board - UCU-BBUC
+# BBUC-online noticeboard system
 
 Official Online Notice Board System (ONBS) for Uganda Christian University - Bishop Barham University College.
 
