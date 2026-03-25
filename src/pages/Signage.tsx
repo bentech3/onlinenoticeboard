@@ -141,48 +141,48 @@ export default function Signage() {
 
       {/* Modern Header */}
       <header className={cn(
-        "relative z-40 flex items-center justify-between px-10 py-8 transition-all duration-700",
+        "relative z-40 flex flex-col md:flex-row items-center justify-between px-6 md:px-10 py-4 md:py-8 transition-all duration-700 gap-4",
         showControls ? "translate-y-0 opacity-100" : "-translate-y-4 opacity-0"
       )}>
-        <div className="flex items-center gap-8">
+        <div className="flex items-center gap-4 md:gap-8">
           <div className="relative group">
             <div className="absolute -inset-2 bg-white/10 rounded-full blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
-            <img src={ucuLogo} alt="UCU Logo" className="h-[90px] w-auto relative drop-shadow-2xl" />
+            <img src={ucuLogo} alt="UCU Logo" className="h-[50px] md:h-[90px] w-auto relative drop-shadow-2xl" />
           </div>
-          <div className="h-16 w-px bg-white/10 mx-2" />
-          <div className="space-y-1">
-            <h1 className="text-3xl font-black uppercase tracking-[0.15em] text-white leading-none">BBUC Notice Board</h1>
-            <div className="flex items-center gap-4 text-slate-400 text-lg font-bold">
-              <span className="text-secondary">{format(currentTime, 'EEEE, MMM do')}</span>
-              <span className="h-1.5 w-1.5 rounded-full bg-slate-700" />
+          <div className="h-10 md:h-16 w-px bg-white/10 mx-1 md:mx-2" />
+          <div className="space-y-0.5 md:space-y-1">
+            <h1 className="text-xl md:text-3xl font-black uppercase tracking-[0.1em] md:tracking-[0.15em] text-white leading-none">BBUC Notice Board</h1>
+            <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-sm md:text-lg font-bold">
+              <span className="text-secondary">{format(currentTime, 'EEE, MMM do')}</span>
+              <span className="h-1 w-1 rounded-full bg-slate-700" />
               <span className="text-white tracking-widest">{format(currentTime, 'HH:mm:ss')}</span>
             </div>
           </div>
         </div>
         
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-3">
           <Button 
             variant="outline" 
-            size="lg" 
+            size="sm" 
             onClick={() => setIsPlaying(!isPlaying)}
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-white/20 h-16 w-16"
+            className="rounded-xl bg-white/5 border-white/10 hover:bg-white/20 h-12 w-12 md:h-16 md:w-16"
           >
-            {isPlaying ? <Pause className="h-8 w-8" /> : <Play className="h-8 w-8" />}
+            {isPlaying ? <Pause className="h-5 w-5 md:h-8 md:w-8" /> : <Play className="h-5 w-5 md:h-8 md:w-8" />}
           </Button>
           <Button 
             variant="outline" 
-            size="lg" 
+            size="sm" 
             onClick={toggleFullscreen}
-            className="rounded-2xl bg-white/5 border-white/10 hover:bg-white/20 h-16 w-16"
+            className="rounded-xl bg-white/5 border-white/10 hover:bg-white/20 h-12 w-12 md:h-16 md:w-16"
           >
-            <Maximize className="h-8 w-8" />
+            <Maximize className="h-5 w-5 md:h-8 md:w-8" />
           </Button>
         </div>
       </header>
 
       {/* Navigation Overlays */}
       <div className={cn(
-        "fixed inset-y-0 left-0 z-30 flex items-center px-6 transition-opacity duration-500",
+        "fixed inset-y-0 left-0 z-30 hidden md:flex items-center px-6 transition-opacity duration-500",
         showControls ? "opacity-100" : "opacity-0"
       )}>
         <Button 
@@ -196,7 +196,7 @@ export default function Signage() {
       </div>
 
       <div className={cn(
-        "fixed inset-y-0 right-0 z-30 flex items-center px-6 transition-opacity duration-500",
+        "fixed inset-y-0 right-0 z-30 hidden md:flex items-center px-6 transition-opacity duration-500",
         showControls ? "opacity-100" : "opacity-0"
       )}>
         <Button 
@@ -210,88 +210,85 @@ export default function Signage() {
       </div>
 
       {/* Main Notice Display */}
-      <main className="relative z-20 flex-1 flex items-center justify-center px-12 pb-12 pt-4">
+      <main className="relative z-20 flex-1 flex items-center justify-center px-4 md:px-12 pb-8 md:pb-12 pt-2 transition-all duration-500">
         <div 
           key={current.id} 
           className="w-full max-w-7xl animate-in fade-in slide-in-from-bottom-8 duration-1000"
         >
           <div className="relative group">
             {/* Glossy Backdrop */}
-            <div className="absolute -inset-0.5 bg-gradient-to-br from-white/20 to-transparent rounded-[60px] blur-xs opacity-50" />
+            <div className="absolute -inset-0.5 bg-gradient-to-br from-white/20 to-transparent rounded-[32px] md:rounded-[60px] blur-xs opacity-50" />
             
-            <div className="relative rounded-[60px] bg-white/[0.03] backdrop-blur-[80px] border border-white/10 p-12 md:p-20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] overflow-hidden">
+            <div className="relative rounded-[32px] md:rounded-[60px] bg-white/[0.03] backdrop-blur-[40px] md:backdrop-blur-[80px] border border-white/10 p-8 md:p-20 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.7)] overflow-hidden">
               
               {/* Expired Stamp */}
               {isExpired && (
-                <div className="absolute top-[20%] right-[10%] z-50 pointer-events-none rotate-[25deg] animate-in zoom-in-50 duration-500">
-                  <div className="border-[12px] border-destructive/60 px-12 py-4 rounded-3xl text-7xl font-black text-destructive/60 uppercase tracking-[0.2em] shadow-2xl backdrop-blur-sm">
+                <div className="absolute top-[10%] md:top-[20%] right-[10%] z-50 pointer-events-none rotate-[25deg] animate-in zoom-in-50 duration-500">
+                  <div className="border-4 md:border-[12px] border-destructive/60 px-4 md:px-12 py-1 md:py-4 rounded-lg md:rounded-3xl text-2xl md:text-7xl font-black text-destructive/60 uppercase tracking-[0.2em] shadow-2xl backdrop-blur-sm">
                     OUTDATED
                   </div>
                 </div>
               )}
 
-              <div className="flex flex-col md:flex-row gap-16 items-start">
-                <div className="flex-1 space-y-10">
+              <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-start">
+                <div className="flex-1 space-y-6 md:space-y-10 w-full">
                   {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-4">
+                  <div className="flex flex-wrap items-center gap-2 md:gap-4">
                     {current.is_urgent && (
-                      <Badge className="bg-destructive text-white gap-3 text-xl font-black px-8 py-3 rounded-2xl animate-pulse shadow-2xl shadow-destructive/20 border-b-4 border-black/20">
-                        <AlertTriangle className="h-6 w-6" /> URGENT BROADCAST
+                      <Badge className="bg-destructive text-white gap-2 md:gap-3 text-xs md:text-xl font-black px-3 md:px-8 py-1.5 md:py-3 rounded-lg md:rounded-2xl animate-pulse shadow-2xl shadow-destructive/20 border-b-2 md:border-b-4 border-black/20">
+                        <AlertTriangle className="h-4 w-4 md:h-6 md:w-6" /> URGENT
                       </Badge>
                     )}
                     {current.department && (
-                      <Badge className="bg-secondary/20 text-secondary gap-3 text-xl font-black px-8 py-3 rounded-2xl border border-secondary/30 backdrop-blur-md">
-                        <Building2 className="h-6 w-6" /> {current.department.name}
+                      <Badge className="bg-secondary/20 text-secondary gap-2 md:gap-3 text-xs md:text-xl font-black px-3 md:px-8 py-1.5 md:py-3 rounded-lg md:rounded-2xl border border-secondary/30 backdrop-blur-md">
+                        <Building2 className="h-4 w-4 md:h-6 md:w-6" /> {current.department.name}
                       </Badge>
                     )}
                     {current.category && (
-                      <Badge variant="outline" className="text-slate-400 border-white/10 text-xl font-bold px-8 py-3 rounded-2xl bg-white/5">
+                      <Badge variant="outline" className="text-slate-400 border-white/10 text-xs md:text-xl font-bold px-3 md:px-8 py-1.5 md:py-3 rounded-lg md:rounded-2xl bg-white/5">
                         {current.category}
                       </Badge>
                     )}
                   </div>
 
                   {/* Title */}
-                  <h2 className="text-6xl md:text-8xl font-black leading-[0.95] tracking-tight drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] text-white">
+                  <h2 className="text-3xl md:text-6xl lg:text-8xl font-black leading-[1.1] md:leading-[0.95] tracking-tight drop-shadow-[0_10px_10px_rgba(0,0,0,0.3)] text-white">
                     {current.title}
                   </h2>
 
                   {/* Content */}
-                  <div className="text-3xl md:text-4xl text-slate-200/90 leading-relaxed font-semibold max-h-[450px] overflow-hidden relative">
+                  <div className="text-lg md:text-3xl lg:text-4xl text-slate-200/90 leading-relaxed font-semibold max-h-[300px] md:max-h-[450px] overflow-y-auto scrollbar-hide relative pr-2">
                     <p className="whitespace-pre-wrap">{current.content}</p>
-                    {/* Fade for long content */}
-                    <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                    {/* Fade for long content - visible only if content is long */}
+                    <div className="sticky bottom-0 left-0 right-0 h-12 bg-gradient-to-t from-[#020617]/40 to-transparent pointer-events-none" />
                   </div>
 
                   {/* Meta Information */}
-                  <div className="flex flex-wrap items-center gap-12 pt-12 border-t border-white/5">
-                    <div className="flex items-center gap-4 text-slate-400 text-2xl font-bold">
-                      <Clock className="h-8 w-8 text-secondary" />
-                      <span>Posted {formatDistanceToNow(new Date(current.created_at), { addSuffix: true })}</span>
+                  <div className="flex flex-wrap items-center gap-6 md:gap-12 pt-6 md:pt-12 border-t border-white/5">
+                    <div className="flex items-center gap-2 md:gap-4 text-slate-400 text-sm md:text-2xl font-bold">
+                      <Clock className="h-5 w-5 md:h-8 md:w-8 text-secondary" />
+                      <span>{formatDistanceToNow(new Date(current.created_at), { addSuffix: true })}</span>
                     </div>
                     {current.creator && (
-                      <div className="flex items-center gap-5 text-slate-300 text-2xl font-bold">
-                        <div className="h-12 w-12 rounded-full bg-gradient-to-tr from-secondary to-primary/40 flex items-center justify-center text-white text-base">
+                      <div className="flex items-center gap-3 md:gap-5 text-slate-300 text-sm md:text-2xl font-bold">
+                        <div className="h-8 w-8 md:h-12 md:w-12 rounded-full bg-gradient-to-tr from-secondary to-primary/40 flex items-center justify-center text-white text-xs md:text-base">
                           {current.creator.full_name.charAt(0)}
                         </div>
-                        <span>{current.creator.full_name}</span>
+                        <span className="truncate max-w-[150px] md:max-w-none">{current.creator.full_name}</span>
                       </div>
                     )}
                   </div>
 
                   {/* Attachment Images Preview */}
                   {current.attachments && current.attachments.some(a => a.file_type?.startsWith('image/')) && (
-                    <div className="pt-8 flex flex-wrap gap-6">
+                    <div className="pt-4 md:pt-8 flex flex-wrap gap-4 md:gap-6 justify-center lg:justify-start">
                       {current.attachments.filter(a => a.file_type?.startsWith('image/')).slice(0, 2).map((img) => (
-                        <div key={img.id} className="relative group/img overflow-hidden rounded-3xl border border-white/10 aspect-video w-full max-w-[400px]">
+                        <div key={img.id} className="relative group/img overflow-hidden rounded-2xl md:rounded-3xl border border-white/10 aspect-video w-full max-w-[280px] md:max-w-[400px]">
                           <img 
                             src={img.file_url} 
                             alt="Attachment" 
                             className="w-full h-full object-cover transition-transform duration-700 group-hover/img:scale-110" 
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover/img:opacity-100 transition-opacity flex items-end p-4">
-                            <span className="text-white text-sm font-bold truncate">{img.file_name}</span>
-                          </div>
                         </div>
                       ))}
                     </div>
@@ -299,16 +296,16 @@ export default function Signage() {
                 </div>
 
                 {/* Vertical QR Panel */}
-                <div className="w-full md:w-[300px] flex flex-col items-center gap-8 p-10 rounded-[50px] bg-white/[0.02] border border-white/5 shadow-inner shrink-0">
-                  <div className="p-4 bg-white rounded-[40px] shadow-2xl transform hover:scale-105 transition-transform duration-500">
-                    <img src={qrUrl} alt="Quick Scan" className="w-[200px] h-[200px]" />
+                <div className="w-full lg:w-[280px] flex flex-row lg:flex-col items-center gap-6 md:gap-8 p-6 md:p-10 rounded-3xl md:rounded-[50px] bg-white/[0.02] border border-white/5 shadow-inner shrink-0 justify-center">
+                  <div className="p-2 md:p-4 bg-white rounded-2xl md:rounded-[40px] shadow-2xl transform hover:scale-105 transition-transform duration-500 shrink-0">
+                    <img src={qrUrl} alt="Quick Scan" className="w-[100px] h-[100px] md:w-[200px] md:h-[200px]" />
                   </div>
-                  <div className="text-center space-y-4">
-                    <div className="px-4 py-2 bg-secondary/10 rounded-full border border-secondary/20 inline-block">
-                      <p className="text-secondary text-sm font-black uppercase tracking-[0.2em]">Quick Access</p>
+                  <div className="text-left lg:text-center space-y-2 md:space-y-4">
+                    <div className="px-3 md:px-4 py-1 md:py-2 bg-secondary/10 rounded-full border border-secondary/20 inline-block">
+                      <p className="text-secondary text-[10px] md:text-sm font-black uppercase tracking-[0.2em]">Quick Access</p>
                     </div>
-                    <p className="text-slate-400 text-sm leading-relaxed font-bold">
-                      Scan with your mobile camera to read this notice on the go.
+                    <p className="text-slate-400 text-xs md:text-sm leading-relaxed font-bold max-w-[150px] md:max-w-none">
+                      Scan to read on mobile.
                     </p>
                   </div>
                 </div>
@@ -320,21 +317,21 @@ export default function Signage() {
 
       {/* Dynamic Footer / Progress Indicators */}
       <footer className={cn(
-        "relative z-40 px-10 pb-10 transition-all duration-700",
+        "relative z-40 px-4 md:px-10 pb-6 md:pb-10 transition-all duration-700",
         showControls ? "opacity-100" : "opacity-40"
       )}>
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-center gap-6 md:gap-8">
           {/* Pagination Pill */}
-          <div className="flex center gap-3 bg-white/5 p-3 rounded-full border border-white/5 backdrop-blur-2xl px-6">
-            {sortedNotices.slice(0, 20).map((_, index) => (
+          <div className="flex flex-wrap justify-center gap-2 md:gap-3 bg-white/5 p-2 md:p-3 rounded-[24px] md:rounded-full border border-white/5 backdrop-blur-2xl px-4 md:px-6 max-w-full">
+            {sortedNotices.slice(0, 15).map((_, index) => (
               <button
                 key={index}
                 onClick={() => { setCurrentIndex(index); setIsPlaying(false); }}
                 className={cn(
-                  "relative h-3 rounded-full transition-all duration-500",
+                  "relative h-2 md:h-3 rounded-full transition-all duration-500",
                   index === currentIndex 
-                    ? "w-20 bg-secondary shadow-[0_0_20px_rgba(234,179,8,0.5)]" 
-                    : "w-3 bg-white/20 hover:bg-white/40"
+                    ? "w-10 md:w-20 bg-secondary shadow-[0_0_20px_rgba(234,179,8,0.5)]" 
+                    : "w-2 md:w-3 bg-white/20 hover:bg-white/40"
                 )}
               >
                 {index === currentIndex && isPlaying && (
@@ -344,12 +341,12 @@ export default function Signage() {
             ))}
           </div>
 
-          <div className="flex items-center gap-6 text-slate-500 font-black text-sm uppercase tracking-[0.4em]">
-            <span>System Online</span>
-            <span className="h-1 w-1 bg-slate-800 rounded-full" />
-            <span className="text-slate-300">Notice {currentIndex + 1} of {sortedNotices.length}</span>
-            <span className="h-1 w-1 bg-slate-800 rounded-full" />
-            <span>UCU-BBUC Network</span>
+          <div className="flex flex-wrap items-center justify-center gap-3 md:gap-6 text-slate-500 font-black text-[10px] md:text-sm uppercase tracking-[0.2em] md:tracking-[0.4em] text-center">
+            <span>Online</span>
+            <span className="h-0.5 w-0.5 bg-slate-800 rounded-full" />
+            <span className="text-slate-300">Nº {currentIndex + 1} / {sortedNotices.length}</span>
+            <span className="h-0.5 w-0.5 bg-slate-800 rounded-full" />
+            <span>UCU-BBUC</span>
           </div>
         </div>
       </footer>

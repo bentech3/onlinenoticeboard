@@ -1,4 +1,5 @@
 import { useMemo, useState } from 'react';
+import { formatDistanceToNow } from 'date-fns';
 import { FileText, Clock, CheckCircle, TrendingUp, Plus, Bookmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
@@ -12,6 +13,7 @@ import { useNotices } from '@/hooks/useNotices';
 import { useBookmarkedNotices } from '@/hooks/useNoticeBookmarks';
 import { useDepartments } from '@/hooks/useDepartments';
 import { NoticeStatus } from '@/lib/types';
+import { Badge } from '@/components/ui/badge';
 import { cn, getDepartmentColor } from '@/lib/utils';
 import { Building2, Settings2, ShieldCheck, History } from 'lucide-react';
 import { useUpdateNotice } from '@/hooks/useNotices';
