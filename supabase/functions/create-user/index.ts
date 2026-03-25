@@ -112,8 +112,19 @@ serve(async (req: Request) => {
     );
   } catch (error) {
     console.error("Error creating user:", error);
-    const errorMessage = error instanceof Error ? error.message : "An unknown error occurred";
-    return new Response(JSON.stringify({ error: errorMessage }), {
+    
+    // Attempt to extract a clear error message
+    let errorMessage = "An unknown error occurred";
+    if (error instanceof Error) {
+      errorMessage = error.message;
+    } else if (typeof error === 'object' && error !== null && 'message' in error) {
+      errorMessage = (error as any).message;
+    }
+    
+    return new Response(JSON.stringify({ 
+      error: errorMessage,
+      details: error
+    }), {
       status: 400,
       headers: { "Content-Type": "application/json", ...corsHeaders },
     });

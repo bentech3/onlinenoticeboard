@@ -42,6 +42,7 @@ export interface Notice {
   rejection_reason: string | null;
   expires_at: string | null;
   is_urgent: boolean;
+  is_outdated: boolean;
   view_count: number;
   is_archived: boolean;
   scheduled_at: string | null;

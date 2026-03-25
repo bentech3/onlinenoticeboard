@@ -113,6 +113,18 @@ export default function AuthPage() {
               )}
             </div>
 
+            {/* Public Access Link */}
+            <div className="mt-6 flex flex-col items-center">
+              <button
+                onClick={() => navigate('/signage')}
+                className="group flex items-center gap-2 text-sm font-bold text-white/40 hover:text-secondary transition-all"
+              >
+                <div className="h-px w-4 bg-white/20 group-hover:bg-secondary/40" />
+                VIEW PUBLIC NOTICE BOARD
+                <div className="h-px w-4 bg-white/20 group-hover:bg-secondary/40" />
+              </button>
+            </div>
+
             {/* Footer / Contact */}
             <div className="mt-10 pt-6 border-t border-white/10">
               <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">

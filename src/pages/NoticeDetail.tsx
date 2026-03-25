@@ -147,11 +147,19 @@ export default function NoticeDetail() {
                     <NoticeReminder notice={notice} />
                   </>
                 )}
-                {isSuperAdmin && notice && (
-                  <Button variant="outline" size="sm" onClick={handleArchive} className="shrink-0 h-8 text-xs">
-                    <Archive className="mr-1.5 h-3.5 w-3.5" />
-                    {notice.is_archived ? 'Unarchive' : 'Archive'}
-                  </Button>
+                {(isSuperAdmin || isHOD) && notice && (
+                  <>
+                    <Button variant="outline" size="sm" onClick={handleToggleOutdated} className={cn("shrink-0 h-8 text-xs", notice.is_outdated && "text-warning border-warning")}>
+                      <Clock className="mr-1.5 h-3.5 w-3.5" />
+                      {notice.is_outdated ? 'Remove Outdated Stamp' : 'Mark as Outdated'}
+                    </Button>
+                    {isSuperAdmin && (
+                      <Button variant="outline" size="sm" onClick={handleArchive} className="shrink-0 h-8 text-xs">
+                        <Archive className="mr-1.5 h-3.5 w-3.5" />
+                        {notice.is_archived ? 'Unarchive' : 'Archive'}
+                      </Button>
+                    )}
+                  </>
                 )}
                 {canEdit && (
                   <Button variant="outline" size="sm" onClick={() => navigate(`/notices/${id}/edit`)} className="shrink-0 h-8 text-xs">
@@ -279,23 +287,38 @@ export default function NoticeDetail() {
                     <Paperclip className="h-4 w-4" />
                     Attachments ({notice.attachments.length})
                   </h4>
-                  <div className="grid gap-2">
-                    {notice.attachments.map((attachment) => (
-                      <a
-                        key={attachment.id}
-                        href={attachment.file_url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center gap-3 p-2.5 md:p-3 rounded-lg border hover:bg-muted/50 transition-colors"
-                      >
-                        <div className="flex-1 min-w-0">
-                          <p className="font-medium truncate text-sm">{attachment.file_name}</p>
-                          <p className="text-xs text-muted-foreground">
-                            {attachment.file_type} • {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : 'Unknown size'}
-                          </p>
+                  <div className="grid gap-4">
+                    {notice.attachments.map((attachment) => {
+                      const isImage = attachment.file_type?.startsWith('image/');
+                      return (
+                        <div key={attachment.id} className="space-y-2">
+                          {isImage ? (
+                            <div className="rounded-xl overflow-hidden border bg-muted/30">
+                              <img 
+                                src={attachment.file_url} 
+                                alt={attachment.file_name} 
+                                className="w-full h-auto max-h-[500px] object-contain hover:scale-[1.02] transition-transform duration-300 cursor-pointer"
+                                onClick={() => window.open(attachment.file_url, '_blank')}
+                              />
+                            </div>
+                          ) : (
+                            <a
+                              href={attachment.file_url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-3 p-3 rounded-lg border hover:bg-muted/50 transition-colors bg-card"
+                            >
+                              <div className="flex-1 min-w-0">
+                                <p className="font-medium truncate text-sm">{attachment.file_name}</p>
+                                <p className="text-xs text-muted-foreground">
+                                  {attachment.file_type} • {attachment.file_size ? `${(attachment.file_size / 1024).toFixed(1)} KB` : 'Unknown size'}
+                                </p>
+                              </div>
+                            </a>
+                          )}
                         </div>
-                      </a>
-                    ))}
+                      );
+                    })}
                   </div>
                 </div>
               </>

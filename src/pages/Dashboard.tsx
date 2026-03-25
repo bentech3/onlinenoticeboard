@@ -13,7 +13,9 @@ import { useBookmarkedNotices } from '@/hooks/useNoticeBookmarks';
 import { useDepartments } from '@/hooks/useDepartments';
 import { NoticeStatus } from '@/lib/types';
 import { cn, getDepartmentColor } from '@/lib/utils';
-import { Building2 } from 'lucide-react';
+import { Building2, Settings2, ShieldCheck, History } from 'lucide-react';
+import { useUpdateNotice } from '@/hooks/useNotices';
+import { toast } from '@/hooks/use-toast';
 
 export default function Dashboard() {
   const { profile, role, isCreator, isHOD, isSuperAdmin } = useAuth();
@@ -27,6 +29,7 @@ export default function Dashboard() {
   const { notices: pendingNotices } = useNotices('pending', isHOD && !isSuperAdmin ? profile?.department_id : undefined);
   const { data: bookmarkedNotices = [], isLoading: bookmarksLoading } = useBookmarkedNotices();
   const { data: departments = [] } = useDepartments();
+  const updateNotice = useUpdateNotice();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState<string | null>(null);
@@ -243,6 +246,12 @@ export default function Dashboard() {
               <Bookmark className="mr-1 h-3 w-3 md:h-3.5 md:w-3.5" />
               Saved
             </TabsTrigger>
+            {(isSuperAdmin || isHOD) && (
+              <TabsTrigger value="manage" className="text-xs md:text-sm gap-1.5">
+                <Settings2 className="h-3 w-3 md:h-3.5 md:w-3.5" />
+                Manage Board
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <TabsContent value="feed" className="space-y-4 md:space-y-6">
@@ -287,6 +296,79 @@ export default function Dashboard() {
               emptyMessage="You haven't saved any notices yet. Click the bookmark icon on a notice to save it."
             />
           </TabsContent>
+
+          {(isSuperAdmin || isHOD) && (
+            <TabsContent value="manage" className="space-y-4 md:space-y-6">
+              <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+                <div>
+                  <h2 className="text-lg font-bold flex items-center gap-2">
+                    <ShieldCheck className="h-5 w-5 text-primary" />
+                    Board Management
+                  </h2>
+                  <p className="text-sm text-muted-foreground">Quickly mark notices as outdated to update the digital signage.</p>
+                </div>
+              </div>
+
+              <Card className="border-none bg-card/50 shadow-sm overflow-hidden">
+                <div className="divide-y divide-border">
+                  {approvedNotices
+                    .filter(n => isSuperAdmin || n.department_id === profile?.department_id)
+                    .map((notice) => (
+                    <div key={notice.id} className="p-4 flex items-center justify-between gap-4 hover:bg-muted/30 transition-colors">
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2 mb-1">
+                          <h3 className="font-bold text-sm truncate">{notice.title}</h3>
+                          {notice.is_outdated && (
+                            <Badge variant="outline" className="text-[10px] h-5 border-warning text-warning bg-warning/5 gap-1">
+                              <History className="h-3 w-3" /> OUTDATED
+                            </Badge>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-3 text-xs text-muted-foreground">
+                          <span className={cn("font-semibold py-0.5 px-2 rounded text-[10px] text-white", getDepartmentColor(notice.department?.name))}>
+                            {notice.department?.name}
+                          </span>
+                          <span>{formatDistanceToNow(new Date(notice.created_at), { addSuffix: true })}</span>
+                        </div>
+                      </div>
+                      <Button
+                        variant={notice.is_outdated ? "outline" : "default"}
+                        size="sm"
+                        className={cn(
+                          "h-8 text-xs font-bold transition-all",
+                          notice.is_outdated ? "border-warning text-warning hover:bg-warning/10" : "bg-primary hover:bg-primary/90 shadow-md"
+                        )}
+                        onClick={async () => {
+                          try {
+                            await updateNotice.mutateAsync({ 
+                              id: notice.id, 
+                              is_outdated: !notice.is_outdated 
+                            });
+                            toast({
+                              title: !notice.is_outdated ? "Notice marked as OUTDATED" : "Notice marked as CURRENT",
+                              description: `Signage board has been updated.`,
+                            });
+                          } catch (err) {
+                            toast({
+                              title: "Failed to update notice",
+                              variant: "destructive",
+                            });
+                          }
+                        }}
+                      >
+                        {notice.is_outdated ? "Mark Current" : "Mark Outdated"}
+                      </Button>
+                    </div>
+                  ))}
+                  {approvedNotices.length === 0 && (
+                    <div className="p-12 text-center text-muted-foreground">
+                      No approved notices to manage yet.
+                    </div>
+                  )}
+                </div>
+              </Card>
+            </TabsContent>
+          )}
         </Tabs>
       </div>
     </DashboardLayout>
