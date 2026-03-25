@@ -16,7 +16,7 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { useNotices, useApproveNotice, useRejectNotice } from '@/hooks/useNotices';
 import { Notice } from '@/lib/types';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { useNavigate } from 'react-router-dom';
 
 export default function ApprovalQueue() {

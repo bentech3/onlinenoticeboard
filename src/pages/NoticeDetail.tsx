@@ -9,7 +9,8 @@ import { NoticeTagging } from '@/components/notices/NoticeTagging';
 import { NoticeReminder } from '@/components/notices/NoticeReminder';
 import { ReputationBadge } from '@/components/notices/ReputationBadge';
 import { useNoticeReputation } from '@/hooks/useReputationScore';
-import { formatDistanceToNow, format } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+import { format } from 'date-fns/format';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -82,6 +83,25 @@ export default function NoticeDetail() {
       title: notice.is_archived ? 'Notice unarchived' : 'Notice archived',
       description: notice.is_archived ? 'Notice is now visible again' : 'Notice has been archived',
     });
+  };
+
+  const handleToggleOutdated = async () => {
+    if (!notice) return;
+    try {
+      await updateNotice.mutateAsync({ 
+        id: notice.id, 
+        is_outdated: !notice.is_outdated 
+      });
+      toast({
+        title: !notice.is_outdated ? "Notice marked as OUTDATED" : "Notice marked as CURRENT",
+        description: `Signage board has been updated.`,
+      });
+    } catch (err) {
+      toast({
+        title: "Failed to update notice",
+        variant: "destructive",
+      });
+    }
   };
 
   if (isLoading) {

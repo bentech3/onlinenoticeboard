@@ -1,4 +1,4 @@
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { Calendar, Building2, AlertTriangle, Paperclip, ChevronRight, ShieldAlert, Users } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';

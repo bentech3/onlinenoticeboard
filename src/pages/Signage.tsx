@@ -1,6 +1,8 @@
 import { useEffect, useState, useCallback, useMemo } from 'react';
 import ucuLogo from '@/assets/ucu-logo.png';
-import { formatDistanceToNow, format, isBefore } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
+import { format } from 'date-fns/format';
+import { isBefore } from 'date-fns/isBefore';
 import { 
   Building2, 
   Calendar, 

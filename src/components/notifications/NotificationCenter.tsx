@@ -1,6 +1,6 @@
 import { Bell, Check, CheckCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import {

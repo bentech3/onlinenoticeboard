@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { formatDistanceToNow } from 'date-fns';
+import { formatDistanceToNow } from 'date-fns/formatDistanceToNow';
 import { FileText, Clock, CheckCircle, TrendingUp, Plus, Bookmark } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { DashboardLayout } from '@/components/layout/DashboardLayout';
