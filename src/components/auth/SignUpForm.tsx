@@ -52,16 +52,16 @@ export function SignUpForm() {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="signup-name" className="text-foreground/80 text-sm">Full Name</Label>
+    <form onSubmit={form.handleSubmit(handleSignUp)} className="space-y-3">
+      <div className="space-y-1">
+        <Label htmlFor="signup-name" className="text-foreground/70 text-xs ml-1">Full Name</Label>
         <div className="relative">
           <User className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="signup-name"
             type="text"
             placeholder="Enter your full name"
-            className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 h-9 rounded-lg border-border/60 focus:border-primary text-sm"
             {...form.register('fullName')}
           />
         </div>
@@ -70,15 +70,15 @@ export function SignUpForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="signup-email" className="text-foreground/80 text-sm">Email</Label>
+      <div className="space-y-1">
+        <Label htmlFor="signup-email" className="text-foreground/70 text-xs ml-1">Email</Label>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="signup-email"
             type="email"
             placeholder="Please enter your email"
-            className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 h-9 rounded-lg border-border/60 focus:border-primary text-sm"
             {...form.register('email')}
           />
         </div>
@@ -87,15 +87,16 @@ export function SignUpForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="signup-password" className="text-foreground/80 text-sm">Password</Label>
+      <div className="space-y-1">
+        <Label htmlFor="signup-password" className="text-foreground/70 text-xs ml-1">Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="signup-password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="••••••••"
-            className="pl-9 pr-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 pr-9 h-9 rounded-lg border-border/60 focus:border-primary text-sm"
+            placeholder="Create password"
+            autoComplete="new-password"
             {...form.register('password')}
           />
           <button
@@ -111,15 +112,16 @@ export function SignUpForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="signup-confirm" className="text-foreground/80 text-sm">Confirm Password</Label>
+      <div className="space-y-1">
+        <Label htmlFor="signup-confirm" className="text-foreground/70 text-xs ml-1">Confirm Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="signup-confirm"
             type={showPassword ? 'text' : 'password'}
-            placeholder="••••••••"
-            className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 h-9 rounded-lg border-border/60 focus:border-primary text-sm"
+            placeholder="Repeat password"
+            autoComplete="new-password"
             {...form.register('confirmPassword')}
           />
         </div>
@@ -130,7 +132,7 @@ export function SignUpForm() {
 
       <Button
         type="submit"
-        className="w-full h-11 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 text-base font-semibold tracking-wide shadow-gold"
+        className="w-full h-10 rounded-full bg-secondary text-secondary-foreground hover:bg-secondary/90 text-sm font-semibold tracking-wide shadow-gold mt-2"
         disabled={isLoading}
       >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

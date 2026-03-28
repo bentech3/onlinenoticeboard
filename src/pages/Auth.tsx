@@ -37,17 +37,17 @@ export default function AuthPage() {
       </div>
 
       {/* Auth Card — The "Square Slide" */}
-      <div className="relative z-10 w-full max-w-[500px] animate-in fade-in zoom-in duration-500">
-        <div className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden min-h-[500px] flex flex-col justify-center">
-          <div className="p-8 sm:p-10">
+      <div className="relative z-10 w-full max-w-[420px] animate-in fade-in zoom-in duration-500">
+        <div className="bg-white/[0.08] backdrop-blur-xl border border-white/20 rounded-2xl shadow-2xl overflow-hidden min-h-[400px] flex flex-col justify-center">
+          <div className="p-6 sm:p-8">
             {/* Header Section */}
-            <div className="text-center mb-8">
+            <div className="text-center mb-6">
               <img
                 src={ucuLogo}
                 alt="UCU Logo"
-                className="h-16 sm:h-20 w-auto mx-auto mb-6 drop-shadow-2xl"
+                className="h-12 sm:h-16 w-auto mx-auto mb-4 drop-shadow-2xl"
               />
-              <h1 className="text-2xl font-bold text-foreground">BBUC-online-notice-board</h1>
+              <h1 className="text-xl font-bold text-foreground">BBUC-online-notice-board</h1>
               <p className="text-white/70 text-sm sm:text-base">
                 {mode === 'signin'
                   ? 'Sign in to access official updates'
@@ -113,20 +113,18 @@ export default function AuthPage() {
             </div>
 
             {/* Public Access Link */}
-            <div className="mt-6 flex flex-col items-center">
+            <div className="mt-8 flex flex-col items-center">
               <button
                 onClick={() => navigate('/signage')}
-                className="group flex items-center gap-2 text-sm font-bold text-white/40 hover:text-secondary transition-all"
+                className="group flex items-center gap-3 px-6 py-2.5 rounded-full bg-secondary/10 border border-secondary/30 text-sm font-bold text-secondary hover:bg-secondary/20 transition-all active:scale-[0.98]"
               >
-                <div className="h-px w-4 bg-white/20 group-hover:bg-secondary/40" />
                 VIEW PUBLIC NOTICE BOARD
-                <div className="h-px w-4 bg-white/20 group-hover:bg-secondary/40" />
               </button>
             </div>
 
             {/* Footer */}
-            <div className="mt-10 pt-6 border-t border-white/10">
-              <p className="text-center text-[11px] text-white/40 mt-2 tracking-wide uppercase">
+            <div className="mt-8 pt-4 border-t border-white/10">
+              <p className="text-center text-[10px] text-white/40 mt-1 tracking-wide uppercase">
                 © {new Date().getFullYear()} UCU — Bishop Barham University College
               </p>
             </div>

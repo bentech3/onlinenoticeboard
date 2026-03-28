@@ -54,16 +54,16 @@ export function SignInForm() {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-5" autoComplete="off">
-      <div className="space-y-2">
-        <Label htmlFor="signin-email" className="text-foreground/80 text-sm">Email</Label>
+    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-4" autoComplete="off">
+      <div className="space-y-1">
+        <Label htmlFor="signin-email" className="text-foreground/70 text-xs ml-1">Email</Label>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="signin-email"
             type="email"
             placeholder="Please enter your email"
-            className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 h-10 rounded-lg border-border/60 focus:border-primary text-sm"
             {...form.register('email')}
           />
         </div>
@@ -72,8 +72,8 @@ export function SignInForm() {
         )}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="signin-password" className="text-foreground/80 text-sm">Password</Label>
+      <div className="space-y-1">
+        <Label htmlFor="signin-password" className="text-foreground/70 text-xs ml-1">Password</Label>
         <div className="relative">
           <Lock className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
@@ -81,7 +81,7 @@ export function SignInForm() {
             type={showPassword ? 'text' : 'password'}
             placeholder="Enter your password"
             autoComplete="new-password"
-            className="pl-9 pr-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 pr-9 h-10 rounded-lg border-border/60 focus:border-primary text-sm"
             {...form.register('password')}
           />
           <button
@@ -99,7 +99,7 @@ export function SignInForm() {
 
       <Button
         type="submit"
-        className="w-full h-11 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold tracking-wide"
+        className="w-full h-10 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-semibold tracking-wide mt-2"
         disabled={isLoading}
       >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}

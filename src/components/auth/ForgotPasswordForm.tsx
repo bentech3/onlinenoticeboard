@@ -73,16 +73,16 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(handleResetRequest)} className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="reset-email" className="text-foreground/80 text-sm">Email Address</Label>
+    <form onSubmit={form.handleSubmit(handleResetRequest)} className="space-y-4">
+      <div className="space-y-1">
+        <Label htmlFor="reset-email" className="text-foreground/70 text-xs ml-1">Email Address</Label>
         <div className="relative">
           <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
           <Input
             id="reset-email"
             type="email"
             placeholder="Please enter your email"
-            className="pl-9 h-11 rounded-lg border-border/60 focus:border-primary"
+            className="pl-9 h-10 rounded-lg border-border/60 focus:border-primary text-sm"
             {...form.register('email')}
           />
         </div>
@@ -93,7 +93,7 @@ export function ForgotPasswordForm({ onBack }: ForgotPasswordFormProps) {
 
       <Button
         type="submit"
-        className="w-full h-11 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-base font-semibold tracking-wide"
+        className="w-full h-10 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 text-sm font-semibold tracking-wide"
         disabled={isLoading}
       >
         {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
