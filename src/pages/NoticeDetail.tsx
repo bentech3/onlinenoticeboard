@@ -245,12 +245,17 @@ export default function NoticeDetail() {
                   <span>{notice.department.name}</span>
                 </div>
               )}
-              {notice.target_department && notice.target_department_id !== notice.department_id && (
+              {notice.target_department_id === null ? (
+                <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-blue-300 bg-blue-50 text-blue-600 font-bold text-[10px] md:text-xs">
+                  <Users className="h-3.5 w-3.5 md:h-4 md:w-4" />
+                  <span>All Departments</span>
+                </div>
+              ) : notice.target_department && notice.target_department_id !== notice.department_id ? (
                 <div className="flex items-center gap-1.5 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-primary font-bold text-[10px] md:text-xs">
                   <Users className="h-3.5 w-3.5 md:h-4 md:w-4" />
                   <span>Target: {notice.target_department.name}</span>
                 </div>
-              )}
+              ) : null}
               {notice.creator && (
                 <div className="flex items-center gap-1.5">
                   <Avatar className="h-4 w-4 md:h-5 md:w-5">

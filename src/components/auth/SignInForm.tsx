@@ -54,7 +54,7 @@ export function SignInForm() {
   };
 
   return (
-    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-5">
+    <form onSubmit={form.handleSubmit(handleSignIn)} className="space-y-5" autoComplete="off">
       <div className="space-y-2">
         <Label htmlFor="signin-email" className="text-foreground/80 text-sm">Email</Label>
         <div className="relative">
@@ -79,7 +79,8 @@ export function SignInForm() {
           <Input
             id="signin-password"
             type={showPassword ? 'text' : 'password'}
-            placeholder="••••••••"
+            placeholder="Enter your password"
+            autoComplete="new-password"
             className="pl-9 pr-9 h-11 rounded-lg border-border/60 focus:border-primary"
             {...form.register('password')}
           />

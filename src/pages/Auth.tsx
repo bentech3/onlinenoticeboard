@@ -6,7 +6,6 @@ import { useAuth } from '@/hooks/useAuth';
 import { SignInForm } from '@/components/auth/SignInForm';
 import { SignUpForm } from '@/components/auth/SignUpForm';
 import { ForgotPasswordForm } from '@/components/auth/ForgotPasswordForm';
-import { Phone } from 'lucide-react';
 
 export default function AuthPage() {
   const [searchParams] = useSearchParams();
@@ -125,18 +124,9 @@ export default function AuthPage() {
               </button>
             </div>
 
-            {/* Footer / Contact */}
+            {/* Footer */}
             <div className="mt-10 pt-6 border-t border-white/10">
-              <div className="flex items-start gap-3 p-3 rounded-2xl bg-white/5 border border-white/5">
-                <Phone className="h-4 w-4 text-white/60 mt-0.5 shrink-0" />
-                <p className="text-[13px] text-white/60 leading-snug">
-                  Need help? Contact admin: <br />
-                  <a href="tel:+256761214808" className="font-semibold text-white hover:underline">
-                    +256761214808
-                  </a>
-                </p>
-              </div>
-              <p className="text-center text-[11px] text-white/40 mt-6 tracking-wide uppercase">
+              <p className="text-center text-[11px] text-white/40 mt-2 tracking-wide uppercase">
                 © {new Date().getFullYear()} UCU — Bishop Barham University College
               </p>
             </div>

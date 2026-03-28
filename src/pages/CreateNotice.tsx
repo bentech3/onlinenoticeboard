@@ -271,17 +271,19 @@ export default function CreateNotice() {
 
               {/* Target Audience */}
               <div className="space-y-2">
-                <Label>Target Department (Optional)</Label>
-                <p className="text-xs text-muted-foreground">Recommend a specific department this notice is intended for. Leave empty for "University Wide".</p>
+                <Label>Target Audience</Label>
+                <p className="text-xs text-muted-foreground">
+                  Select which department this notice is meant for. Choose <strong>All Departments</strong> if it applies university-wide.
+                </p>
                 <Select
                   value={form.watch('target_department_id') || 'all'}
                   onValueChange={(value) => form.setValue('target_department_id', value === 'all' ? null : value)}
                 >
                   <SelectTrigger>
-                    <SelectValue placeholder="University Wide" />
+                    <SelectValue placeholder="All Departments (University Wide)" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="all">University Wide (Public)</SelectItem>
+                    <SelectItem value="all">🌐 All Departments (University Wide)</SelectItem>
                     {departments?.map((dept) => (
                       <SelectItem key={dept.id} value={dept.id}>
                         {dept.name}

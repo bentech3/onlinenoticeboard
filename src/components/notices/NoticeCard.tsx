@@ -118,12 +118,17 @@ export function NoticeCard({ notice, showStatus = false, compact = false }: Noti
             )}
 
             {/* Target Audience Badge */}
-            {notice.target_department && notice.target_department_id !== notice.department_id && (
+            {notice.target_department_id === null ? (
+              <Badge variant="outline" className="border-blue-300 text-blue-600 bg-blue-50 gap-1.5">
+                <Users className="h-3 w-3" />
+                All Departments
+              </Badge>
+            ) : notice.target_department && notice.target_department_id !== notice.department_id ? (
               <Badge variant="outline" className="border-primary/30 text-primary bg-primary/5 gap-1.5">
                 <Users className="h-3 w-3" />
                 Target: {notice.target_department.name}
               </Badge>
-            )}
+            ) : null}
 
             {/* Creator */}
             {notice.creator && (

@@ -16,20 +16,34 @@ export function NoticeCalendarExport({ notice }: NoticeCalendarExportProps) {
     e.stopPropagation();
 
     const start = new Date(targetDate);
-    const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 hour
+    const end = new Date(start.getTime() + 60 * 60 * 1000); // 1 hour duration
 
+    // Format to iCalendar UTC datetime: YYYYMMDDTHHmmssZ
     const formatDate = (d: Date) =>
       d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+
+    const now = formatDate(new Date());
+    const uid = `notice-${notice.id}@bbuc-noticeboard`;
+
+    const cleanDescription = (notice.content || '')
+      .replace(/<[^>]*>/g, '')   // strip HTML
+      .slice(0, 500)
+      .replace(/\n/g, '\\n')     // escape newlines for ICS
+      .replace(/,/g, '\\,');     // escape commas for ICS
 
     const icsContent = [
       'BEGIN:VCALENDAR',
       'VERSION:2.0',
-      'PRODID:-//UCU Notice Board//EN',
+      'PRODID:-//BBUC Notice Board//EN',
+      'CALSCALE:GREGORIAN',
+      'METHOD:PUBLISH',
       'BEGIN:VEVENT',
+      `UID:${uid}`,
+      `DTSTAMP:${now}`,
       `DTSTART:${formatDate(start)}`,
       `DTEND:${formatDate(end)}`,
       `SUMMARY:${notice.title}`,
-      `DESCRIPTION:${notice.content.replace(/<[^>]*>/g, '').slice(0, 500).replace(/\n/g, '\\n')}`,
+      `DESCRIPTION:${cleanDescription}`,
       `URL:${window.location.origin}/notices/${notice.id}`,
       'END:VEVENT',
       'END:VCALENDAR',
@@ -39,10 +53,12 @@ export function NoticeCalendarExport({ notice }: NoticeCalendarExportProps) {
     const link = document.createElement('a');
     link.href = URL.createObjectURL(blob);
     link.download = `notice-${notice.id.slice(0, 8)}.ics`;
+    document.body.appendChild(link);
     link.click();
+    document.body.removeChild(link);
     URL.revokeObjectURL(link.href);
 
-    toast({ title: 'Calendar event exported', description: 'Open the .ics file to add it to your calendar.' });
+    toast({ title: 'Calendar event exported', description: 'Open the .ics file to add it to your calendar app.' });
   };
 
   return (
