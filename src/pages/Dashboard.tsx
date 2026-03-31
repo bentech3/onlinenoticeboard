@@ -27,7 +27,12 @@ export default function Dashboard() {
   const targetDept = !isSuperAdmin ? profile?.department_id : undefined;
 
   const { notices: allNotices, isLoading } = useNotices();
-  const { notices: approvedNotices } = useNotices('approved', undefined, targetDept);
+  
+  // For the main feed, we want to show everything approved if they are a student/viewer
+  // but for HOD/Creators we keep the departmental restriction for clarity in their workspace.
+  const feedTargetDept = (!isSuperAdmin && (isHOD || isCreator)) ? profile?.department_id : undefined;
+  
+  const { notices: approvedNotices } = useNotices('approved', undefined, feedTargetDept);
   const { notices: pendingNotices } = useNotices('pending', isHOD && !isSuperAdmin ? profile?.department_id : undefined);
   const { data: bookmarkedNotices = [], isLoading: bookmarksLoading } = useBookmarkedNotices();
   const { data: departments = [] } = useDepartments();
@@ -51,15 +56,22 @@ export default function Dashboard() {
   }, [allNotices, profile?.id]);
 
   const filteredNotices = useMemo(() => {
-    return approvedNotices.filter((notice) => {
-      const matchesSearch = !searchTerm ||
-        notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        notice.content.toLowerCase().includes(searchTerm.toLowerCase());
-      const matchesDepartment = !departmentFilter || notice.department_id === departmentFilter;
-      const matchesStatus = !statusFilter || notice.status === statusFilter;
-      const matchesCategory = !categoryFilter || notice.category === categoryFilter;
-      return matchesSearch && matchesDepartment && matchesStatus && matchesCategory;
-    });
+    return approvedNotices
+      .filter((notice) => !notice.is_archived) // Hide archived
+      .filter((notice) => {
+        // Automatically hide expired/outdated if not super admin or specifically requested
+        // but for "Current notices automatically", we should prioritize non-outdated ones.
+        if (notice.is_outdated) return false; 
+        if (notice.expires_at && new Date(notice.expires_at) < new Date()) return false;
+        
+        const matchesSearch = !searchTerm ||
+          notice.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          notice.content.toLowerCase().includes(searchTerm.toLowerCase());
+        const matchesDepartment = !departmentFilter || notice.department_id === departmentFilter;
+        const matchesStatus = !statusFilter || notice.status === statusFilter;
+        const matchesCategory = !categoryFilter || notice.category === categoryFilter;
+        return matchesSearch && matchesDepartment && matchesStatus && matchesCategory;
+      });
   }, [approvedNotices, searchTerm, departmentFilter, statusFilter, categoryFilter]);
 
   const getGreeting = () => {
@@ -266,8 +278,16 @@ export default function Dashboard() {
             <NoticeList
               notices={filteredNotices}
               isLoading={isLoading}
-              emptyMessage="No notices match your filters"
+              emptyMessage="No current notices match your filters"
             />
+            <div className="pt-4 flex justify-center border-t border-border/50">
+              <Button variant="outline" asChild className="gap-2 shadow-sm rounded-full px-6 hover:bg-muted/50 transition-all">
+                <Link to="/notices">
+                  <History className="h-4 w-4 text-muted-foreground" />
+                  View All Notices & Archive
+                </Link>
+              </Button>
+            </div>
           </TabsContent>
 
           {isCreator && (
